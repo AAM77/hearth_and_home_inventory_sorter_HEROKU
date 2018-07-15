@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :email, :password
   has_secure_password
 
+  #def initialize
+    ## Have the user initialize with 3 pre-created folders!!
+  #end
+
   def slug
     self.username.gsub(" ", "-")
   end
