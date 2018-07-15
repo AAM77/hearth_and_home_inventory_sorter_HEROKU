@@ -1,3 +1,4 @@
+require_relative "../spec_helper"
 require 'pry'
 
 describe 'User' do
@@ -15,7 +16,9 @@ describe 'User' do
   end #can find user
 
   it 'has a secure password' do
+
     expect(@user.authenticate("dog")).to eq(false)
+
     expect(@user.authenticate("@abc123")).to eq(@user)
   end #has secure password
 end #class User describe
