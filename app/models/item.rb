@@ -12,4 +12,13 @@ class Item < ActiveRecord::Base
   def self.find_by_slug(slug)
     self.all.find {|s| s.slug == slug}
   end
+
+  def self.all_items
+    items = self.all.collect { |item| item.name.downcase }
+  end
+
+  def self.find_by_case(record)
+    self.all_items.include?(record.downcase)
+  end
+
 end

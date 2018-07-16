@@ -23,14 +23,16 @@ class FoldersController < ApplicationController
       if params[:name] == ""
         redirect "/folders/new"
       else
-        @folder = Folder.new(name: params[:name])
-        @folder.user_id = current_user.id
+        @folder = Folder.find_by_case(params[:name])
 
-        if @folder.save
-          redirect "/#{current_user.slug}/folders"
-        else
+        if @folder
           redirect "/folders/new"
-        end #@folder.save
+        else
+          @folder = Folder.new(name: params[:name])
+          @folder.user_id = current_user.id
+          @folder.save
+          redirect "/#{current_user.slug}/folders"
+        end #@folder
       end #params[:name] empty
 
     else
