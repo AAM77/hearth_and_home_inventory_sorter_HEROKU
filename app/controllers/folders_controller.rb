@@ -1,5 +1,8 @@
 class FoldersController < ApplicationController
 
+  ###################################
+  # Displays the create_folder form #
+  ###################################
   get "/folders/new" do
     if logged_in?
       @user = current_user
@@ -9,6 +12,9 @@ class FoldersController < ApplicationController
     end
   end
 
+  ###################################
+  # Displays the User's folders     #
+  ###################################
   get "/:slug/folders" do
     if logged_in?
       @folders = current_user.folders
@@ -18,12 +24,16 @@ class FoldersController < ApplicationController
     end
   end
 
+  ###################################
+  # Verifies if the folder exists   #
+  ###################################
   post "/:slug/folders" do
     if logged_in?
       if params[:name] == ""
         redirect "/folders/new"
       else
-        @folder = Folder.find_by_case(params[:name])
+        @user = current_user
+        @folder = current_user.find_by_folder(params[:name])
 
         if @folder
           redirect "/folders/new"
@@ -40,5 +50,13 @@ class FoldersController < ApplicationController
     end #loggend_in?
   end
 
+  get "/folders/:slug/items" do
+    if logged_in?
+      @folder = current_user.folders.find_by_slug(params[:slug])
+      erb :"folders/show_folder"
+    else
+      redirect "/login"
+    end
+  end
 
 end

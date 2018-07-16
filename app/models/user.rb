@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
     self.folders << folder2
   end
 
+
+
+  ###########################################################
+  # Convert the Username to a slug that can be searched for #
+  ###########################################################
   def slug
     self.username.gsub(" ", "-")
   end
@@ -22,20 +27,39 @@ class User < ActiveRecord::Base
     self.all.find {|s| s.slug == slug}
   end
 
-  def self.all_usernames
-    usernames = self.all.collect { |user| user.username.downcase }
-  end
 
+  #################################################
+  # Test to see if the input email already exists #
+  #################################################
   def self.all_emails
-    usernames = self.all.collect { |user| user.email.downcase }
+    emails = self.all.collect { |user| user.email.downcase }
   end
 
   def self.find_by_email(record)
-    self.all_emails.include?(record.downcase)
+    self.where('lower(email) = ?', record.downcase).first
   end
 
+
+  ####################################################
+  # Test to see if the input username already exists #
+  ####################################################
+
   def self.find_by_username(record)
-    self.all_usernames.include?(record.downcase)
+    self.where('lower(username) = ?', record.downcase).first
   end
+
+
+  #######################################################
+  # Test to see if the input folder name already exists #
+  #######################################################
+  def all_folders
+    folders = self.folders.collect { |folder| folder.name.downcase }
+  end
+
+  def find_by_folder(record)
+    all_folders.include?(record.downcase)
+  end
+
+
 
 end
