@@ -151,7 +151,7 @@ describe ApplicationController do
   end
 
   ##################################################################
-  ## This needs to change                                        ##
+  ## This needs to change                                         ##
   ## Each user has access to only his or her own personal folders ##
   ## A user cannot see folders created by other users             ##
   ## ** Each User initializes with three pre-created folders!! ** ##

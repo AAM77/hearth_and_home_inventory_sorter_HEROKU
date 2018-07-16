@@ -1,4 +1,4 @@
-D, [2018-07-14T18:23:05.004504 #17734] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+D, [2018-07-15T21:41:24.687522 #32007] DEBUG -- :   [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
 Run options: include {:focus=>true}
 
 All examples were filtered out; ignoring {:focus=>true}
@@ -286,23 +286,720 @@ a {
 <div id="div_group_1" class="example_group passed">
   <dl style="margin-left: 0px;">
   <dt id="example_group_1" class="passed">ApplicationController</dt>
-    <script type="text/javascript">moveProgressBar('25.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">responds with a welcome message</span><span class='duration'>0.11922s</span></dd>
   </dl>
 </div>
 <div id="div_group_2" class="example_group passed">
-  <dl style="margin-left: 0px;">
-  <dt id="example_group_2" class="passed">User</dt>
-    <script type="text/javascript">moveProgressBar('50.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">can slug the username</span><span class='duration'>0.08892s</span></dd>
-    <script type="text/javascript">moveProgressBar('75.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">can find a user based on the slug</span><span class='duration'>0.08253s</span></dd>
-    <script type="text/javascript">moveProgressBar('100.0');</script>
-    <dd class="example passed"><span class="passed_spec_name">has a secure password</span><span class='duration'>0.20843s</span></dd>
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_2" class="passed">Homepage</dt>
+    <script type="text/javascript">moveProgressBar('2.8');</script>
+    <dd class="example passed"><span class="passed_spec_name">loads the homepage</span><span class='duration'>0.24180s</span></dd>
   </dl>
 </div>
-<script type="text/javascript">document.getElementById('duration').innerHTML = "Finished in <strong>0.50102 seconds</strong>";</script>
-<script type="text/javascript">document.getElementById('totals').innerHTML = "4 examples, 0 failures";</script>
+<div id="div_group_3" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_3" class="passed">Signup Page</dt>
+    <script type="text/javascript">moveProgressBar('5.7');</script>
+    <dd class="example passed"><span class="passed_spec_name">loads the signup page</span><span class='duration'>0.14031s</span></dd>
+    <script type="text/javascript">moveProgressBar('8.5');</script>
+    <dd class="example passed"><span class="passed_spec_name">signup directs user to folders index</span><span class='duration'>0.35473s</span></dd>
+    <script type="text/javascript">makeRed('rspec-header');</script>
+    <script type="text/javascript">makeRed('div_group_3');</script>
+    <script type="text/javascript">makeRed('example_group_3');</script>
+    <script type="text/javascript">moveProgressBar('11.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user sign up without a username</span>
+      <span class="duration">0.34663s</span>
+      <div class="failure" id="failure_1">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&#39;/signup&#39;)
+    expected &quot;http://example.org/folders&quot; to include &quot;/signup&quot;
+  # ./spec/controllers/application_controller_spec.rb:38:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:38:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">36</span>      }
+<span class="linenum">37</span>      post <span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>, params
+<span class="offending"><span class="linenum">38</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>)</span>
+<span class="linenum">39</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('14.2');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user sign up without an email</span>
+      <span class="duration">0.23128s</span>
+      <div class="failure" id="failure_2">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&#39;/signup&#39;)
+    expected &quot;http://example.org/folders&quot; to include &quot;/signup&quot;
+  # ./spec/controllers/application_controller_spec.rb:48:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:48:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">46</span>      }
+<span class="linenum">47</span>      post <span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>, params
+<span class="offending"><span class="linenum">48</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>)</span>
+<span class="linenum">49</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('17.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user sign up without a password</span>
+      <span class="duration">0.15131s</span>
+      <div class="failure" id="failure_3">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&#39;/signup&#39;)
+    expected &quot;http://example.org/folders&quot; to include &quot;/signup&quot;
+  # ./spec/controllers/application_controller_spec.rb:58:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:58:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">56</span>      }
+<span class="linenum">57</span>      post <span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>, params
+<span class="offending"><span class="linenum">58</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>)</span>
+<span class="linenum">59</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('20.0');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">creates a new user and logs them in on valid submission and does not let a logged in user view the signup page</span>
+      <span class="duration">0.43891s</span>
+      <div class="failure" id="failure_4">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&#39;/folders&#39;)
+    expected nil to include &quot;/folders&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:69:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:69:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">67</span>      post <span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>, params
+<span class="linenum">68</span>      get <span class="string"><span class="delimiter">'</span><span class="content">/signup</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">69</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">'</span><span class="content">/folders</span><span class="delimiter">'</span></span>)</span>
+<span class="linenum">70</span>    <span class="keyword">end</span>
+<span class="linenum">71</span>  <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_4" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_4" class="passed">login</dt>
+    <script type="text/javascript">makeRed('div_group_4');</script>
+    <script type="text/javascript">makeRed('example_group_4');</script>
+    <script type="text/javascript">moveProgressBar('22.8');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">loads the login page</span>
+      <span class="duration">0.11588s</span>
+      <div class="failure" id="failure_5">
+        <div class="message"><pre>  Failure/Error: expect(last_response.status).to eq(200)
+
+    expected: 200
+         got: 404
+
+    (compared using ==)
+  # ./spec/controllers/application_controller_spec.rb:76:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:76:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">74</span>    <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">loads the login page</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">75</span>      get <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">76</span>      <span class="keyword">expect</span>(last_response.status).to eq(<span class="integer">200</span>)</span>
+<span class="linenum">77</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('25.7');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">loads the folders index after login</span>
+      <span class="duration">0.27970s</span>
+      <div class="failure" id="failure_6">
+        <div class="message"><pre>  Failure/Error: expect(last_response.status).to eq(302)
+
+    expected: 302
+         got: 404
+
+    (compared using ==)
+  # ./spec/controllers/application_controller_spec.rb:86:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:86:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">84</span>      }
+<span class="linenum">85</span>      post <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span>, params
+<span class="offending"><span class="linenum">86</span>      <span class="keyword">expect</span>(last_response.status).to eq(<span class="integer">302</span>)</span>
+<span class="linenum">87</span>      follow_redirect!
+<span class="linenum">88</span>      <span class="keyword">expect</span>(last_response.status).to eq(<span class="integer">200</span>)</code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('28.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let user view login page if already logged in</span>
+      <span class="duration">0.43740s</span>
+      <div class="failure" id="failure_7">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&quot;/folders&quot;)
+    expected nil to include &quot;/folders&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:100:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:100:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">98</span>      post <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span>, params
+<span class="linenum">99</span>      get <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">100</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/folders</span><span class="delimiter">&quot;</span></span>)</span>
+<span class="linenum">101</span>    <span class="keyword">end</span>
+<span class="linenum">102</span>  <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_5" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_5" class="passed">logout</dt>
+    <script type="text/javascript">makeRed('div_group_5');</script>
+    <script type="text/javascript">makeRed('example_group_5');</script>
+    <script type="text/javascript">moveProgressBar('31.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">lets a user logout if they are already logged in</span>
+      <span class="duration">0.48445s</span>
+      <div class="failure" id="failure_8">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&quot;/login&quot;)
+    expected nil to include &quot;/login&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:114:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:114:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">112</span>      post <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span>, params
+<span class="linenum">113</span>      get <span class="string"><span class="delimiter">'</span><span class="content">/logout</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">114</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/login</span><span class="delimiter">&quot;</span></span>)</span>
+<span class="linenum">115</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('34.2');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user logout if not logged in</span>
+      <span class="duration">0.32575s</span>
+      <div class="failure" id="failure_9">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&quot;/&quot;)
+    expected nil to include &quot;/&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:119:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:119:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">117</span>    <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let a user logout if not logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">118</span>      get <span class="string"><span class="delimiter">'</span><span class="content">/logout</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">119</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/</span><span class="delimiter">&quot;</span></span>)</span>
+<span class="linenum">120</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('37.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not load /folders if user not logged in</span>
+      <span class="duration">0.27487s</span>
+      <div class="failure" id="failure_10">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&quot;/login&quot;)
+    expected nil to include &quot;/login&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:124:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:124:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">122</span>    <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not load /folders if user not logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">123</span>      get <span class="string"><span class="delimiter">'</span><span class="content">/folders</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">124</span>      <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/login</span><span class="delimiter">&quot;</span></span>)</span>
+<span class="linenum">125</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('40.0');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does load /folders if user is logged in</span>
+      <span class="duration">0.46012s</span>
+      <div class="failure" id="failure_11">
+        <div class="message"><pre>  Failure/Error: fill_in(:username, :with =&gt; &quot;jimmy123&quot;)
+
+  Capybara::ElementNotFound:
+    Unable to find visible field :username that is not disabled
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+  # ./spec/controllers/application_controller_spec.rb:133:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+./spec/controllers/application_controller_spec.rb:133:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">292</span>
+<span class="linenum">293</span>          raise <span class="constant">Capybara</span>::<span class="constant">Ambiguous</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Ambiguous match, found </span><span class="inline"><span class="inline-delimiter">#{</span>result.size<span class="inline-delimiter">}</span></span><span class="content"> elements matching </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> ambiguous?(query, result)
+<span class="offending"><span class="linenum">294</span>          raise <span class="constant">Capybara</span>::<span class="constant">ElementNotFound</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Unable to find </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> result.empty?</span>
+<span class="linenum">295</span>
+<span class="linenum">296</span>          result.first</code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_6" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_6" class="passed">user show page</dt>
+    <script type="text/javascript">makeRed('div_group_6');</script>
+    <script type="text/javascript">makeRed('example_group_6');</script>
+    <script type="text/javascript">moveProgressBar('42.8');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">shows all a single users folders</span>
+      <span class="duration">0.42244s</span>
+      <div class="failure" id="failure_12">
+        <div class="message"><pre>  Failure/Error: folder1 = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; user.id)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:143:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:143:in `block (3 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">141</span>    <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">shows all a single users folders</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">142</span>      user = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">143</span>      folder1 = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user.id)</span>
+<span class="linenum">144</span>      folder2 = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Lending</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user.id)
+<span class="linenum">145</span>      get <span class="string"><span class="delimiter">&quot;</span><span class="content">/users/</span><span class="inline"><span class="inline-delimiter">#{</span>user.slug<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_7" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_7" class="passed">index action</dt>
+  </dl>
+</div>
+<div id="div_group_8" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_8" class="passed">logged in</dt>
+    <script type="text/javascript">makeRed('div_group_8');</script>
+    <script type="text/javascript">makeRed('example_group_8');</script>
+    <script type="text/javascript">moveProgressBar('45.7');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let the user view the folders index of another user if logged in</span>
+      <span class="duration">0.45309s</span>
+      <div class="failure" id="failure_13">
+        <div class="message"><pre>  Failure/Error: folder1 = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; user1.id)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:165:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:165:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">163</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let the user view the folders index of another user if logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">164</span>        user1 = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">165</span>        folder1 = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user1.id)</span>
+<span class="linenum">166</span>
+<span class="linenum">167</span>        user2 = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">goldylocks33</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">goldy_locks@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">bears</span><span class="delimiter">&quot;</span></span>)</code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_9" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_9" class="passed">logged out</dt>
+    <script type="text/javascript">makeRed('div_group_9');</script>
+    <script type="text/javascript">makeRed('example_group_9');</script>
+    <script type="text/javascript">moveProgressBar('48.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user view the folders index if not logged in</span>
+      <span class="duration">0.31536s</span>
+      <div class="failure" id="failure_14">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&quot;/login&quot;)
+    expected nil to include &quot;/login&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:184:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:184:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">182</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let a user view the folders index if not logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">183</span>        get <span class="string"><span class="delimiter">'</span><span class="content">/folders</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">184</span>        <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/login</span><span class="delimiter">&quot;</span></span>)</span>
+<span class="linenum">185</span>      <span class="keyword">end</span>
+<span class="linenum">186</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_10" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_10" class="passed">new action</dt>
+  </dl>
+</div>
+<div id="div_group_11" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_11" class="passed">logged in</dt>
+    <script type="text/javascript">makeRed('div_group_11');</script>
+    <script type="text/javascript">makeRed('example_group_11');</script>
+    <script type="text/javascript">moveProgressBar('51.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">lets user view new folder form if logged in</span>
+      <span class="duration">0.39060s</span>
+      <div class="failure" id="failure_15">
+        <div class="message"><pre>  Failure/Error: fill_in(:username, :with =&gt; &quot;jimmy123&quot;)
+
+  Capybara::ElementNotFound:
+    Unable to find visible field :username that is not disabled
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+  # ./spec/controllers/application_controller_spec.rb:196:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+./spec/controllers/application_controller_spec.rb:196:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">292</span>
+<span class="linenum">293</span>          raise <span class="constant">Capybara</span>::<span class="constant">Ambiguous</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Ambiguous match, found </span><span class="inline"><span class="inline-delimiter">#{</span>result.size<span class="inline-delimiter">}</span></span><span class="content"> elements matching </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> ambiguous?(query, result)
+<span class="offending"><span class="linenum">294</span>          raise <span class="constant">Capybara</span>::<span class="constant">ElementNotFound</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Unable to find </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> result.empty?</span>
+<span class="linenum">295</span>
+<span class="linenum">296</span>          result.first</code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('54.2');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">lets user create a folder if he or she is logged in</span>
+      <span class="duration">0.25612s</span>
+      <div class="failure" id="failure_16">
+        <div class="message"><pre>  Failure/Error: fill_in(:username, :with =&gt; &quot;jimmy123&quot;)
+
+  Capybara::ElementNotFound:
+    Unable to find visible field :username that is not disabled
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+  # ./spec/controllers/application_controller_spec.rb:208:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+./spec/controllers/application_controller_spec.rb:208:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">292</span>
+<span class="linenum">293</span>          raise <span class="constant">Capybara</span>::<span class="constant">Ambiguous</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Ambiguous match, found </span><span class="inline"><span class="inline-delimiter">#{</span>result.size<span class="inline-delimiter">}</span></span><span class="content"> elements matching </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> ambiguous?(query, result)
+<span class="offending"><span class="linenum">294</span>          raise <span class="constant">Capybara</span>::<span class="constant">ElementNotFound</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Unable to find </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> result.empty?</span>
+<span class="linenum">295</span>
+<span class="linenum">296</span>          result.first</code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('57.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user create a folder from another user</span>
+      <span class="duration">0.62267s</span>
+      <div class="failure" id="failure_17">
+        <div class="message"><pre>  Failure/Error: fill_in(:username, :with =&gt; &quot;jimmy123&quot;)
+
+  Capybara::ElementNotFound:
+    Unable to find visible field :username that is not disabled
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+  # ./spec/controllers/application_controller_spec.rb:229:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+./spec/controllers/application_controller_spec.rb:229:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">292</span>
+<span class="linenum">293</span>          raise <span class="constant">Capybara</span>::<span class="constant">Ambiguous</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Ambiguous match, found </span><span class="inline"><span class="inline-delimiter">#{</span>result.size<span class="inline-delimiter">}</span></span><span class="content"> elements matching </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> ambiguous?(query, result)
+<span class="offending"><span class="linenum">294</span>          raise <span class="constant">Capybara</span>::<span class="constant">ElementNotFound</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Unable to find </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> result.empty?</span>
+<span class="linenum">295</span>
+<span class="linenum">296</span>          result.first</code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('60.0');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user create a blank folder name</span>
+      <span class="duration">0.60851s</span>
+      <div class="failure" id="failure_18">
+        <div class="message"><pre>  Failure/Error: fill_in(:username, :with =&gt; &quot;jimmy123&quot;)
+
+  Capybara::ElementNotFound:
+    Unable to find visible field :username that is not disabled
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+  # /Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+  # ./spec/controllers/application_controller_spec.rb:251:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:294:in `block in synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/base.rb:83:in `synchronize&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:285:in `synced_resolve&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/finders.rb:33:in `find&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/node/actions.rb:85:in `fill_in&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/session.rb:734:in `block (2 levels) in &lt;class:Session&gt;&#39;
+/Users/Zulkernan/.rvm/gems/ruby-2.4.2/gems/capybara-3.3.1/lib/capybara/dsl.rb:51:in `block (2 levels) in &lt;module:DSL&gt;&#39;
+./spec/controllers/application_controller_spec.rb:251:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">292</span>
+<span class="linenum">293</span>          raise <span class="constant">Capybara</span>::<span class="constant">Ambiguous</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Ambiguous match, found </span><span class="inline"><span class="inline-delimiter">#{</span>result.size<span class="inline-delimiter">}</span></span><span class="content"> elements matching </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> ambiguous?(query, result)
+<span class="offending"><span class="linenum">294</span>          raise <span class="constant">Capybara</span>::<span class="constant">ElementNotFound</span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Unable to find </span><span class="inline"><span class="inline-delimiter">#{</span>query.description<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="keyword">if</span> result.empty?</span>
+<span class="linenum">295</span>
+<span class="linenum">296</span>          result.first</code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_12" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_12" class="passed">logged out</dt>
+    <script type="text/javascript">makeRed('div_group_12');</script>
+    <script type="text/javascript">makeRed('example_group_12');</script>
+    <script type="text/javascript">moveProgressBar('62.8');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let user view new folder form if not logged in</span>
+      <span class="duration">0.20750s</span>
+      <div class="failure" id="failure_19">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&quot;/login&quot;)
+    expected nil to include &quot;/login&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:268:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:268:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">266</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let user view new folder form if not logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">267</span>        get <span class="string"><span class="delimiter">'</span><span class="content">/folders/new</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">268</span>        <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/login</span><span class="delimiter">&quot;</span></span>)</span>
+<span class="linenum">269</span>      <span class="keyword">end</span>
+<span class="linenum">270</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_13" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_13" class="passed">show action</dt>
+  </dl>
+</div>
+<div id="div_group_14" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_14" class="passed">logged in</dt>
+    <script type="text/javascript">makeRed('div_group_14');</script>
+    <script type="text/javascript">makeRed('example_group_14');</script>
+    <script type="text/javascript">moveProgressBar('65.7');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">displays a single folder</span>
+      <span class="duration">0.29389s</span>
+      <div class="failure" id="failure_20">
+        <div class="message"><pre>  Failure/Error: folder = Folder.create(:name =&gt; &quot;Storage&quot;, :user_id =&gt; user.id)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:278:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:278:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">276</span>
+<span class="linenum">277</span>        user = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">278</span>        folder = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Storage</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user.id)</span>
+<span class="linenum">279</span>
+<span class="linenum">280</span>        visit <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_15" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_15" class="passed">logged out</dt>
+    <script type="text/javascript">makeRed('div_group_15');</script>
+    <script type="text/javascript">makeRed('example_group_15');</script>
+    <script type="text/javascript">moveProgressBar('68.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user view a folder</span>
+      <span class="duration">0.37571s</span>
+      <div class="failure" id="failure_21">
+        <div class="message"><pre>  Failure/Error: folder = Folder.create(:name =&gt; &quot;Storage&quot;, :user_id =&gt; user.id)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:297:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:297:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">295</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let a user view a folder</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">296</span>        user = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">297</span>        folder = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Storage</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user.id)</span>
+<span class="linenum">298</span>        get <span class="string"><span class="delimiter">&quot;</span><span class="content">/folders/</span><span class="inline"><span class="inline-delimiter">#{</span>folder.id<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span> <span class="comment">## MAKE THIS A SLUG FOR THE FOLDER NAME</span>
+<span class="linenum">299</span>        <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/login</span><span class="delimiter">&quot;</span></span>)</code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_16" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_16" class="passed">edit action</dt>
+  </dl>
+</div>
+<div id="div_group_17" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_17" class="passed">logged in</dt>
+    <script type="text/javascript">makeRed('div_group_17');</script>
+    <script type="text/javascript">makeRed('example_group_17');</script>
+    <script type="text/javascript">moveProgressBar('71.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">lets a user view folder edit form if he or she is logged in</span>
+      <span class="duration">0.25570s</span>
+      <div class="failure" id="failure_22">
+        <div class="message"><pre>  Failure/Error: folder = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; user.id)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:308:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:308:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">306</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">lets a user view folder edit form if he or she is logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">307</span>        user = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">308</span>        folder = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user.id)</span>
+<span class="linenum">309</span>
+<span class="linenum">310</span>        visit <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('74.2');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user edit a folder her or she did not create</span>
+      <span class="duration">0.19545s</span>
+      <div class="failure" id="failure_23">
+        <div class="message"><pre>  Failure/Error: folder1 = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; user1.id)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:322:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:322:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">320</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let a user edit a folder her or she did not create</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">321</span>        user1 = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">322</span>        folder1 = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user1.id)</span>
+<span class="linenum">323</span>
+<span class="linenum">324</span>        user2 = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">goldylocks33</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">goldy_locks@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">bears</span><span class="delimiter">&quot;</span></span>)</code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('77.1');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">lets a user edit his or her own folder if logged in</span>
+      <span class="duration">0.32701s</span>
+      <div class="failure" id="failure_24">
+        <div class="message"><pre>  Failure/Error: folder = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; 1)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:338:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:338:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">336</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">lets a user edit his or her own folder if logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">337</span>        user = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">338</span>        folder = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; <span class="integer">1</span>)</span>
+<span class="linenum">339</span>        visit <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('80.0');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user edit a folder name with a blank name</span>
+      <span class="duration">0.48840s</span>
+      <div class="failure" id="failure_25">
+        <div class="message"><pre>  Failure/Error: folder = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; 1)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:356:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:356:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">354</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let a user edit a folder name with a blank name</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">355</span>        user = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">356</span>        folder = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; <span class="integer">1</span>)</span>
+<span class="linenum">357</span>        visit <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_18" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_18" class="passed">logged out</dt>
+    <script type="text/javascript">makeRed('div_group_18');</script>
+    <script type="text/javascript">makeRed('example_group_18');</script>
+    <script type="text/javascript">moveProgressBar('82.8');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not load -- instead redirects to login</span>
+      <span class="duration">0.23539s</span>
+      <div class="failure" id="failure_26">
+        <div class="message"><pre>  Failure/Error: expect(last_response.location).to include(&quot;/login&quot;)
+    expected nil to include &quot;/login&quot;, but it does not respond to `include?`
+  # ./spec/controllers/application_controller_spec.rb:375:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:375:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">373</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not load -- instead redirects to login</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">374</span>        get <span class="string"><span class="delimiter">'</span><span class="content">/folders/1/edit</span><span class="delimiter">'</span></span>
+<span class="offending"><span class="linenum">375</span>        <span class="keyword">expect</span>(last_response.location).to include(<span class="string"><span class="delimiter">&quot;</span><span class="content">/login</span><span class="delimiter">&quot;</span></span>)</span>
+<span class="linenum">376</span>      <span class="keyword">end</span>
+<span class="linenum">377</span>    <span class="keyword">end</span></code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_19" class="example_group passed">
+  <dl style="margin-left: 15px;">
+  <dt id="example_group_19" class="passed">delete action</dt>
+  </dl>
+</div>
+<div id="div_group_20" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_20" class="passed">logged in</dt>
+    <script type="text/javascript">makeRed('div_group_20');</script>
+    <script type="text/javascript">makeRed('example_group_20');</script>
+    <script type="text/javascript">moveProgressBar('85.7');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">lets a user delete their own folder if they are logged in</span>
+      <span class="duration">0.33298s</span>
+      <div class="failure" id="failure_27">
+        <div class="message"><pre>  Failure/Error: folder = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; 1)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:384:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:384:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">382</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">lets a user delete their own folder if they are logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">383</span>        user = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">384</span>        folder = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; <span class="integer">1</span>)</span>
+<span class="linenum">385</span>        visit <span class="string"><span class="delimiter">'</span><span class="content">/login</span><span class="delimiter">'</span></span></code></pre>
+      </div>
+    </dd>
+    <script type="text/javascript">moveProgressBar('88.5');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not let a user delete a folder they did not create</span>
+      <span class="duration">0.26276s</span>
+      <div class="failure" id="failure_28">
+        <div class="message"><pre>  Failure/Error: folder1 = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; user1.id)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:398:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:398:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">396</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not let a user delete a folder they did not create</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="linenum">397</span>        user1 = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">jimmy123</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">silhouette@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">froglets</span><span class="delimiter">&quot;</span></span>)
+<span class="offending"><span class="linenum">398</span>        folder1 = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; user1.id)</span>
+<span class="linenum">399</span>
+<span class="linenum">400</span>        user2 = <span class="constant">User</span>.create(<span class="symbol">:username</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">goldylocks33</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:email</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">goldy_locks@testy.com</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:password</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">bears</span><span class="delimiter">&quot;</span></span>)</code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_21" class="example_group passed">
+  <dl style="margin-left: 30px;">
+  <dt id="example_group_21" class="passed">logged out</dt>
+    <script type="text/javascript">makeRed('div_group_21');</script>
+    <script type="text/javascript">makeRed('example_group_21');</script>
+    <script type="text/javascript">moveProgressBar('91.4');</script>
+    <dd class="example failed">
+      <span class="failed_spec_name">does not load let user delete a folder if not logged in</span>
+      <span class="duration">0.24196s</span>
+      <div class="failure" id="failure_29">
+        <div class="message"><pre>  Failure/Error: folder = Folder.create(:name =&gt; &quot;Donating&quot;, :user_id =&gt; 1)
+
+  NameError:
+    uninitialized constant Folder
+  # ./spec/controllers/application_controller_spec.rb:418:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+        <div class="backtrace"><pre>./spec/controllers/application_controller_spec.rb:418:in `block (4 levels) in &lt;top (required)&gt;&#39;</pre></div>
+    <pre class="ruby"><code><span class="linenum">416</span>    <span class="keyword">context</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">logged out</span><span class="delimiter">&quot;</span></span> <span class="keyword">do</span>
+<span class="linenum">417</span>      <span class="keyword">it</span> <span class="string"><span class="delimiter">'</span><span class="content">does not load let user delete a folder if not logged in</span><span class="delimiter">'</span></span> <span class="keyword">do</span>
+<span class="offending"><span class="linenum">418</span>        folder = <span class="constant">Folder</span>.create(<span class="symbol">:name</span> =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">Donating</span><span class="delimiter">&quot;</span></span>, <span class="symbol">:user_id</span> =&gt; <span class="integer">1</span>)</span>
+<span class="linenum">419</span>        visit <span class="string"><span class="delimiter">'</span><span class="content">/folders/1</span><span class="delimiter">'</span></span>
+<span class="linenum">420</span>        <span class="keyword">expect</span>(page.current_path).to eq(<span class="string"><span class="delimiter">&quot;</span><span class="content">/login</span><span class="delimiter">&quot;</span></span>)</code></pre>
+      </div>
+    </dd>
+  </dl>
+</div>
+<div id="div_group_22" class="example_group passed">
+  <dl style="margin-left: 0px;">
+  <dt id="example_group_22" class="passed">User</dt>
+    <script type="text/javascript">moveProgressBar('94.2');</script>
+    <dd class="example passed"><span class="passed_spec_name">can slug the username</span><span class='duration'>0.36840s</span></dd>
+    <script type="text/javascript">moveProgressBar('97.1');</script>
+    <dd class="example passed"><span class="passed_spec_name">can find a user based on the slug</span><span class='duration'>0.26467s</span></dd>
+    <script type="text/javascript">moveProgressBar('100.0');</script>
+    <dd class="example passed"><span class="passed_spec_name">has a secure password</span><span class='duration'>0.66871s</span></dd>
+  </dl>
+</div>
+<script type="text/javascript">document.getElementById('duration').innerHTML = "Finished in <strong>13.17826 seconds</strong>";</script>
+<script type="text/javascript">document.getElementById('totals').innerHTML = "35 examples, 29 failures";</script>
 </div>
 </div>
 </body>

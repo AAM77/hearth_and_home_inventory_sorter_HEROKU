@@ -18,6 +18,20 @@
 
         <%= yield %>
 
+        <br>
+
+        <!-- ADD THIS FEATURE INTO THE MENU -->
+
+        <% if logged_in? %>
+            <form action="/logout">
+              <button type="submit">Log Out</button>
+            </form>
+        <% else %>
+            <form action="/login">
+              <button type="submit">Login</button>
+            </form>
+        <% end %>
+
       <footer class="branding">
         <small>&copy; 2018 <strong>Hearth and Home: Inventory Sorter</strong></small>
       </footer>
