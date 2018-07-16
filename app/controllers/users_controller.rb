@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+
   get "/signup" do
     erb :"users/create_user"
   end
@@ -16,10 +17,11 @@ class UsersController < ApplicationController
   end
 
   get "/login" do
-    if !logged_in?
-      erb :"users/login_user"
+    if logged_in?
+      @user = current_user
+      redirect :"#{@user.slug}"
     else
-      redirect :"/users/#{current_user.slug}"
+      erb :"users/login_user"
     end
   end
 
@@ -29,25 +31,24 @@ class UsersController < ApplicationController
 
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect "users/#{@user.slug}"
+      redirect "#{@user.slug}"
     else
       redirect "/signup"
     end
   end
 
   get "/logout" do
-    if !logged_in?
-      redirect "/"
-    else
+    if logged_in?
       session.clear
       redirect "/login"
+    else
+      redirect "/"
     end
   end
 
-  get "/users/:slug" do
-    @folders = current_user.folders
-    erb :"folders/folder_index"
+  get "/:slug" do
+    @user = current_user
+    erb :"users/show_user"
   end
-
 
 end
