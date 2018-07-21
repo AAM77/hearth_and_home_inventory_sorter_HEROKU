@@ -1,1 +1,22 @@
-# Account Details
+<form action="/<%= @user.slug %>/delete" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+</form>
+
+  <label for="first name">First Name: </label>
+  <p><%= @user.first_name %></p> <br>
+  <br>
+
+  <label for="last name">Last Name: </label>
+  <p><%= @user.last_name %></p> <br>
+  <br>
+
+  <label for="telephone">Telephone </label>
+  <p><%= @user.telephone %></p> <br>
+  <br>
+
+  <label for="email">Email: </label>
+  <p><%= @user.email %></p> <br>
+  <br>
+
+
+  <a href="/<%= @user.slug %>/edit" >Edit My Info</a>

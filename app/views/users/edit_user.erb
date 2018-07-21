@@ -1,0 +1,34 @@
+<form action="/<%= @user.slug %>/edit" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+
+  <label for="first name">First Name: </label>
+  <input type="text" name="first_name" placeholder="First Name">
+  <br>
+
+  <label for="last name">Last Name: </label>
+  <input type="text" name="last_name" placeholder="Last Name">
+  <br>
+
+  <label for="telephone">Telephone </label>
+  <input type="text" name="telephone" placeholder="Telephone">
+  <br>
+
+  <label for="email">Email: </label>
+  <input type="email" name="email" placeholder="Email">
+  <br>
+
+  <label for="old password">Old Password: </label>
+  <input type="password" name="old_password" placeholder="Old Password">
+  <br>
+
+  <label for="new password">New Password: </label>
+  <input type="password" name="new_password" placeholder="New Password">
+  <br>
+
+  <label for="confirm password">Confirm Password: </label>
+  <input type="password" name="confirm_password" placeholder="Confirm Password">
+  <br>
+
+  <button type="submit">Update My Info</button>
+
+</form>
