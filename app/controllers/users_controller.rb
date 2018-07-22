@@ -73,7 +73,7 @@ class UsersController < ApplicationController
         @user.telephone = params[:telephone] if params[:telephone] != ""
         @user.email = params[:email] if params[:email] != ""
         @user.save!(validate: false)
-        redirect "/#{@user.slug}/account_details"
+        redirect "/#{@user.slug}/user_info"
       else
         if params[:old_password] == @user.password && params[:new_password] == params[:confirm_password]
           @user.password = params[:new_password]
@@ -84,7 +84,7 @@ class UsersController < ApplicationController
       end
 
       #if @user.save
-      #  redirect "/#{@user.slug}/account_details"
+      #  redirect "/#{@user.slug}/user_info"
       #else
       #  redirect "/#{@user.slug}/edit"
       #end
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
     end
   end
 
-  get "/:slug/account_details" do
+  get "/:slug/user_info" do
     if logged_in?
       @user = current_user
       erb :"users/user_info"
@@ -112,9 +112,9 @@ class UsersController < ApplicationController
 
   delete "/:slug/delete" do
     if logged_in?
-      @user = current_user
-      if @user.user_id == current_user.id
-        @user.delete
+      @user = User.find_by_slug(params[:slug])
+      if @user.id == current_user.id
+        @user.destroy
         redirect "/"
       else
         redirect "/#{@user.slug}"

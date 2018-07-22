@@ -15,8 +15,20 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="menu">
-        <a href="/">Home</a> <a href="/">Folders</a> <a href="/">Categories</a> <a href="/">Items</a> <a href="/">Account</a>
+      <div class="navbar">
+        <nav>
+          <% if logged_in? %>
+              <a href="/">Home</a>
+              <a href="/<%= current_user.slug %>/folders">Folders</a>
+              <a href="/<%= current_user.slug %>/categories">Categories</a>
+              <a href="/<%= current_user.slug %>/items">Items</a>
+              <a href="/<%= current_user.slug %>/user_info">Account</a>
+              <a href="/logout">Log out</a>
+          <% else %>
+              <a href="/">Home</a>
+              <a href="/login">Log in</a>
+          <% end %>
+        </nav>
       </div>
       <br>
 
@@ -26,15 +38,7 @@
 
         <!-- FIGURE OUT: HOW TO ADD THIS FEATURE INTO THE MENU -->
 
-        <% if logged_in? %>
-            <form action="/logout">
-              <button type="submit">Log Out</button>
-            </form>
-        <% else %>
-            <form action="/login">
-              <button type="submit">Login</button>
-            </form>
-        <% end %>
+
 
       <footer class="branding">
         <small>&copy; 2018 <strong>Hearth and Home: Inventory Sorter</strong></small>
