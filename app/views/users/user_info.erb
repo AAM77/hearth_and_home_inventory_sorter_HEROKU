@@ -1,6 +1,3 @@
-<form action="/<%= @user.slug %>/delete" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete">
-</form>
 
   <label for="first name">First Name: </label>
   <p><%= @user.first_name %></p> <br>
@@ -20,3 +17,8 @@
 
 
   <a href="/<%= @user.slug %>/edit" >Edit My Info</a>
+
+  <form action="/<%= @user.slug %>/delete" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <button type="submit">Delete Account</button>
+  </form>

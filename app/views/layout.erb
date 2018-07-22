@@ -16,14 +16,15 @@
   <body>
     <div class="wrapper">
       <div class="menu">
-        <a href="/">Home</a> <a href="/">Home</a> 
+        <a href="/">Home</a> <a href="/">Folders</a> <a href="/">Categories</a> <a href="/">Items</a> <a href="/">Account</a>
       </div>
+      <br>
 
         <%= yield %>
 
         <br>
 
-        <!-- ADD THIS FEATURE INTO THE MENU -->
+        <!-- FIGURE OUT: HOW TO ADD THIS FEATURE INTO THE MENU -->
 
         <% if logged_in? %>
             <form action="/logout">

@@ -5,7 +5,7 @@ class CreateUsersTable < ActiveRecord::Migration
       t.string :last_name
       t.string :username
       t.string :email
-      t.integer :telephone
+      t.string :telephone
       t.string :password_digest
     end
   end

@@ -1,4 +1,4 @@
-<form action="/<%= @user.slug %>/edit" method="POST">
+<form action="/<%= current_user.slug %>/edit" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
   <label for="first name">First Name: </label>
@@ -10,7 +10,8 @@
   <br>
 
   <label for="telephone">Telephone </label>
-  <input type="text" name="telephone" placeholder="Telephone">
+  <input type="tel" name="telephone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+
   <br>
 
   <label for="email">Email: </label>

@@ -2,7 +2,11 @@ class UsersController < ApplicationController
 
 
   get "/signup" do
-    erb :"users/create_user"
+    if logged_in?
+      redirect "/#{current_user.slug}"
+    else
+      erb :"users/create_user"
+    end
   end
 
   post "/signup" do
@@ -14,7 +18,7 @@ class UsersController < ApplicationController
     else
       @user = User.new(username: params[:username], email: params[:email], password: params[:password])
       @user.initial_folders
-      @user.save
+      @user.save!
       session[:user_id] = @user.id
       redirect "/folders"
     end
@@ -59,23 +63,31 @@ class UsersController < ApplicationController
   end
 
   patch "/:slug/edit" do
+
     if logged_in?
       @user = current_user
-      @user.first_name = params[:first_name]
-      @user.last_name = params[:last_name]
-      @user.telephone = params[:telephone]
-      @user.email = params[:email]
 
-      #@user.password:
-      if params[:old_password] == @user.password && params[:new_password] == params[:confirm_password]
-        @user.password = params[:new_password]
-      end
-
-      if @user.save
-        redirect "/#{@user.slug}/user_info"
+      if params[:old_password] == ""
+        @user.first_name = params[:first_name] if params[:first_name] != ""
+        @user.last_name = params[:last_name] if params[:last_name] != ""
+        @user.telephone = params[:telephone] if params[:telephone] != ""
+        @user.email = params[:email] if params[:email] != ""
+        @user.save!(validate: false)
+        redirect "/#{@user.slug}/account_details"
       else
-        redirect "/#{@user.slug}/edit"
+        if params[:old_password] == @user.password && params[:new_password] == params[:confirm_password]
+          @user.password = params[:new_password]
+        else
+          redirect "/#{@user.slug}/edit"
+        end
+
       end
+
+      #if @user.save
+      #  redirect "/#{@user.slug}/account_details"
+      #else
+      #  redirect "/#{@user.slug}/edit"
+      #end
 
     else
       redirect "/login"
