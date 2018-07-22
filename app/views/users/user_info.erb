@@ -14,9 +14,11 @@
   <label for="email">Email: </label>
   <p><%= @user.email %></p> <br>
   <br>
-
+  <br>
 
   <a href="/<%= @user.slug %>/edit" >Edit My Info</a>
+
+  <br>
 
   <form action="/<%= @user.slug %>/delete" method="POST">
     <input id="hidden" type="hidden" name="_method" value="delete">

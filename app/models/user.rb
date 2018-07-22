@@ -60,6 +60,9 @@ class User < ActiveRecord::Base
     all_folders.include?(record.downcase)
   end
 
+  def self.find_by_folder(record)
+    self.where({ name: record, user_id: current_user.id })
+  end
 
 
 end

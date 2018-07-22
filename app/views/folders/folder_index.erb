@@ -1,5 +1,16 @@
 <% @folders.each do |folder| %>
-<a href="/folders/<%= folder.slug %>/items"><%= folder.name %></a><br>
+<a href="/folders/<%= folder.slug %>/items"><%= folder.name %></a>
+
+<form action="/folders/<%= folder.slug %>/delete" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <button type="submit">Delete Folder</button>
+</form>
+
+<form action="/folders/<%= folder.slug %>/edit" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <button type="submit">Edit</button>
+</form><br>
+
 <% end %>
 
 <br>
