@@ -1,6 +1,7 @@
 require 'pry'
 
 class FoldersController < ApplicationController
+  # ADD FUNCTIONALITY: !! Deleting an item from a specific folder should delete it only from that folder !! #
 
   ###################################
   # Displays the User's folders     #

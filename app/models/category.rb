@@ -6,16 +6,15 @@ class Category < ActiveRecord::Base
     self.name.gsub(" ", "-")
   end
 
-  def self.find_by_slug(slug)
-    self.all.find {|s| s.slug == slug}
+  def self.find_by_category_slug(slug, user_id)
+    self.all.find {|s| s.slug == slug && s.user_id == user_id}
   end
 
-  def self.all_categories
-    categories = self.all.collect { |category| category.name.downcase }
-  end
-
-  def self.find_by_case(record)
-    self.all_categories.include?(record.downcase)
+  #######################################################
+  # Test to see if the input category name already exists #
+  #######################################################
+  def self.find_by_category_name(record, user_id)
+    self.where("lower(name) = ? AND user_id = ?", record.downcase, user_id)
   end
 
 end
