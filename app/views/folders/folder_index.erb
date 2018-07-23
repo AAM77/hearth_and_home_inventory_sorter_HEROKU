@@ -6,8 +6,7 @@
   <button type="submit">Delete Folder</button>
 </form>
 
-<form action="/folders/<%= folder.slug %>/edit" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="patch">
+<form action="/folders/<%= folder.slug %>/edit">
   <button type="submit">Edit</button>
 </form><br>
 

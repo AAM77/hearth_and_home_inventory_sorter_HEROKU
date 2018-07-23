@@ -1,3 +1,5 @@
+require 'pry'
+
 class FoldersController < ApplicationController
 
   ###################################
@@ -5,7 +7,7 @@ class FoldersController < ApplicationController
   ###################################
   get "/:slug/folders" do
     if logged_in?
-      @folders = current_user.folders
+      @folders = Folder.where(user_id: current_user.id)
       erb :"folders/folder_index"
     else
       redirect "/"
@@ -34,9 +36,9 @@ class FoldersController < ApplicationController
         redirect "/folders/new"
       else
         @user = current_user
-        @folder = current_user.find_by_folder(params[:name])
+        @folder = Folder.find_by_folder(params[:name], current_user.id)
 
-        if @folder
+        if !@folder.empty?
           redirect "/folders/new"
         else
           @folder = Folder.new(name: params[:name])
@@ -56,17 +58,10 @@ class FoldersController < ApplicationController
   #################################
   get "/folders/:slug/edit" do
     if logged_in?
-      @folder = Folder.all.find_by_slug(params[:slug])
+      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
 
-      if @folder.user_id == current_user.id
-        if current_user.find_by_folder(params[:name])
-          redirect "/folders/#{@folder.slug}/edit"
-        else
-          @folder.name = params[:name] if params[:name] != ""
-          @folder.user_id = current_user.id
-          @folder.save
-          redirect "/#{current_user.slug}/folders"
-        end
+      if @folder
+        erb :"folders/edit_folder"
       else
         redirect "/#{current_user.slug}/folders"
       end
@@ -76,12 +71,15 @@ class FoldersController < ApplicationController
     end
   end
 
-  post "/folders/:slug/edit" do
+  patch "/folders/:slug/edit" do
     if logged_in?
-      @folder = Folder.all.find_by_slug(params[:slug])
 
-      if @folder.user_id == current_user.id
-        if current_user.find_by_folder(params[:name])
+      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
+
+      if @folder
+        #binding.pry
+
+        if Folder.find_by_folder_name(params[:name], current_user.id)
           redirect "/folders/#{@folder.slug}/edit"
         else
           @folder.name = params[:name] if params[:name] != ""
@@ -104,7 +102,7 @@ class FoldersController < ApplicationController
   ####################################
   get "/folders/:slug/items" do
     if logged_in?
-      @folder = current_user.folders.find_by_slug(params[:slug])
+      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
       erb :"folders/show_folder"
       # lists the items in alphabetical order
     else

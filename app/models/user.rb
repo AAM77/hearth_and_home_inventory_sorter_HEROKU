@@ -31,9 +31,9 @@ class User < ActiveRecord::Base
   #################################################
   # Test to see if the input email already exists #
   #################################################
-  def self.all_emails
-    emails = self.all.collect { |user| user.email.downcase }
-  end
+  #def self.all_emails
+  #  emails = self.all.collect { |user| user.email.downcase }
+  #end
 
   def self.find_by_email(record)
     self.where('lower(email) = ?', record.downcase).first
@@ -52,17 +52,17 @@ class User < ActiveRecord::Base
   #######################################################
   # Test to see if the input folder name already exists #
   #######################################################
-  def all_folders
-    folders = self.folders.collect { |folder| folder.name.downcase }
-  end
+  #def all_folders
+  #  folders = self.folders.collect { |folder| folder.name.downcase }
+  #end
 
-  def find_by_folder(record)
-    all_folders.include?(record.downcase)
-  end
+  #def find_by_folder(record)
+  #  all_folders.include?(record.downcase)
+  #end
 
-  def self.find_by_folder(record)
-    self.where({ name: record, user_id: current_user.id })
-  end
+  #def self.find_by_folder(record)
+  #  self.where("lower(name) = ? AND user_id = ?", record.downcase, current_user.id)
+  #end
 
 
 end
