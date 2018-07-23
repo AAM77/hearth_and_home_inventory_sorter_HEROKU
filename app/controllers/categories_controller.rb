@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   #Essentially similar routes to the "FoldersController"
-
-  # ADD FUNCTIONALITY: !! Deleting an item from a specific categroy should delete it only from that categroy !! #
+  # -- NOT DRY -- ADDRESS THIS -- 
+  # ADD FUNCTIONALITY: !! Deleting an item from a specific category should delete it only from that category !! #
 
   ###################################
   # Displays the User's categories     #
@@ -9,27 +9,27 @@ class CategoriesController < ApplicationController
   get "/:slug/categories" do
     if logged_in?
       @categories = Category.where(user_id: current_user.id)
-      erb :"categories/categroy_index"
+      erb :"categories/category_index"
     else
       redirect "/"
     end
   end
 
   ###################################
-  # Displays the create_categroy form #
+  # Displays the create_category form #
   ###################################
   get "/categories/new" do
     if logged_in?
       @user = current_user
-      erb :"categories/create_categroy"
+      erb :"categories/create_category"
     else
       redirect "/login"
     end
   end
 
   ############################################################
-  # Using the input params during categroy creation to check   #
-  # if a categroy with the same name exists before creating it #
+  # Using the input params during category creation to check   #
+  # if a category with the same name exists before creating it #
   ############################################################
   post "/:slug/categories" do
     if logged_in?
@@ -37,16 +37,16 @@ class CategoriesController < ApplicationController
         redirect "/categories/new"
       else
         @user = current_user
-        @categroy = Category.find_by_categroy_name(params[:name], current_user.id)
+        @category = Category.find_by_category_name(params[:name], current_user.id)
 
-        if !@categroy.empty?
+        if !@category.empty?
           redirect "/categories/new"
         else
-          @categroy = Category.new(name: params[:name])
-          @categroy.user_id = current_user.id
-          @categroy.save
+          @category = Category.new(name: params[:name])
+          @category.user_id = current_user.id
+          @category.save
           redirect "/#{current_user.slug}/categories"
-        end #@categroy
+        end #@category
       end #params[:name] empty
 
     else
@@ -55,14 +55,14 @@ class CategoriesController < ApplicationController
   end
 
   #################################
-  # Displays the edit_categroy form #
+  # Displays the edit_category form #
   #################################
   get "/categories/:slug/edit" do
     if logged_in?
-      @categroy = Category.find_by_categroy_slug(params[:slug], current_user.id)
+      @category = Category.find_by_category_slug(params[:slug], current_user.id)
 
-      if @categroy
-        erb :"categories/edit_categroy"
+      if @category
+        erb :"categories/edit_category"
       else
         redirect "/#{current_user.slug}/categories"
       end
@@ -75,25 +75,25 @@ class CategoriesController < ApplicationController
   patch "/categories/:slug/edit" do
     if logged_in?
 
-      @categroy = Category.find_by_categroy_slug(params[:slug], current_user.id)
-      categroy_exists = !Category.find_by_categroy_name(params[:name], current_user.id).empty?
+      @category = Category.find_by_category_slug(params[:slug], current_user.id)
+      category_exists = !Category.find_by_category_name(params[:name], current_user.id).empty?
 
-      if @categroy
+      if @category
         #binding.pry
 
-        if categroy_exists
+        if category_exists
           #binding.pry
-          redirect "/categories/#{@categroy.slug}/edit"
+          redirect "/categories/#{@category.slug}/edit"
         else
-          @categroy.name = params[:name] if params[:name] != ""
-          @categroy.user_id = current_user.id
-          @categroy.save
+          @category.name = params[:name] if params[:name] != ""
+          @category.user_id = current_user.id
+          @category.save
           redirect "/#{current_user.slug}/categories"
-        end # @categroy.
+        end # @category.
 
       else
         redirect "/#{current_user.slug}/categories"
-      end #categroy.user_id == current_user.id
+      end #category.user_id == current_user.id
 
     else
       redirect "/login"
@@ -101,12 +101,12 @@ class CategoriesController < ApplicationController
   end
 
   ####################################
-  # Show route for a specific categroy #
+  # Show route for a specific category #
   ####################################
   get "/categories/:slug/items" do
     if logged_in?
-      @categroy = Category.find_by_categroy_slug(params[:slug], current_user.id)
-      erb :"categories/show_categroy"
+      @category = Category.find_by_category_slug(params[:slug], current_user.id)
+      erb :"categories/show_category"
       # lists the items in alphabetical order
     else
       redirect "/login"
@@ -115,18 +115,18 @@ class CategoriesController < ApplicationController
 
 
   ######################################
-  # Delete route for a specific categroy #
+  # Delete route for a specific category #
   ######################################
 
   delete "/categories/:slug/delete" do
     if logged_in?
-      @categroy = Category.find_by_categroy_slug(params[:slug], current_user.id)
-      if @categroy.user_id == current_user.id
-        @categroy.destroy
-        flash[:success_message] = "Successfully deleted categroy: [ #{@categroy.name} ]"
+      @category = Category.find_by_category_slug(params[:slug], current_user.id)
+      if @category.user_id == current_user.id
+        @category.destroy
+        flash[:success_message] = "Successfully deleted category: [ #{@category.name} ]"
         redirect "/#{current_user.slug}/categories"
       else
-        flash[:fail_message] = "ERROR: Could not delete categroy: [ #{@categroy.name} ]."
+        flash[:fail_message] = "ERROR: Could not delete category: [ #{@category.name} ]."
         redirect "/#{current_user.slug}"
       end
     else
