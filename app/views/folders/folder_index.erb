@@ -1,3 +1,18 @@
+<% if flash[:success_message] %>
+  <br>
+  <div id="flash_message" style="text-align: center; border: 2px solid green;">
+    <%= flash[:success_message] %>
+  </div>
+  <br>
+
+<% elsif flash[:fail_message] %>
+  <br>
+  <div id="flash_message" style="border: 2px solid red;">
+    <%= flash[:fail_message] %>
+  </div>
+  <br>
+<% end %>
+
 <% @folders.each do |folder| %>
 <a href="/folders/<%= folder.slug %>/items"><%= folder.name %></a>
 

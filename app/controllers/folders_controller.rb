@@ -36,7 +36,7 @@ class FoldersController < ApplicationController
         redirect "/folders/new"
       else
         @user = current_user
-        @folder = Folder.find_by_folder(params[:name], current_user.id)
+        @folder = Folder.find_by_folder_name(params[:name], current_user.id)
 
         if !@folder.empty?
           redirect "/folders/new"
@@ -75,11 +75,13 @@ class FoldersController < ApplicationController
     if logged_in?
 
       @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
+      folder_exists = !Folder.find_by_folder_name(params[:name], current_user.id).empty?
 
       if @folder
         #binding.pry
 
-        if Folder.find_by_folder_name(params[:name], current_user.id)
+        if folder_exists
+          #binding.pry
           redirect "/folders/#{@folder.slug}/edit"
         else
           @folder.name = params[:name] if params[:name] != ""
@@ -109,6 +111,29 @@ class FoldersController < ApplicationController
       redirect "/login"
     end
   end
+
+
+  ######################################
+  # Delete route for a specific folder #
+  ######################################
+
+  delete "/folders/:slug/delete" do
+    if logged_in?
+      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
+      if @folder.user_id == current_user.id
+        @folder.destroy
+        flash[:success_message] = "Successfully deleted folder: [ #{@folder.name} ]"
+        redirect "/#{current_user.slug}/folders"
+      else
+        flash[:fail_message] = "ERROR: Could not delete folder: [ #{@folder.name} ]."
+        redirect "/#{current_user.slug}"
+      end
+    else
+      redirect "/login"
+    end
+  end
+
+
 
 
 
