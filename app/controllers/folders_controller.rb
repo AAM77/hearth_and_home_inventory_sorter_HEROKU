@@ -18,7 +18,7 @@ class FoldersController < ApplicationController
   ###################################
   # Displays the create_folder form #
   ###################################
-  get "/folders/new" do
+  get "/:slug/folders/new" do
     if logged_in?
       @user = current_user
       erb :"folders/create_folder"
@@ -31,28 +31,27 @@ class FoldersController < ApplicationController
   # Using the input params during folder creation to check   #
   # if a folder with the same name exists before creating it #
   ############################################################
-  post "/:slug/folders" do
+  post "/:slug/folders/new" do
     if logged_in?
       if params[:name] == ""
         redirect "/folders/new"
       else
-        @user = current_user
-        @folder = Folder.find_by_folder_name(params[:name], current_user.id)
-
-        if !@folder.empty?
-          redirect "/folders/new"
-        else
-          @folder = Folder.new(name: params[:name])
-          @folder.user_id = current_user.id
-          @folder.save
-          redirect "/#{current_user.slug}/folders"
-        end #@folder
+        @folder = current_user.create_folder(params[:name]) {redirect "/current_user.slug/folders/new"}## new addition - testing it out
+        redirect "/#{current_user.slug}/folders"
       end #params[:name] empty
 
     else
       redirect "/login"
     end #loggend_in?
   end
+
+
+            #@folder = Folder.new(name: params[:name])
+            #@folder.user_id = current_user.id
+            #current_user.folders << @folder
+            #current_user.save(validate: false)
+            #@folder.save
+
 
   #################################
   # Displays the edit_folder form #

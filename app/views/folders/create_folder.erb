@@ -1,4 +1,7 @@
-<form action="/<%= @user.slug %>/folders" method="POST">
-  <input type="text" name="name" placeholder="Folder Name"><br>
+<form action="/<%= @user.slug %>/folders/new" method="POST">
+  <p>Folder Name: <input type="text" name="name" placeholder="Folder Name"><p> <br>
+
+  <label>Choose from an existing item</label>
+  <
   <button type="submit">Create New Folder</button>
 </form>

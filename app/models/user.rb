@@ -6,12 +6,21 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def initial_folders
-    folder1 = Folder.new(name: "Home")
-    folder2 = Folder.new(name: "Work")
-    folder1.save
-    folder2.save
-    self.folders << folder1
-    self.folders << folder2
+    self.folders << Folder.create(name: "Home")
+    self.folders << Folder.create(name: "Work")
+  end
+
+  ####################################################
+  # Test to see if the input username already exists #
+  ####################################################
+  def create_folder(folder_name)
+    folder = self.folders.where("lower(name) = ?", folder_name.downcase)
+
+    if !folder.empty?
+      yield
+    else
+      self.folders << Folder.create(name: folder_name)
+    end
   end
 
 
