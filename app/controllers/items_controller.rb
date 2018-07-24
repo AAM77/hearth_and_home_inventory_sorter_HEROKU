@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   get "/:slug/items" do
     if logged_in?
-      @items = Item.all
+      @items = Item.where(user_id: current_user.id)
       erb :"items/item_index"
     else
       redirect "/login"
