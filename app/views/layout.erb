@@ -24,17 +24,94 @@
 
       <div class="row">
         <div class="col-sm-12">
-          <% if logged_in? %>
-              <a href="/">Home</a>
-              <a href="/<%= current_user.slug %>/folders">Folders</a>
-              <a href="/<%= current_user.slug %>/categories">Categories</a>
-              <a href="/<%= current_user.slug %>/items">Items</a>
-              <a href="/<%= current_user.slug %>/user_info">Account</a>
-              <a href="/logout">Log out</a>
-          <% else %>
-              <a href="/">Home</a>
-              <a href="/login">Log in</a>
-          <% end %>
+
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">Hearth & Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <% if logged_in? %>
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+
+
+                  <!-- Dropdown for Categories -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Categories
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/<%= current_user.slug %>/categories">All Categories</a>
+                      <div class="dropdown-divider"></div>
+                      <% current_user.categories.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |folder| %>
+                        <a class="dropdown-item" href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
+                      <% end %>
+                    </div>
+                  </li>
+
+                  <!-- Dropdown for Folders -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Folders
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/<%= current_user.slug %>/folders">All Folders</a>
+                      <div class="dropdown-divider"></div>
+                      <% current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |folder| %>
+                        <a class="dropdown-item" href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>
+                      <% end %>
+                    </div>
+                  </li>
+
+                  <!-- Items -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/<%= current_user.slug %>/items">Items</a>
+                  </li>
+
+                  <!-- Account -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/<%= current_user.slug %>/user_info">Account</a>
+                  </li>
+
+
+
+
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                  </li>
+
+
+                </ul>
+
+              <% else %>
+
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Sign Up or Log In
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/signup">Sign Up</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="/login">Log In</a>
+                    </div>
+                  </li>
+                </ul>
+              <% end %>
+
+            </div>
+          </nav>
         </div>
       </div>
 
