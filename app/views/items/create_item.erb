@@ -1,0 +1,13 @@
+<form action="/<%= current_user.slug %>/items/new" method="POST">
+  <label for="item_name">Item Name: </label>
+  <input type="text" name="name" placeholder="Item Name">
+  <br>
+  <label for="item_description">Item Description: </label><br>
+  <textarea name="description" rows="10" cols="30">Describe your item (e.g. color, shape, condition, etc.)</textarea>
+  <br>
+  <label for="item_cost">Item Cost: </label>
+  <input type="number" name="cost" placeholder="Cost">
+  <br>
+  <br>
+  <button type="submit">Create Item</button>
+</form>

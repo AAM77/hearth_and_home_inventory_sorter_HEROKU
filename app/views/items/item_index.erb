@@ -1,0 +1,8 @@
+<% @items.each do |item| %>
+  <a href="items/<%= item.slug %>/show"><%= item.name %></a><br>
+<% end %>
+
+<br>
+<br>
+
+<a href="/items/new">Add Item</a>

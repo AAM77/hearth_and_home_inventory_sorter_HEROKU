@@ -8,8 +8,7 @@ class ItemsController < ApplicationController
     end
   end
 
-
-  get "/items/new" do
+  get "/:slug/items/new" do
     if logged_in?
       erb :"items/create_item"
     else
@@ -17,25 +16,28 @@ class ItemsController < ApplicationController
     end
   end
 
-  post "/items/new" do
+  post "/:slug/items/new" do
     if logged_in?
-      # -- DO THIS --
+      @item = Item.new(name: params[:name], description: params[:description], cost: params[:cost])
+      @item.user_id = current_user.id
+      @item.save
+      redirect "/#{current_user.slug}/items"
     else
       redirect "/login"
     end
   end
 
-  get "/items/:slug/edit" do
+  get "/:user_slug/items/:item_slug/edit" do
     if logged_in?
-      # -- RETRIEVE THIS ERB --
+      erb :"items/edit_item"
     else
       redirect "/login"
     end
   end
 
-  post "/items/:slug/edit" do
+  post "/:user_slug/items/:item_slug/edit" do
     if logged_in?
-      # -- DO THIS --
+      redirect "/#{current_user.slug}/items"
     else
       redirect "/login"
     end
