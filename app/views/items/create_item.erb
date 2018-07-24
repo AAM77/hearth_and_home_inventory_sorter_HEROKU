@@ -1,21 +1,35 @@
 <form action="/<%= current_user.slug %>/items/new" method="POST">
   <label for="item_name">Item Name: </label>
-  <input type="text" name="name" placeholder="Item Name">
+  <input type="text" name="item[name]" placeholder="Item Name">
   <br>
+  <br>
+
   <label for="item_description">Item Description: </label><br>
   <textarea name="description" rows="10" cols="30">Describe your item (e.g. color, shape, condition, etc.)</textarea>
   <br>
+  <br>
+
   <label for="item_cost">Item Cost: </label>
   <input type="number" name="cost" placeholder="Cost">
   <br>
+  <br>
 
   <label>Select Folders to Add the Item to</label>
-  <select name="item[folders][]" size="4" multiple>
-    <%= @folders.each do |folder| %>
+  <br>
+  <select name="item[folder_ids][]" size="4" multiple>
+    <% @folders.each do |folder| %>
       <option value="<%= folder.id %>"><%= folder.name %></option>
     <% end %>
   </select>
   <br>
   <br>
+
+  <label>And/or Create a New Folder</label>
+  <input type="text" name="folder[name]" placeholder="Folder Name">
+  <br>
+
+  <br>
+  <br>
+
   <button type="submit">Create Item</button>
 </form>

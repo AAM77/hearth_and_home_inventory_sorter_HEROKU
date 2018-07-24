@@ -3,6 +3,10 @@
 
   <br>
 
+  <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
+    <button type="submit">Edit</button>
+  </form>
+
   <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
     <input id="hidden" type="hidden" name="_method" value="delete">
     <button type="submit">Delete Item</button>

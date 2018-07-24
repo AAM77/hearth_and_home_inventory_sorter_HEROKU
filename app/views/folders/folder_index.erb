@@ -14,7 +14,7 @@
 <% end %>
 
 <% @folders.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |folder| %>
-<a href="/<%= current_user.slug %>/folders/<%= folder.slug %>/items"><%= folder.name %></a>
+<a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>
 
 <form action="/<%= current_user.slug %>/folders/<%= folder.slug %>/edit">
   <button type="submit">Edit</button>

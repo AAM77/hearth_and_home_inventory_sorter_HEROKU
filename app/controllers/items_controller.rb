@@ -10,6 +10,7 @@ class ItemsController < ApplicationController
 
   get "/:slug/items/new" do
     if logged_in?
+      @folders = current_user.folders
       erb :"items/create_item"
     else
       redirect "/login"
@@ -18,29 +19,71 @@ class ItemsController < ApplicationController
 
   post "/:slug/items/new" do
     if logged_in?
-      @item = Item.new(name: params[:name], description: params[:description], cost: params[:cost])
-      @item.user_id = current_user.id
-      @item.save
-      redirect "/#{current_user.slug}/items"
+      if params[:item][:name].empty?
+        redirect "/#{current_user.slug}/items/new"
+
+      else
+        @item = Item.create(name: params[:item][:name], description: params[:description], cost: params[:cost])
+
+        if params[:item][:folder_ids]
+          params[:item][:folder_ids].each do |folder_id|
+            folder = current_user.folders.find_by_id(folder_id)
+            folder.items << @item
+            current_user.items << @item
+          end
+        end
+
+        if !params[:folder][:name].empty?
+          new_folder = Folder.create(name: params[:folder][:name])
+          new_folder.items << @item
+          current_user.folders << new_folder
+        end
+
+        @item.save
+        redirect "/#{current_user.slug}/items"
+      end
+
     else
       redirect "/login"
     end
   end
 
-  get "/:user_slug/items/:item_slug/edit" do
+  get "/:user_slug/items/:item_slug/:item_id/edit" do
     if logged_in?
+      @item = current_user.items.find_by_id(params[:item_id])
+      @folders = current_user.folders
       erb :"items/edit_item"
     else
       redirect "/login"
     end
   end
 
-  post "/:user_slug/items/:item_slug/edit" do
+  patch "/:user_slug/items/:item_slug/:item_id/edit" do
     if logged_in?
-      redirect "/#{current_user.slug}/items"
+
+      @item = current_user.items.find_by_id(params[:item_id])
+
+      if params[:item][:folder_ids]
+        params[:item][:folder_ids].each do |folder_id|
+          folder = current_user.folders.find_by_id(folder_id)
+          folder.items << @item
+          current_user.items << @item
+        end
+      end
+
+      if !params[:folder][:name].empty?
+        new_folder = Folder.create(name: params[:folder][:name])
+        new_folder.items << @item
+        current_user.folders << new_folder
+      end
+
+        @item.save
+        redirect "/#{current_user.slug}/items"
+
     else
       redirect "/login"
     end
+
   end
 
   delete "/:user_slug/items/:item_slug/:item_id/delete" do

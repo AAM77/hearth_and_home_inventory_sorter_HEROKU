@@ -1,15 +1,32 @@
-<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/edit" method="POST">
+<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/edit" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
   <label for="item_name">Item Name: </label>
-  <input type="text" name="name" placeholder="Item Name">
+  <input type="text" name="item[name]" placeholder="<%= @item.name %>">
   <br>
+
   <label for="item_description">Item Description: </label><br>
-  <textarea name="description" rows="10" cols="30">Describe your item (e.g. color, shape, condition, etc.)</textarea>
+  <textarea name="description" rows="10" cols="30"><%= @item.description %></textarea>
   <br>
+
   <label for="item_cost">Item Cost: </label>
-  <input type="number" name="cost" placeholder="Cost">
+  <input type="number" name="cost" placeholder="<%= @item.cost %>">
+  <br>
+
+  <label>Select Folders to Add the Item to</label>
+  <select name="item[folder_ids][]" size="4" multiple>
+    <% @folders.each do |folder| %>
+      <option value="<%= folder.id %>" <%= 'selected' if @item.folders.include?(folder) %> ><%= folder.name %></option>
+    <% end %>
+  </select>
+  <br>
+
+  <label>And/or Create a New Folder</label>
+  <input type="text" name="folder[name]" placeholder="Folder Name">
+  <br>
+
   <br>
   <br>
+
   <button type="submit">Update Item Info</button>
 </form>

@@ -8,7 +8,7 @@ class FoldersController < ApplicationController
   ###################################
   get "/:slug/folders" do
     if logged_in?
-      @folders = Folder.where(user_id: current_user.id)
+      @folders = current_user.folders
       erb :"folders/folder_index"
     else
       redirect "/"
@@ -69,9 +69,6 @@ class FoldersController < ApplicationController
   #end
 
   #redirect "/#{current_user.slug}/folders"
-
-
-
 
 
   #################################
@@ -140,7 +137,7 @@ class FoldersController < ApplicationController
   ####################################
   # Show route for a specific folder #
   ####################################
-  get "/:user_slug/folders/:folder_slug/items" do
+  get "/:user_slug/folders/:folder_slug" do
     if logged_in?
       @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
       erb :"folders/show_folder"
