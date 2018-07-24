@@ -10,6 +10,10 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "secret"
   end
 
+  #######################
+  # Retrieves Home page #
+  #######################
+
   get "/" do
     if !logged_in?
       erb :welcome_index
@@ -18,7 +22,12 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+
   helpers do
+
+    #################################
+    # Checks if a user is logged in #
+    #################################
     def current_user
       @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end

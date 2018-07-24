@@ -1,27 +1,29 @@
 /*////////// NAVBAR STYLES //////////*/
-a .dropdown-item .dropdown-section {
-  color: ##53a5f6;
-  font-weight: 700;
-  background-color: #53a5f6;
-}
 
-.dropdown-section:hover, .dropdown-section:focus {
-  color: #53a5f6;
-  text-decoration: none;
-  background-color: #53a5f6;
-}
-
-.dropdown-section.active, .dropdown-section:active {
-  color: #fff;
-  text-decoration: none;
-  background-color: #53a5f6;
-}
-
-.dropdown-section.disabled, .dropdown-section:disabled {
-  color: #53a5f6;
-  background-color: transparent;
 
 /*////////// LAYOUT STYLES //////////*/
+
+
+body {
+  background-color: #53A5F6;
+}
+
+.container {
+  background-color: #fff;
+}
+
+.divider-line {
+  width: 1100px;
+  height:0;
+  border-top: 2px solid #FF7500;
+  font-size:0;"
+  margin-top: 200px;
+}
+
 .row {
   margin-bottom: 20px;
+}
+
+.row.page-links {
+  margin-top: 50px;
 }

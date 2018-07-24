@@ -14,25 +14,31 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!-- Custom Style -->
-    <link rel="stylesheet" href="css/custom_style.css"
+    <link rel="stylesheet" href="/css/custom_style.css">
 
     <title>Hearth and Home: Inventory Sorter</title>
 
   </head>
+
   <body>
     <div class="container">
 
       <div class="row">
         <div class="col-sm-12">
 
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="/">Hearth & Home</a>
+          <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/">
+              <img src="" width="30" height="30" class="d-inline-block align-top" alt="">| Hearth & Home |
+            </a>
+            
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
               <% if logged_in? %>
+
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
@@ -78,25 +84,20 @@
                   <li class="nav-item">
                     <a class="nav-link" href="/<%= current_user.slug %>/user_info">Account</a>
                   </li>
+                </ul>
 
-
-
-
-
+                <ul class="navbar-nav">
                   <li class="nav-item">
                     <a class="nav-link" href="/logout">Log Out</a>
                   </li>
-
-
                 </ul>
 
               <% else %>
-
                 <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                  </li>
+                </ul>
 
+
+                <ul class="navbar-nav">
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Sign Up or Log In
@@ -118,12 +119,49 @@
 
 
         <br>
-
-
           <%= yield %>
-
+        <br>
 
         <br>
+        <div class="divider-line" > - </div>
+        <br>
+        <br>
+
+
+      <div class="row page-links">
+        <div class="col-sm-4">
+          <h3>Contact</h3>
+
+          <address>
+            <p>Address:</p>
+            Hearth & Home<br>
+            P.O. Box 77777<br>
+            Brooklyn, NY 11223
+          </address>
+          <p>
+            Email: <a href="mailto:info@heartandhome.com">info@hearthandhome.com</a><br>
+            Phone: +1 786 742 6789
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <h3>Links</h3>
+          <p>
+            <a href="#" target="_blank">Something Useful 1</a><br>
+            <a href="#" target="_blank">Something Useful 2</a><br>
+            <a href="#" target="_blank">Something Useful 3</a>
+          </p>
+        </div>
+
+        <div class="col-sm-4">
+          <h3>Follow</h3>
+          <p>
+            <a href="#" target="_blank">YouTube</a><br>
+            <a href="#" target="_blank">Facebook</a><br>
+            <a href="#" target="_blank">Twitter</a>
+          </p>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col-sm-12">

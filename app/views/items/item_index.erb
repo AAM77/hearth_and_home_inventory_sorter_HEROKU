@@ -1,22 +1,27 @@
-<% @items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
-  <a href="items/<%= item.slug %>/<%= item.id %>/show"><%= item.name %></a>
+<div>
+
+  <% @items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+  <div>
+    <a href="items/<%= item.slug %>/<%= item.id %>/show"><%= item.name %></a>
+
+    <br>
+
+    <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
+      <button type="submit">Edit</button>
+    </form>
+
+    <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
+      <input id="hidden" type="hidden" name="_method" value="delete">
+      <button type="submit">Delete Item</button>
+    </form>
+  </div>
+
+    <br>
+
+  <% end %>
 
   <br>
-
-  <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-    <button type="submit">Edit</button>
-  </form>
-
-  <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
-    <input id="hidden" type="hidden" name="_method" value="delete">
-    <button type="submit">Delete Item</button>
-  </form>
-
   <br>
 
-<% end %>
-
-<br>
-<br>
-
-<a href="/<%= current_user.slug %>/items/new">Add Item</a>
+  <a href="/<%= current_user.slug %>/items/new">Add Item</a>
+</div>
