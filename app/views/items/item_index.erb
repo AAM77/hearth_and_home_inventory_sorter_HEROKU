@@ -1,8 +1,12 @@
 <% @items.each do |item| %>
-  <a href="items/<%= item.slug %>/show"><%= item.name %></a><br>
+  <a href="items/<%= item.slug %>/<%= item.id %>/show"><%= item.name %></a><br>
+  <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <button type="submit">Delete Item</button>
+  </form>
 <% end %>
 
 <br>
 <br>
 
-<a href="/items/new">Add Item</a>
+<a href="/<%= current_user.slug %>/items/new">Add Item</a>

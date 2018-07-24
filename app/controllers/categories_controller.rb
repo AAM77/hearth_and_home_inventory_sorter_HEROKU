@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   #Essentially similar routes to the "FoldersController"
-  # -- NOT DRY -- ADDRESS THIS -- 
+  # -- NOT DRY -- ADDRESS THIS --
   # ADD FUNCTIONALITY: !! Deleting an item from a specific category should delete it only from that category !! #
 
   ###################################

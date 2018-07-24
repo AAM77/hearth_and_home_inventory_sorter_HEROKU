@@ -1,0 +1,16 @@
+
+  <label for="item_name">Item Name: </label>
+  <p><%= @item.name %></p>
+  <br>
+  <label for="item_description">Item Description: </label><br>
+  <p><%= @item.description %></p>
+  <br>
+  <label for="item_cost">Item Cost: </label>
+  <p><%= @item.cost %></p>
+  <br>
+  <br>
+
+  <form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/delete" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <button type="submit">Delete Item</button>
+  </form>

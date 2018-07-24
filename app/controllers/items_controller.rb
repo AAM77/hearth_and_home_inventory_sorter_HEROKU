@@ -43,17 +43,21 @@ class ItemsController < ApplicationController
     end
   end
 
-  delete "/items/:slug/edit" do
+  delete "/:user_slug/items/:item_slug/:item_id/delete" do
     if logged_in?
-      # -- DELETE THIS ITEM --
+      @item = Item.find_by_item_slug(params[:item_slug], params[:item_id].to_i, current_user.id)
+      @item.destroy
+      redirect "/#{current_user.slug}/items"
     else
       redirect "/login"
     end
   end
 
-  get "/items/:slug/show" do
+  get "/:user_slug/items/:item_slug/:item_id/show" do
     if logged_in?
-      # -- SHOW THIS ITEM --
+      @item = Item.find_by_item_slug(params[:item_slug], params[:item_id].to_i, current_user.id)
+      #binding.pry
+      erb :"items/show_item"
     else
       redirect "/login"
     end

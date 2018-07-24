@@ -11,15 +11,15 @@ class Item < ActiveRecord::Base
     self.name.gsub(" ", "-")
   end
 
-  def self.find_by_folder_slug(slug, user_id)
-    self.all.find {|s| s.slug == slug && s.user_id == user_id}
+  def self.find_by_item_slug(slug, item_id, user_id)
+    self.all.find {|s| s.slug == slug && s.id == item_id && s.user_id == user_id}
   end
 
   #######################################################
   # Test to see if the input folder name already exists #
   #######################################################
-  def self.find_by_folder_name(record, user_id)
-    self.where("lower(name) = ? AND user_id = ?", record.downcase, user_id)
+  def self.find_by_item_name(record, user_id)
+    self.where("lower(name) = ? AND id = ? AND user_id = ?", record.downcase, id, user_id)
   end
 
 end
