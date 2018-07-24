@@ -1,7 +1,22 @@
-<form action="/<%= @user.slug %>/folders/new" method="POST">
-  <p>Folder Name: <input type="text" name="name" placeholder="Folder Name"><p> <br>
+<form action="/<%= current_user.slug %>/folders/new" method="POST">
+  <p>Folder Name: <input type="text" name="folder[name]" placeholder="Folder Name"><p> <br>
 
-  <label>Choose from an existing item</label>
-  <
+  <label>Choose from an existing item: </label><br>
+  <select name="folder[item_ids][]" size="4" multiple>
+    <% @items.each do |item| %>
+      <option value="<%= item.id %>"><%= item.name %></option>
+    <% end %>
+  </select>
+
+  <br>
+  <br>
+
+  <label>and/or, create a new item:</label>
+  <input type="text" name="item[name]">
+
+  <br>
+  <br>
+
+
   <button type="submit">Create New Folder</button>
 </form>

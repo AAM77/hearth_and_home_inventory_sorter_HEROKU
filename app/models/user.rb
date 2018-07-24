@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def create_item(item_name)
+    self.items << Item.create(name: item_name)
+  end
+
 
   ###########################################################
   # Convert the Username to a slug that can be searched for #

@@ -20,7 +20,7 @@ class FoldersController < ApplicationController
   ###################################
   get "/:slug/folders/new" do
     if logged_in?
-      @user = current_user
+      @items = current_user.items
       erb :"folders/create_folder"
     else
       redirect "/login"
@@ -33,12 +33,27 @@ class FoldersController < ApplicationController
   ############################################################
   post "/:slug/folders/new" do
     if logged_in?
-      if params[:name] == ""
-        redirect "/folders/new"
+      if params[:folder][:name] == ""
+        redirect "/#{current_user.slug}/folders/new"
       else
-        @folder = current_user.create_folder(params[:name]) {redirect "/current_user.slug/folders/new"}## new addition - testing it out
+        @folder = Folder.create(name: params[:folder][:name])
+
+        if params[:folder][:item_ids]
+          params[:folder][:item_ids].each do |item_id|
+            @folder.items << current_user.items.find_by_id(item_id)
+          end
+        end
+
+        if !params[:item][:name].empty?
+          new_item = Item.create(name: params[:item][:name])
+          @folder.items << new_item
+          current_user.items << new_item
+        end
+        
+        current_user.folders << @folder
+        #binding.pry
         redirect "/#{current_user.slug}/folders"
-      end #params[:name] empty
+      end #params[:folder][:name] empty
 
     else
       redirect "/login"
@@ -46,11 +61,17 @@ class FoldersController < ApplicationController
   end
 
 
-            #@folder = Folder.new(name: params[:name])
-            #@folder.user_id = current_user.id
-            #current_user.folders << @folder
-            #current_user.save(validate: false)
-            #@folder.save
+  #@folder = current_user.create_folder(params[:folder][:name]) {redirect "/current_user.slug/folders/new"}
+
+  #if !params[:item][:name].empty?
+  #  #current_user.folders.where("lower(name) = ?", params[:folder][:name].downcase)
+  #  @folder.items << Item.create(name: params[:item][:name])
+  #end
+
+  #redirect "/#{current_user.slug}/folders"
+
+
+
 
 
   #################################

@@ -10,11 +10,6 @@ USERS << annie = User.create(username: "Annie", email: "annie@test.com", passwor
 USERS << huang = User.create(username: "Huang", email: "huangtest.com", password: "123abchuang")
 USERS << motunui = User.create(username: "Motunui", email: "motunui@test.com", password: "123abcmotunui")
 
-USERS.each {|user| user.initial_folders}
-USERS.each {|user| user.create_folder("Triple A") if user.username.downcase.include?("a")}
-USERS.each {|user| user.create_folder("J Room") if user.username.downcase.include?("j")}
-
-
 joe.create_folder("Dorm")
 john.create_folder("Dining Room")
 karim.create_folder("Bedroom")
@@ -23,3 +18,15 @@ karen.create_folder("Misc")
 annie.create_folder("Bedroom")
 huang.create_folder("Gym")
 motunui.create_folder("My Island")
+
+USERS.each {|user| user.initial_folders}
+USERS.each {|user| user.create_folder("Triple A") if user.username.downcase.include?("a")}
+USERS.each {|user| user.create_folder("J Room") if user.username.downcase.include?("j")}
+USERS.each {|user| user.create_item("Pen")}
+USERS.each {|user| user.create_item("Ball")}
+USERS.each {|user| user.create_item("Laptop")}
+USERS.each {|user| user.create_item("TV")}
+USERS.each {|user| user.create_item("Apples")}
+USERS.each {|user| user.create_item("Bookshelf")}
+USERS.each {|user| user.create_item("Essential Oil Diffuser")}
+USERS.each {|user| user.create_item("Air Purifier")}
