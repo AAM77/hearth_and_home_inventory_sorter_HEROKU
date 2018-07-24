@@ -1,8 +1,27 @@
 <h3> Please choose a new name for your folder </h3>
 
-<form action="/folders/<%= @folder.slug %>/edit" method="POST">
+<form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/edit" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
+
+
   <label for="folder_name">Folder Name: </label>
-  <input type="text" name="name" placeholder="<%=@folder.name%>">
+  <input type="text" name="name" placeholder="<%=@folder.name%>"><br>
+
+  <label>Choose from an existing item: </label><br>
+  <select name="folder[item_ids][]" size="4" multiple>
+    <% @items.each do |item| %>
+      <option value="<%= item.id %>" <%= 'selected' if @folder.items.include?(item) %>><%= item.name %></option>
+    <% end %>
+  </select>
+
+  <br>
+  <br>
+
+  <label>and/or, create a new item:</label>
+  <input type="text" name="item[name]">
+
+  <br>
+  <br>
+
   <button type="submit">Save Changes</button>
 </form>

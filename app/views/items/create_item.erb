@@ -8,6 +8,14 @@
   <label for="item_cost">Item Cost: </label>
   <input type="number" name="cost" placeholder="Cost">
   <br>
+
+  <label>Select Folders to Add the Item to</label>
+  <select name="item[folders][]" size="4" multiple>
+    <%= @folders.each do |folder| %>
+      <option value="<%= folder.id %>"><%= folder.name %></option>
+    <% end %>
+  </select>
+  <br>
   <br>
   <button type="submit">Create Item</button>
 </form>

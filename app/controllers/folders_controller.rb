@@ -49,7 +49,7 @@ class FoldersController < ApplicationController
           @folder.items << new_item
           current_user.items << new_item
         end
-        
+
         current_user.folders << @folder
         #binding.pry
         redirect "/#{current_user.slug}/folders"
@@ -77,9 +77,10 @@ class FoldersController < ApplicationController
   #################################
   # Displays the edit_folder form #
   #################################
-  get "/folders/:slug/edit" do
+  get "/:user_slug/folders/:folder_slug/edit" do
     if logged_in?
-      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
+      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+      @items = current_user.items
 
       if @folder
         erb :"folders/edit_folder"
@@ -92,21 +93,37 @@ class FoldersController < ApplicationController
     end
   end
 
-  patch "/folders/:slug/edit" do
+  patch "/:user_slug/folders/:folder_slug/edit" do
     if logged_in?
 
-      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
-      folder_exists = !Folder.find_by_folder_name(params[:name], current_user.id).empty?
+      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+      folder = Folder.find_by_folder_name(params[:name], current_user.id)
 
       if @folder
         #binding.pry
 
-        if folder_exists
+        if !folder.empty?
           #binding.pry
-          redirect "/folders/#{@folder.slug}/edit"
+          redirect "/#{current_user.slug}/folders/#{@folder.slug}/edit"
         else
           @folder.name = params[:name] if params[:name] != ""
-          @folder.user_id = current_user.id
+
+          if params[:folder][:item_ids]
+            @folder.items.clear
+            params[:folder][:item_ids].each do |item_id|
+              #item = @folder.items.where(id: item_id)
+              #if !@folder.items.include?(item)
+              @folder.items << current_user.items.find_by_id(item_id)
+              #end
+            end
+          end
+
+          if !params[:item][:name].empty?
+            new_item = Item.create(name: params[:item][:name])
+            @folder.items << new_item
+            current_user.items << new_item
+          end
+
           @folder.save
           redirect "/#{current_user.slug}/folders"
         end # @folder.
@@ -123,9 +140,9 @@ class FoldersController < ApplicationController
   ####################################
   # Show route for a specific folder #
   ####################################
-  get "/folders/:slug/items" do
+  get "/:user_slug/folders/:folder_slug/items" do
     if logged_in?
-      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
+      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
       erb :"folders/show_folder"
       # lists the items in alphabetical order
     else
@@ -138,9 +155,9 @@ class FoldersController < ApplicationController
   # Delete route for a specific folder #
   ######################################
 
-  delete "/folders/:slug/delete" do
+  delete "/:user_slug/folders/:folder_slug/delete" do
     if logged_in?
-      @folder = Folder.find_by_folder_slug(params[:slug], current_user.id)
+      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
       if @folder.user_id == current_user.id
         @folder.destroy
         flash[:success_message] = "Successfully deleted folder: [ #{@folder.name} ]"

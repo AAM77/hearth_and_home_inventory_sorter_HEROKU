@@ -13,7 +13,7 @@
   <br>
 <% end %>
 
-<% @categories.each do |category| %>
+<% @categories.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |category| %>
 <a href="/categories/<%= category.slug %>/items"><%= category.name %></a>
 
 <form action="/categories/<%= category.slug %>/delete" method="POST">

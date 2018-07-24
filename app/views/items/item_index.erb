@@ -1,9 +1,15 @@
-<% @items.each do |item| %>
-  <a href="items/<%= item.slug %>/<%= item.id %>/show"><%= item.name %></a><br>
+<% @items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+  <a href="items/<%= item.slug %>/<%= item.id %>/show"><%= item.name %></a>
+
+  <br>
+
   <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
     <input id="hidden" type="hidden" name="_method" value="delete">
     <button type="submit">Delete Item</button>
   </form>
+
+  <br>
+
 <% end %>
 
 <br>
