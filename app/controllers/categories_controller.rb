@@ -1,5 +1,3 @@
-categoriesrequire 'pry'
-
 class CategoriesController < ApplicationController
 
   # There must be a way to refactor this and folders so as to not repeat myself.
@@ -18,7 +16,7 @@ class CategoriesController < ApplicationController
   ###################################
   get "/:slug/categories" do
     if logged_in?
-      @categories = current_user.categories
+      @categories = current_user.categories.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"categories/category_index"
     else
       redirect "/"
@@ -50,7 +48,7 @@ class CategoriesController < ApplicationController
         @category = Category.create(name: params[:category][:name])
 
         add_existing_items_to_the_category(params[:category][:item_ids], @category)
-        add_the_newly_created_item_to_the_category(params[:item][:name], @category)
+        add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
         current_user.categories << @category
 
         redirect "/#{current_user.slug}/categories"
@@ -100,7 +98,7 @@ class CategoriesController < ApplicationController
         else
           @category.name = params[:category][:name] if params[:category][:name] != ""
           add_existing_items_to_the_category(params[:category][:item_ids], @category) { @category.items.clear }
-          add_the_newly_created_item_to_the_category(params[:item][:name], @category)
+          add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
 
           @category.save
           redirect "/#{current_user.slug}/categories"

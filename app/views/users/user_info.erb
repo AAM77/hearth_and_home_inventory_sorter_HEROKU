@@ -1,26 +1,36 @@
 
-  <label for="first name">First Name: </label>
-  <p><%= @user.first_name %></p> <br>
-  <br>
-
-  <label for="last name">Last Name: </label>
-  <p><%= @user.last_name %></p> <br>
-  <br>
-
-  <label for="telephone">Telephone </label>
-  <p><%= @user.telephone %></p> <br>
-  <br>
-
-  <label for="email">Email: </label>
-  <p><%= @user.email %></p> <br>
+  <label for="first name">First Name:
+  <p><%= @user.first_name %></p>
+  </label>
   <br>
   <br>
 
-  <a href="/<%= @user.slug %>/edit" >Edit My Info</a>
+  <label for="last name">Last Name:
+  <p><%= @user.last_name %></p>
+  </label>
+  <br>
+  <br>
+
+  <label for="telephone">Telephone:
+  <p><%= @user.telephone %></p>
+  </label>
+  <br>
+  <br>
+
+  <label for="email">Email:
+  <p><%= @user.email %></p>
+  </label>
+  <br>
+  <br>
+  <br>
+
+  <form action="/<%= @user.slug %>/edit">
+    <button class="content_button"  type="submit">Edit My Info</button>
+  </form>
 
   <br>
 
   <form action="/<%= @user.slug %>/delete" method="POST">
     <input id="hidden" type="hidden" name="_method" value="delete">
-    <button type="submit">Delete Account</button>
+    <button class="content_button"  type="submit">Delete Account</button>
   </form>

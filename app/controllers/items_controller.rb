@@ -6,8 +6,6 @@ class ItemsController < ApplicationController
   ###################################################
 
 
-
-
   #################################
   # Retrieves the item index page #
   #################################
@@ -29,7 +27,7 @@ class ItemsController < ApplicationController
 
   get "/:slug/items/new" do
     if logged_in?
-      @folders = current_user.folders
+      @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"items/create_item"
     else
       redirect "/login"
@@ -43,9 +41,6 @@ class ItemsController < ApplicationController
   # And associations                            #
   ###############################################
 
-  # WHAT A MONSTER
-  # REFACTOR
-
   post "/:slug/items/new" do
     if logged_in?
       if params[:item][:name].empty?
@@ -54,8 +49,8 @@ class ItemsController < ApplicationController
       else
         @item = Item.create(name: params[:item][:name], description: params[:description], cost: params[:cost])
 
-        add_existing_items_to_the_folder(params[:item][:folder_ids], @item)
-        add_the_newly_created_item_to_the_folder(@folder.name, params[:folder][:name])
+        add_the_item_to_existing_folders(params[:item][:folder_ids], @item)
+        add_the_item_to_the_newly_created_folder(@folder.name, params[:folder][:name])
 
         @item.save
         redirect "/#{current_user.slug}/items"
@@ -73,7 +68,7 @@ class ItemsController < ApplicationController
   get "/:user_slug/items/:item_slug/:item_id/edit" do
     if logged_in?
       @item = current_user.items.find_by_id(params[:item_id])
-      @folders = current_user.folders
+      @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"items/edit_item"
     else
       redirect "/login"
@@ -85,16 +80,13 @@ class ItemsController < ApplicationController
   # Edits the item's details and folders #
   ########################################
 
-  # Looks like a MONSTER
-  # REFACTOR
-
   patch "/:user_slug/items/:item_slug/:item_id/edit" do
     if logged_in?
 
       @item = current_user.items.find_by_id(params[:item_id])
 
-      add_existing_items_to_the_folder(params[:item][:folder_ids], @item)
-      add_the_newly_created_item_to_the_folder(@folder.name, params[:folder][:name])
+      add_the_item_to_existing_folders(params[:item][:folder_ids], @item)
+      add_the_item_to_the_newly_created_folder(@folder.name, params[:folder][:name])
 
         @item.save
         redirect "/#{current_user.slug}/items"
@@ -135,7 +127,6 @@ class ItemsController < ApplicationController
     end
   end
 
-
   #######################################
   # Retrieves the item's show/info page #
   #######################################
@@ -143,7 +134,6 @@ class ItemsController < ApplicationController
   get "/:user_slug/items/:item_slug/:item_id" do
     if logged_in?
       @item = Item.find_by_item_slug(params[:item_slug], params[:item_id].to_i, current_user.id)
-      #binding.pry
       erb :"items/show_item"
     else
       redirect "/login"

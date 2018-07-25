@@ -1,14 +1,16 @@
+<h3> [ -- <%= @folder.name %> -- ] contains the Following Items: </h3>
+
 <% @folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
 
     <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a><br>
 
     <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-      <button type="submit">Edit</button>
+      <button class="content_button"  type="submit">Edit Item</button>
     </form>
 
     <form action="/<%= current_user.slug %>/folders/<%= @folder.id %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
       <input id="hidden" type="hidden" name="_method" value="delete">
-      <button type="submit">Delete Item</button>
+      <button class="content_button"  type="submit">Delete Item</button>
     </form>
 
     <br>
@@ -16,10 +18,16 @@
 <% end %>
 
 <form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/edit">
-  <button type="submit">Edit</button>
+  <button class="form_button"  type="submit">Edit Folder</button>
 </form>
 
 <form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/delete" method="POST">
   <input id="hidden" type="hidden" name="_method" value="delete">
-  <button type="submit">Delete Folder</button>
+  <button class="form_button"  type="submit">Delete Folder</button>
 </form>
+
+
+  <br>
+  <br>
+
+  <a href="javascript:history.back()">Go Back</a>

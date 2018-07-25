@@ -1,6 +1,17 @@
+<h3> Create a New Item </h3>
+<br>
+
+
 <form action="/<%= current_user.slug %>/items/new" method="POST">
-  <label for="item_name">Item Name: </label>
+  <label for="item_name">Item Name:
   <input type="text" name="item[name]" placeholder="Item Name">
+  </label>
+  <br>
+  <br>
+
+  <label for="item_cost">Item Cost:
+  <input type="number" name="cost" placeholder="Cost">
+  </label>
   <br>
   <br>
 
@@ -9,10 +20,6 @@
   <br>
   <br>
 
-  <label for="item_cost">Item Cost: </label>
-  <input type="number" name="cost" placeholder="Cost">
-  <br>
-  <br>
 
   <label>Select Folders to Add the Item to</label>
   <br>
@@ -24,12 +31,20 @@
   <br>
   <br>
 
-  <label>And/or Create a New Folder</label>
+  <h5>Add to new folder</h5>
+  <label>Folder Name:
   <input type="text" name="folder[name]" placeholder="Folder Name">
+  </label>
   <br>
 
   <br>
   <br>
 
-  <button type="submit">Create Item</button>
+  <button class="content_button"  type="submit">Create Item</button>
 </form>
+
+
+  <br>
+  <br>
+
+  <a href="javascript:history.back()">Go Back</a>

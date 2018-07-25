@@ -7,7 +7,7 @@
   <br>
   <div class="folder_items">
     <% @folders.each do |folder| %>
-      <h3 class="folder_items">||||| <%= folder.name %> |||||</h3>
+      <h3 class="folder_items">[----------------------------- <%= folder.name %> -----------------------------]</h3>
 
       <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
         <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
@@ -32,12 +32,11 @@
   <!-- ITEMS THAT ARE NO LONGER ASSOCIATED WITH FOLDERS  -->
 
   <h3>Items Not in a Folder</h3>
-
   <br>
+
   <% @items.each do |item| %>
     <% if item.folders.empty? %>
       <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
-      <br>
 
       <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
         <button class="content_button" type="submit">Edit</button>
@@ -47,12 +46,20 @@
         <input id="hidden" type="hidden" name="_method" value="delete">
         <button class="content_button" type="submit">Delete Item</button>
       </form>
+      <br>
     <% end %> <!-- item.folders.empty? -->
-    <br>
   <% end %> <!-- @items.each -->
 
   <br>
+  <br>
+
   <form action="/<%= current_user.slug %>/items/new">
-    <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add Item</a></button>
+    <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
   </form>
+
+
+    <br>
+    <br>
+
+    <a href="javascript:history.back()">Go Back</a>
 </div>

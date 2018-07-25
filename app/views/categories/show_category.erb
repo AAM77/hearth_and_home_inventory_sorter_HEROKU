@@ -3,12 +3,12 @@
     <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a><br>
 
     <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-      <button type="submit">Edit</button>
+      <button class="content_button"  type="submit">Edit Item</button>
     </form>
 
     <form action="/<%= current_user.slug %>/categories/<%= @category.id %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
       <input id="hidden" type="hidden" name="_method" value="delete">
-      <button type="submit">Delete Item</button>
+      <button class="content_button"  type="submit">Delete Item</button>
     </form>
 
     <br>
@@ -16,10 +16,16 @@
 <% end %>
 
 <form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/edit">
-  <button type="submit">Edit</button>
+  <button class="content_button"  type="submit">Edit Category</button>
 </form>
 
 <form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/delete" method="POST">
   <input id="hidden" type="hidden" name="_method" value="delete">
-  <button type="submit">Delete Category</button>
+  <button class="content_button"  type="submit">Delete Category</button>
 </form>
+
+
+  <br>
+  <br>
+
+  <a href="javascript:history.back()">Go Back</a>

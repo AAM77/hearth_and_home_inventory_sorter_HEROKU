@@ -13,16 +13,16 @@
   <br>
 <% end %>
 
-<% @categories.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |category| %>
+<% @categories.each do |category| %>
 <a href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
 
 <form action="/<%= current_user.slug %>/categories/<%= category.slug %>/edit">
-  <button type="submit">Edit</button>
+  <button class="content_button"  type="submit">Edit Category</button>
 </form>
 
 <form action="/<%= current_user.slug %>/categories/<%= category.slug %>/delete" method="POST">
   <input id="hidden" type="hidden" name="_method" value="delete">
-  <button type="submit">Delete Category</button>
+  <button class="content_button"  type="submit">Delete Category</button>
 </form><br>
 
 <% end %>
@@ -32,3 +32,10 @@
 
 <a href="/<%= current_user.slug %>/categories/new">Create New Category</a>
 <br>
+
+
+
+  <br>
+  <br>
+
+<a href="javascript:history.back()">Go Back</a>

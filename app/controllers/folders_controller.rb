@@ -1,5 +1,3 @@
-require 'pry'
-
 class FoldersController < ApplicationController
 
   ###################################################
@@ -14,7 +12,7 @@ class FoldersController < ApplicationController
   ###################################
   get "/:slug/folders" do
     if logged_in?
-      @folders = current_user.folders
+      @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"folders/folder_index"
     else
       redirect "/"
@@ -46,7 +44,7 @@ class FoldersController < ApplicationController
         @folder = Folder.create(name: params[:folder][:name])
 
         add_existing_items_to_the_folder(params[:folder][:item_ids], @folder)
-        add_the_newly_created_item_to_the_folder(params[:item][:name], @folder)
+        add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
         current_user.folders << @folder
 
         redirect "/#{current_user.slug}/folders"
@@ -95,11 +93,12 @@ class FoldersController < ApplicationController
 
         else
           @folder.name = params[:folder][:name] if params[:folder][:name] != ""
+
           add_existing_items_to_the_folder(params[:folder][:item_ids], @folder) { @folder.items.clear }
-          add_the_newly_created_item_to_the_folder(params[:item][:name], @folder)
+          add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
 
           @folder.save
-          redirect "/#{current_user.slug}/folders"
+          redirect "/#{current_user.slug}/folders/#{@folder.slug}"
         end # folder_name_exists?
       end #if @folder
 
@@ -107,6 +106,7 @@ class FoldersController < ApplicationController
       redirect "/login"
     end # if logged_in?
   end # patch
+
 
   ####################################
   # Show route for a specific folder #

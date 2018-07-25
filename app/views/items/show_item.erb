@@ -1,20 +1,29 @@
 
-  <label for="item_name">Item Name: </label>
-  <p><%= @item.name %></p>
+  <label for="item_name">Item Name:
+  <%= @item.name %>
+  </label>
   <br>
+
+  <label for="item_cost">Item Cost:
+  <%= @item.cost %> $ 
+  </label>
+  <br>
+
   <label for="item_description">Item Description: </label><br>
   <p><%= @item.description %></p>
-  <br>
-  <label for="item_cost">Item Cost: </label>
-  <p><%= @item.cost %></p>
   <br>
   <br>
 
   <form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/edit">
-    <button type="submit">Edit</button>
+    <button class="content_button"  type="submit">Edit Item</button>
   </form>
 
   <form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/delete" method="POST">
     <input id="hidden" type="hidden" name="_method" value="delete">
-    <button type="submit">Delete Item</button>
+    <button class="content_button"  type="submit">Delete Item</button>
   </form>
+
+  <br>
+  <br>
+
+  <a href="javascript:history.back()">Go Back</a>

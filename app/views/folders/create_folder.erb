@@ -1,22 +1,51 @@
-<form action="/<%= current_user.slug %>/folders/new" method="POST">
-  <p>Folder Name: <input type="text" name="folder[name]" placeholder="Folder Name"><p> <br>
+<h3> Create a New Folder: </h3>
+<br>
 
-  <label>Choose from an existing item: </label><br>
+<form action="/<%= current_user.slug %>/folders/new" method="POST">
+
+  <label for="folder_name">Folder Name:
+    <input type="text" name="folder[name]" placeholder="Folder Name">
+  </label>
+  <br>
+  <br>
+
+  <label>Add or Remove existing items: </label><br>
   <select name="folder[item_ids][]" size="4" multiple>
     <% @items.each do |item| %>
       <option value="<%= item.id %>"><%= item.name %></option>
     <% end %>
   </select>
+  <p>(hold ctrl [in Windows] or cmd [in MacBooks] to select or deselect any of the above)</p>
 
   <br>
   <br>
 
-  <label>and/or, create a new item:</label>
-  <input type="text" name="item[name]">
+  <h5>Would you like to add a new item as well?</h5>
+  <br>
+
+  <label class="item" for="item_name">Item Name:
+  <input type="text" name="item[name]" placeholder="Item Name">
+  </label>
+  <br>
+
+  <label class="item" for="item_cost">Item Cost:  $
+  <input type="number" name="item[cost]" min="0.00" max="10000.00" step="0.01" placeholder="0.00">
+  </label>
+  <br>
+  <br>
+
+  <label class="item" for="item_description">Item Description: </label><br>
+  <textarea name="item[description]" rows="10" cols="30">Item Description (e.g. shape, color, why it's important, etc.)</textarea>
+  <br>
 
   <br>
   <br>
 
-
-  <button type="submit">Create New Folder</button>
+  <button class="form_button create_button"  type="submit">Create New Folder</button>
 </form>
+
+
+  <br>
+  <br>
+
+  <a href="javascript:history.back()">Go Back</a>

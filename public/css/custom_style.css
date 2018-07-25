@@ -3,6 +3,25 @@
 
 /*////////// LAYOUT STYLES //////////*/
 
+a.btn {
+  background-color: red;
+  color: white;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+a.btn:hover {
+  background-color: #555;
+}
+
+a.btn:active {
+  background-color: black;
+}
+
+a.btn:visited {
+  background-color: #ccc;
+}
 
 body {
   background-color: #53A5F6;
