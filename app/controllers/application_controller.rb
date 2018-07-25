@@ -45,6 +45,11 @@ class ApplicationController < Sinatra::Base
       !!current_user
     end
 
+
+    ######################
+    # ** ITEM HELPERS ** #
+    ######################
+
     ########################################################
     # Adds selected items from the drop down to the folder #
     ########################################################
@@ -70,12 +75,17 @@ class ApplicationController < Sinatra::Base
     end
 
 
-    ###############
-    ###############
-    # Some Repetitiveness here
-    # Could not figure out how to do this without metaprogramming
-    ###############
-    ###############
+    ####  #  #  #  #  # #  #  #  #  #  #  # #  #  #  #  #  #  #  #  ###
+    ##  #  #  #  #  #  # #  #  #  #  #  #  # #  #  #  #  #  #  #  #  ##
+    ##               Some Repetitiveness here                        ##
+    ## Could not figure out how to do this without metaprogramming   ##
+    ##  #  #  #  #  #  # #  #  #  #  #  #  # #  #  #  #  #  #  #  #  ##
+    ####  #  #  #  #  # #  #  #  #  #  #  # #  #  #  #  #  #  #  #  ###
+
+
+    ########################
+    # ** FOLDER HELPERS ** #
+    ########################
 
 
     #################################################################
@@ -103,6 +113,40 @@ class ApplicationController < Sinatra::Base
         new_folder = Folder.create(name: folder_name)
         new_folder.items << new_item
         current_user.folders << new_folder
+      end
+    end
+
+
+
+    ##########################
+    # ** CATEGORY HELPERS ** #
+    ##########################
+
+    #####################################################################
+    # Adds the item to the categoriess selected from the drop down menu #
+    #####################################################################
+    def add_existing_items_to_the_category(category_ids, instance_variable)
+      if category_ids
+        yield if block_given?
+        category_ids.each do |category_id|
+          category = currect_user.categories.find_by_id(category_id)
+          category.items << instance_variable
+          current_user.items << instance_variable
+        end
+      end
+    end
+
+    ################################################
+    # Adds the item to the newly created category  #
+    # if the new category name field is not empty  #
+    ################################################
+    def add_the_newly_created_item_to_the_category(category_name, instance_variable)
+      category_exists = !category_name.empty?
+
+      if category_exists
+        new_categroy = Category.create(name: category_name)
+        new_category.items << new_item
+        current_user.categories << new_categories
       end
     end
 
