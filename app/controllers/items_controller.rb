@@ -84,14 +84,34 @@ class ItemsController < ApplicationController
     else
       redirect "/login"
     end
-
   end
 
+  #############################################
+  # Deletes the item for a user (all folders) #
+  #############################################
   delete "/:user_slug/items/:item_slug/:item_id/delete" do
     if logged_in?
       @item = Item.find_by_item_slug(params[:item_slug], params[:item_id].to_i, current_user.id)
       @item.destroy
       redirect "/#{current_user.slug}/items"
+    else
+      redirect "/login"
+    end
+  end
+
+  ###########################################
+  # Deletes the item from a specific folder #
+  ###########################################
+  delete "/:user_slug/folders/:folder_id/items/:item_slug/:item_id/delete" do
+    if logged_in?
+      @item = current_user.items.find_by_id(params[:item_id])
+      @folder = current_user.folders.find_by_id(params[:folder_id])
+
+      if @item && @folder
+        @item.folders.delete(Folder.find_by_id(params[:folder_id]))
+        @folder.items.delete(Item.find_by_id(params[:item_id]))
+      end
+      redirect "/#{current_user.slug}/folders/#{@folder.slug}"
     else
       redirect "/login"
     end
