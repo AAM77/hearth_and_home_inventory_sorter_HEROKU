@@ -1,4 +1,17 @@
 class ItemsController < ApplicationController
+
+  ###################################################
+  # FOR ALL ROUTES: If the user is not logged in,   #
+  # it redirects to the home, signup, or login page #
+  ###################################################
+
+
+
+
+  #################################
+  # Retrieves the item index page #
+  #################################
+
   get "/:slug/items" do
     if logged_in?
       @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
@@ -9,6 +22,11 @@ class ItemsController < ApplicationController
     end
   end
 
+
+  ####################################
+  # Retrieves the item creation page #
+  ####################################
+
   get "/:slug/items/new" do
     if logged_in?
       @folders = current_user.folders
@@ -17,6 +35,16 @@ class ItemsController < ApplicationController
       redirect "/login"
     end
   end
+
+
+  ###############################################
+  # Uses the information to create a new item   #
+  # And assigns it the respective details       #
+  # And associations                            #
+  ###############################################
+
+  # WHAT A MONSTER
+  # REFACTOR
 
   post "/:slug/items/new" do
     if logged_in?
@@ -49,6 +77,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  #################################
+  # Retrieves the item edit page #
+  #################################
+
   get "/:user_slug/items/:item_slug/:item_id/edit" do
     if logged_in?
       @item = current_user.items.find_by_id(params[:item_id])
@@ -58,6 +90,14 @@ class ItemsController < ApplicationController
       redirect "/login"
     end
   end
+
+
+  ########################################
+  # Edits the item's details and folders #
+  ########################################
+
+  # Looks like a MONSTER
+  # REFACTOR
 
   patch "/:user_slug/items/:item_slug/:item_id/edit" do
     if logged_in?
@@ -117,7 +157,12 @@ class ItemsController < ApplicationController
     end
   end
 
-  get "/:user_slug/items/:item_slug/:item_id/show" do
+
+  #######################################
+  # Retrieves the item's show/info page #
+  #######################################
+
+  get "/:user_slug/items/:item_slug/:item_id" do
     if logged_in?
       @item = Item.find_by_item_slug(params[:item_slug], params[:item_id].to_i, current_user.id)
       #binding.pry
@@ -128,10 +173,4 @@ class ItemsController < ApplicationController
   end
 
 
-  # GET: display items index - deleting an item from here should delete it completely
-  # GET-new: create a new item
-  # POST-new: handle the input from the newly created item
-  # GET-edit: edit the information for an existing item
-  # PATCH-edit: handle the input from the edited information
-  # DELETE: deletes an item
 end

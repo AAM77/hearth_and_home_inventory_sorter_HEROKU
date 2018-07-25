@@ -10,7 +10,7 @@
       <h3 class="folder_items">||||| <%= folder.name %> |||||</h3>
 
       <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
-        <a href="<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/show"> <%= item.name %> </a>
+        <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
         <br>
 
         <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
@@ -36,7 +36,7 @@
   <br>
   <% @items.each do |item| %>
     <% if item.folders.empty? %>
-      <a href="<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/show"> <%= item.name %> </a>
+      <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
       <br>
 
       <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">

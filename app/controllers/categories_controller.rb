@@ -3,6 +3,12 @@ class CategoriesController < ApplicationController
   # -- NOT DRY -- NEED to ADDRESS THIS --
   # ADD FUNCTIONALITY: !! Deleting an item from a specific category should delete it only from that category !! #
 
+
+  ###################################################
+  # FOR ALL ROUTES: If the user is not logged in,   #
+  # it redirects to the home, signup, or login page #
+  ###################################################
+
   ############################
   # Retrieves Category Index #
   ############################
@@ -137,17 +143,5 @@ class CategoriesController < ApplicationController
       redirect "/login"
     end
   end
-
-
-
-
-
-  # I ned a get route for edit.erb
-
-  # I need a post route edit.erb
-
-  # I need a delete route (with a warning message if it contains items)
-
-
 
 end
