@@ -54,19 +54,8 @@ class ItemsController < ApplicationController
       else
         @item = Item.create(name: params[:item][:name], description: params[:description], cost: params[:cost])
 
-        if params[:item][:folder_ids]
-          params[:item][:folder_ids].each do |folder_id|
-            folder = current_user.folders.find_by_id(folder_id)
-            folder.items << @item
-            current_user.items << @item
-          end
-        end
-
-        if !params[:folder][:name].empty?
-          new_folder = Folder.create(name: params[:folder][:name])
-          new_folder.items << @item
-          current_user.folders << new_folder
-        end
+        add_existing_items_to_the_folder(params[:item][:folder_ids], @item)
+        add_the_newly_created_item_to_the_folder(@folder.name, params[:folder][:name])
 
         @item.save
         redirect "/#{current_user.slug}/items"
@@ -104,19 +93,8 @@ class ItemsController < ApplicationController
 
       @item = current_user.items.find_by_id(params[:item_id])
 
-      if params[:item][:folder_ids]
-        params[:item][:folder_ids].each do |folder_id|
-          folder = current_user.folders.find_by_id(folder_id)
-          folder.items << @item
-          current_user.items << @item
-        end
-      end
-
-      if !params[:folder][:name].empty?
-        new_folder = Folder.create(name: params[:folder][:name])
-        new_folder.items << @item
-        current_user.folders << new_folder
-      end
+      add_existing_items_to_the_folder(params[:item][:folder_ids], @item)
+      add_the_newly_created_item_to_the_folder(@folder.name, params[:folder][:name])
 
         @item.save
         redirect "/#{current_user.slug}/items"

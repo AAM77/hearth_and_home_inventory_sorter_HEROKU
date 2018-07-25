@@ -56,18 +56,55 @@ class ApplicationController < Sinatra::Base
         end
       end
     end
-  end #helpers
 
-  ########################################################
-  # Adds the new item to the folder and user's item list #
-  # if the new item name field is not empty              #
-  ########################################################
-  def add_the_newly_created_item_to_the_folder(item_name, instance_variable)
-    if !item_name.empty?
-      new_item = Item.create(name: item_name)
-      instance_variable.items << new_item
-      current_user.items << new_item
+    ########################################################
+    # Adds the new item to the folder and user's item list #
+    # if the new item name field is not empty              #
+    ########################################################
+    def add_the_newly_created_item_to_the_folder(item_name, instance_variable)
+      if !item_name.empty?
+        new_item = Item.create(name: item_name)
+        instance_variable.items << new_item
+        current_user.items << new_item
+      end
     end
-  end
 
+
+    ###############
+    ###############
+    # Some Repetitiveness here
+    # Could not figure out how to do this without metaprogramming
+    ###############
+    ###############
+
+
+    #################################################################
+    # Adds the item to the folders selected from the drop down menu #
+    #################################################################
+    def add_existing_items_to_the_folder(folder_ids, instance_variable)
+      if folder_ids
+        yield if block_given?
+        folder_ids.each do |folder_id|
+          folder = currect_user.folders.find_by_id(folder_id)
+          folder.items << instance_variable
+          current_user.items << instance_variable
+        end
+      end
+    end
+
+    ########################################################
+    # Adds the item to the newly created folder            #
+    # if the new folder name field is not empty            #
+    ########################################################
+    def add_the_newly_created_item_to_the_folder(folder_name, instance_variable)
+      folder_exists = !folder_name.empty?
+
+      if folder_exists
+        new_folder = Folder.create(name: folder_name)
+        new_folder.items << new_item
+        current_user.folders << new_folder
+      end
+    end
+
+  end #helpers
 end

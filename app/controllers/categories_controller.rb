@@ -1,71 +1,72 @@
-class CategoriesController < ApplicationController
-  #Essentially similar routes to the "FoldersController"
-  # -- NOT DRY -- NEED to ADDRESS THIS --
-  # ADD FUNCTIONALITY: !! Deleting an item from a specific category should delete it only from that category !! #
+categoriesrequire 'pry'
 
+class CategorysController < ApplicationController
 
   ###################################################
   # FOR ALL ROUTES: If the user is not logged in,   #
   # it redirects to the home, signup, or login page #
   ###################################################
 
-  ############################
-  # Retrieves Category Index #
-  ############################
+
+
+  ###################################
+  # Displays the User's categories     #
+  ###################################
   get "/:slug/categories" do
     if logged_in?
-      @categories = Category.where(user_id: current_user.id)
+      @categories = current_user.categories
       erb :"categories/category_index"
     else
       redirect "/"
     end
   end
 
-  ##################################
-  # Retrieves Create Category form #
-  ##################################
-  get "/categories/new" do
+  ###################################
+  # Displays the create_category form #
+  ###################################
+  get "/:slug/categories/new" do
     if logged_in?
-      @user = current_user
+      @items = current_user.items
       erb :"categories/create_category"
     else
       redirect "/login"
     end
   end
 
-  ##############################################################
+  ############################################################
   # Using the input params during category creation to check   #
   # if a category with the same name exists before creating it #
-  ##############################################################
-  post "/:slug/categories" do
+  ############################################################
+  post "/:slug/categories/new" do
     if logged_in?
-      if params[:name] == ""
-        redirect "/categories/new"
-      else
-        @user = current_user
-        @category = Category.find_by_category_name(params[:name], current_user.id)
 
-        if !@category.empty?
-          redirect "/categories/new"
-        else
-          @category = Category.new(name: params[:name])
-          @category.user_id = current_user.id
-          @category.save
-          redirect "/#{current_user.slug}/categories"
-        end #@category
-      end #params[:name] empty
+      if params[:category][:name] == ""
+        redirect "/#{current_user.slug}/categories/new"
+      else
+        @category = Category.create(name: params[:category][:name])
+
+        add_existing_items_to_the_category(params[:category][:item_ids], @category)
+        add_the_newly_created_item_to_the_category(params[:item][:name], @category)
+        current_user.categories << @category
+
+        redirect "/#{current_user.slug}/categories"
+      end #params[:category][:name] empty
 
     else
       redirect "/login"
-    end #loggend_in?
+    end #logged_in?
   end
 
-  ####################################
-  # Retrieves the Category Edit Form #
-  ####################################
-  get "/categories/:slug/edit" do
+  ###############################################################
+  # Displays the edit_category form                               #
+  # Allows the user to add and remove items from the category     #
+  # Allows the user to create and add a new item to the category  #
+  ###############################################################
+
+  get "/:user_slug/categories/:category_slug/edit" do
     if logged_in?
-      @category = Category.find_by_category_slug(params[:slug], current_user.id)
+      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
+      @items = current_user.items
 
       if @category
         erb :"categories/edit_category"
@@ -79,43 +80,40 @@ class CategoriesController < ApplicationController
   end
 
 
-  ######################################################
-  # Uses the Information Gathered to Edit the Category #
-  ######################################################
-  patch "/categories/:slug/edit" do
-    if logged_in?
+  ######################################################################
+  # Uses the input information to edit the category's name and contents #
+  ######################################################################
 
-      @category = Category.find_by_category_slug(params[:slug], current_user.id)
-      category_exists = !Category.find_by_category_name(params[:name], current_user.id).empty?
+  patch "/:user_slug/categories/:category_slug/edit" do
+    if logged_in?
+      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
+      category_name_exists = !Category.find_by_category_name(params[:category][:name], current_user.id).empty?
 
       if @category
-        #binding.pry
+        if category_name_exists
+          redirect "/#{current_user.slug}/categories/#{@category.slug}/edit"
 
-        if category_exists
-          #binding.pry
-          redirect "/categories/#{@category.slug}/edit"
         else
-          @category.name = params[:name] if params[:name] != ""
-          @category.user_id = current_user.id
+          @category.name = params[:category][:name] if params[:category][:name] != ""
+          add_existing_items_to_the_category(params[:category][:item_ids], @category) { @category.items.clear }
+          add_the_newly_created_item_to_the_category(params[:item][:name], @category)
+
           @category.save
           redirect "/#{current_user.slug}/categories"
-        end # @category.
-
-      else
-        redirect "/#{current_user.slug}/categories"
-      end #category.user_id == current_user.id
+        end # category_name_exists?
+      end #if @category
 
     else
       redirect "/login"
-    end
-  end
+    end # if logged_in?
+  end # patch
 
-  #################################################
-  # Retrieves the Contents of a Specific Category #
-  #################################################
-  get "/categories/:slug/items" do
+  ####################################
+  # Show route for a specific category #
+  ####################################
+  get "/:user_slug/categories/:category_slug" do
     if logged_in?
-      @category = Category.find_by_category_slug(params[:slug], current_user.id)
+      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
       erb :"categories/show_category"
       # lists the items in alphabetical order
     else
@@ -124,13 +122,15 @@ class CategoriesController < ApplicationController
   end
 
 
-  ########################################
+  ######################################
   # Delete route for a specific category #
-  ########################################
+  ######################################
 
-  delete "/categories/:slug/delete" do
+  delete "/:user_slug/categories/:category_slug/delete" do
     if logged_in?
-      @category = Category.find_by_category_slug(params[:slug], current_user.id)
+
+      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
+
       if @category.user_id == current_user.id
         @category.destroy
         flash[:success_message] = "Successfully deleted category: [ #{@category.name} ]"
@@ -139,9 +139,11 @@ class CategoriesController < ApplicationController
         flash[:fail_message] = "ERROR: Could not delete category: [ #{@category.name} ]."
         redirect "/#{current_user.slug}"
       end
+
     else
       redirect "/login"
     end
   end
+
 
 end

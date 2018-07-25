@@ -1,4 +1,22 @@
-<form action="/<%= @user.slug %>/categories" method="POST">
-  <input type="text" name="name" placeholder="Category Name"><br>
+<form action="/<%= current_user.slug %>/categories/new" method="POST">
+  <p>Category Name: <input type="text" name="category[name]" placeholder="Category Name"><p> <br>
+
+  <label>Choose from an existing item: </label><br>
+  <select name="category[item_ids][]" size="4" multiple>
+    <% @items.each do |item| %>
+      <option value="<%= item.id %>"><%= item.name %></option>
+    <% end %>
+  </select>
+
+  <br>
+  <br>
+
+  <label>and/or, create a new item:</label>
+  <input type="text" name="item[name]">
+
+  <br>
+  <br>
+
+
   <button type="submit">Create New Category</button>
 </form>

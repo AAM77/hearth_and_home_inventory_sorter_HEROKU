@@ -14,15 +14,15 @@
 <% end %>
 
 <% @categories.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |category| %>
-<a href="/categories/<%= category.slug %>/items"><%= category.name %></a>
+<a href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
 
-<form action="/categories/<%= category.slug %>/delete" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete">
-  <button type="submit">Delete Category</button>
+<form action="/<%= current_user.slug %>/categories/<%= category.slug %>/edit">
+  <button type="submit">Edit</button>
 </form>
 
-<form action="/categories/<%= category.slug %>/edit">
-  <button type="submit">Edit</button>
+<form action="/<%= current_user.slug %>/categories/<%= category.slug %>/delete" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <button type="submit">Delete Category</button>
 </form><br>
 
 <% end %>
@@ -30,5 +30,5 @@
 <br>
 <br>
 
-<a href="/categories/new">Create New Category</a>
+<a href="/<%= current_user.slug %>/categories/new">Create New Category</a>
 <br>
