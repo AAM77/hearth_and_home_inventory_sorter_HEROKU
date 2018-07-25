@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
   get "/:slug/items" do
     if logged_in?
-      @items = Item.where(user_id: current_user.id)
+      @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
+      @items = current_user.items.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"items/item_index"
     else
       redirect "/login"

@@ -25,13 +25,16 @@ class ApplicationController < Sinatra::Base
 
   helpers do
 
-    #################################
-    # Checks if a user is logged in #
-    #################################
+    ##############################################
+    # Retrieves current user if one is logged in #
+    ##############################################
     def current_user
       @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
 
+    ###################################################################
+    # Checks to see if logged in if a session exists for current user #
+    ###################################################################
     def logged_in?
       !!current_user
     end

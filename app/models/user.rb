@@ -17,9 +17,7 @@ class User < ActiveRecord::Base
   def create_folder(folder_name)
     folder = self.folders.where("lower(name) = ?", folder_name.downcase)
 
-    if !folder.empty?
-      yield
-    else
+    if folder.empty?
       self.folders << Folder.create(name: folder_name)
     end
   end
@@ -27,6 +25,13 @@ class User < ActiveRecord::Base
   def create_item(item_name)
     self.items << Item.create(name: item_name)
   end
+
+  def add_items
+    self.folders.each do |folder|
+      self.items.each {|item| folder.push(item)}
+    end
+  end
+
 
 
   ###########################################################

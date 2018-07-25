@@ -1,11 +1,11 @@
 class CategoriesController < ApplicationController
   #Essentially similar routes to the "FoldersController"
-  # -- NOT DRY -- ADDRESS THIS --
+  # -- NOT DRY -- NEED to ADDRESS THIS --
   # ADD FUNCTIONALITY: !! Deleting an item from a specific category should delete it only from that category !! #
 
-  ###################################
-  # Displays the User's categories     #
-  ###################################
+  ############################
+  # Retrieves Category Index #
+  ############################
   get "/:slug/categories" do
     if logged_in?
       @categories = Category.where(user_id: current_user.id)
@@ -15,9 +15,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  ###################################
-  # Displays the create_category form #
-  ###################################
+  ##################################
+  # Retrieves Create Category form #
+  ##################################
   get "/categories/new" do
     if logged_in?
       @user = current_user
@@ -27,10 +27,10 @@ class CategoriesController < ApplicationController
     end
   end
 
-  ############################################################
+  ##############################################################
   # Using the input params during category creation to check   #
   # if a category with the same name exists before creating it #
-  ############################################################
+  ##############################################################
   post "/:slug/categories" do
     if logged_in?
       if params[:name] == ""
@@ -54,9 +54,9 @@ class CategoriesController < ApplicationController
     end #loggend_in?
   end
 
-  #################################
-  # Displays the edit_category form #
-  #################################
+  ####################################
+  # Retrieves the Category Edit Form #
+  ####################################
   get "/categories/:slug/edit" do
     if logged_in?
       @category = Category.find_by_category_slug(params[:slug], current_user.id)
@@ -72,6 +72,10 @@ class CategoriesController < ApplicationController
     end
   end
 
+
+  ######################################################
+  # Uses the Information Gathered to Edit the Category #
+  ######################################################
   patch "/categories/:slug/edit" do
     if logged_in?
 
@@ -100,9 +104,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  ####################################
-  # Show route for a specific category #
-  ####################################
+  #################################################
+  # Retrieves the Contents of a Specific Category #
+  #################################################
   get "/categories/:slug/items" do
     if logged_in?
       @category = Category.find_by_category_slug(params[:slug], current_user.id)
@@ -114,9 +118,9 @@ class CategoriesController < ApplicationController
   end
 
 
-  ######################################
+  ########################################
   # Delete route for a specific category #
-  ######################################
+  ########################################
 
   delete "/categories/:slug/delete" do
     if logged_in?
