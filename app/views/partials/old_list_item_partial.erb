@@ -1,0 +1,51 @@
+
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-light btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          <a href="/<%= current_user.slug %>/folders/<%= object.slug %>"><%= object.name %> : Has <%= object.items.size %>) item(s)</a>
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+
+        <!-- Lists the items in the folder (alphabetical Order) -->
+        <% object.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+
+          <div class="list_item">
+
+            <!-- Display the item's url, price, and id -->
+            <!-- the id is being displayed temporarily, until I add the option to upload an image -->
+            <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a>
+            <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
+
+            <!-- Display the Edit Button -->
+            <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
+              <button class="content_button"  type="submit">Edit Item</button>
+            </form>
+
+            <!-- Display the Delete Button -->
+            <!-- Must add '/' in front when passing a value for f_slash_object_plural -->
+            <!-- Must add '/' in front when passing a value for f_slash_object_id -->
+            <form action="/<%= current_user.slug %><%= f_slash_object_plural %><%= f_slash_object_id %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
+              <input id="hidden" type="hidden" name="_method" value="delete">
+              <button class="content_button"  type="submit">Delete Item</button>
+            </form>
+
+          </div>
+
+            <!-- Display a divider to compartmentalize each -->
+            <!-- this is temporary, until I add in bootstrapped or custom styles -->
+            <br>
+            <div class="item-divider" > - </div>
+            <br>
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

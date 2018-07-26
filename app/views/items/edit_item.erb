@@ -4,11 +4,15 @@
 <h3> [ -- <%= @item.name %> -- ] Edit Page: </h3>
 <br>
 
+
+<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/edit" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+
   <!-- Lists the items in the folder (alphabetical Order) -->
   <!-- Displays an item url + edit and delete buttons -->
 
   <!-- ITEM FORM PARTIAL -->
-  <%= erb(:"partials/item_form_partial", :locals => {:temp_name => @item.name, :tempt_cost => @item.cost, :temp_description => @item.description}) %>
+  <%= erb(:"partials/item_form_partial", :locals => {:temp_name => @item.name, :temp_cost => @item.cost, :temp_description => @item.description}) %>
   <!-- ITEM FORM PARTIAL -->
 
   <br>

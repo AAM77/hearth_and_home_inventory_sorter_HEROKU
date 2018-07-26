@@ -48,7 +48,6 @@ class ItemsController < ApplicationController
       if params[:item][:name].empty?
         flash[:warning] = "You must enter an item name!"
         redirect "/#{current_user.slug}/items/new"
-
       else
         @item = Item.create(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost])
 
@@ -128,7 +127,7 @@ class ItemsController < ApplicationController
   ###########################################
   # Deletes the item from a specific folder #
   ###########################################
-  delete "/:user_slug/folders/:folder_id/items/:item_slug/:item_id/delete" do
+  delete "/:user_slug/folders/:folder_slug/:folder_id/items/:item_slug/:item_id/delete" do
     if logged_in?
       @item = current_user.items.find_by_id(params[:item_id])
       @folder = current_user.folders.find_by_id(params[:folder_id])

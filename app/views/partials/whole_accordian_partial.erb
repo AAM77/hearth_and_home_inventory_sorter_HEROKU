@@ -1,0 +1,19 @@
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-light btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          <a href="/<%= current_user.slug %>/folders/<%= object.slug %>"><%= object.name %> : Has <%= object.items.size %>) item(s)</a>
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+
+          <!-- Insert Content Here -->
+
+      </div>
+    </div>
+  </div>
+</div>

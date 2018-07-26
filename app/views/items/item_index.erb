@@ -4,35 +4,42 @@
 <!-- THE PURPOSE OF THIS PAGE IS TO ALLOW THE USER TO DELETE AN ITEMS COMPLETELY -->
 <!-- THIS ITEM GETS DELETED FROM THE ACCOUNT (i.e. ALL FOLDERS AND CATEGORIES) -->
 
+<!-- Displays page title -->
+<h2> All of <%= current_user.username.capitalize %>'s Items </h2>
+<br>
+
 <div>
-  <!-- Displays page title -->
-  <h2 class="caution">CAUTION: </h2>
-  <h2 class="caution"> Deleting an item from this page will remove the item from all of its associated folders</h2>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <h2>CAUTION:</h2> Deleting an item from this page will remove the item from all of its associated folders
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
   <br>
 
-
   <!-- Displays each folder and its items -->
+  <!-- It looks convoluted, but it's not really -->
+  <!-- No single large block was doing the task, so I split it into partials -->
+  <!-- And, now, I am able to mix and match them based on which components I need -->
+
   <br>
   <div class="folder_items">
     <% @folders.each do |folder| %>
+      <%= erb(:"partials/accordion_top_partial")%>
+        <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %> : Has <%= folder.items.size %>) item(s)</a>
+      <%= erb(:"partials/accordion_middle_partial")%>
+        <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+          <%= erb(:"partials/item_partial", :locals => {
+            :object => folder, :item => item,
+            :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
+            :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
+            :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+            })%>
+        <% end %>
+      <%= erb(:"partials/accordion_bottom_partial")%>
+    <% end %>
 
-      <div class="folder_title">
-        <h3 class="folder_items">[----------------------------- <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a> -----------------------------]</h3>
-      </div>
 
-      <br>
-      <!-- Lists the items in the folder (alphabetical Order) -->
-      <!-- Displays an item url + edit and delete buttons -->
-
-      <!-- LIST ITEM PARTIAL -->
-      <%= erb(:"partials/list_item_partial", :locals => { :object => folder, :f_slash_object_plural => "", :f_slash_object_id => ""})%>
-      <!-- LIST ITEM PARTIAL -->
-
-      <br>
-      <br>
-    <% end %> <!-- @folders.each -->
-  </div>
-  <br>
 
 
   <!-- ITEMS THAT ARE NOT ASSOCIATED WITH ANY FOLDERS  -->
@@ -44,34 +51,24 @@
 
   <!-- Display the item's url, price, and id -->
   <!-- the id is being displayed temporarily, until I add the option to upload an image -->
-  <% @items.each do |item| %>
-    <% if item.folders.empty? %>
-      <div class="list_item">
-        <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
-        <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
 
-        <!-- Display the Edit Button -->
-        <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-          <button class="content_button" type="submit">Edit</button>
-        </form>
-
-        <!-- Display the Delete Button -->
-        <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
-          <input id="hidden" type="hidden" name="_method" value="delete">
-          <button class="content_button" type="submit">Delete Item</button>
-        </form>
-      </div>
-
-      <!-- Display a divider to compartmentalize each -->
-      <!-- this is temporary, until I add in bootstrapped or custom styles -->
-      <br>
-      <div class="item-divider" > - </div>
-      <br>
-    <% end %> <!-- item.folders.empty? -->
-  <% end %> <!-- @items.each -->
-
-  <br>
-  <br>
+    <br>
+    <div class="non_folder_items">
+      <%= erb(:"partials/accordion_top_partial")%>
+        <h3>Items Not in a Folder</h3>
+      <%= erb(:"partials/accordion_middle_partial")%>
+        <% @items.each do |item| %>
+          <% if item.folders.empty? %>
+            <%= erb(:"partials/item_partial", :locals => {
+              :item => item,
+              :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
+              :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
+              :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+              })%>
+          <% end %>
+        <%= erb(:"partials/accordion_bottom_partial")%>
+      <% end %>
+    </div>
 
   <!-- Display Item Creation Button -->
   <form action="/<%= current_user.slug %>/items/new">

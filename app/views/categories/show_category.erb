@@ -4,8 +4,17 @@
 <br>
 <br>
 
-<%= erb(:"partials/list_item_partial", :locals => {:object => @category, :f_slash_object_plural => "/categories", , :f_slash_object_id => @category.id})%>
+<!-- Lists the items in the category (alphabetical Order) -->
+<% @category.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
 
+  <!-- Lists the items in the category (alphabetical Order) -->
+  <!-- Displays an item url + edit and delete buttons -->
+
+  <!-- LIST ITEM PARTIAL -->
+  <%= erb(:"partials/list_item_partial", :locals => {:collapse_num => "collapseOne", :object_one => category, :object_two => item, :object_one_plural => "categories", :object_one_slug => category.slug, :object_one_id => category.id, :object_two_plural => "items", :object_two_slug => item.slug, :object_two_id => item.id })%>
+  <!-- LIST ITEM PARTIAL -->
+
+<% end %> <!-- category.items.each -->
 <br>
 <br>
 

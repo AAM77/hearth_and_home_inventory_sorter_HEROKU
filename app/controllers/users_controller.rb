@@ -172,10 +172,10 @@ class UsersController < ApplicationController
       if @user.id == current_user.id
         @user.destroy
 
-        flas[:success] = "Your account was successfully deleted."
+        flash[:success] = "Your account was successfully deleted."
         redirect "/"
       else
-        flas[:warning] = "Could not delete account."
+        flash[:warning] = "Could not delete account."
         redirect "/#{@user.slug}"
       end
 
