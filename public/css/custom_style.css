@@ -39,15 +39,24 @@ body {
   margin-top: 200px;
 }
 
-.flash_warning {
+.flash_login {
   text-align: center;
-  border: 2px solid red;"
+  border: 2px solid blue;"
 }
 
 .flash_success {
   text-align: center;
   border: 2px solid green;"
 }
+
+.flash_warning {
+  text-align: center;
+  border: 2px solid red;"
+}
+
+
+
+
 
 .item-divider {
   width: 300px;

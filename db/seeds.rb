@@ -1,3 +1,9 @@
+Item.all.clear
+Folder.all.clear
+Category.all.clear
+User.all.clear
+
+
 USERS = []
 
 USERS << apples = User.create(username: "Apples", email: "Apples@test.com", password: "orange")
@@ -24,13 +30,28 @@ USERS.each {|user| user.initial_categories}
 USERS.each {|user| user.create_folder("Triple A") if user.username.downcase.include?("a")}
 USERS.each {|user| user.create_folder("J Room") if user.username.downcase.include?("j")}
 
-USERS.each {|user| user.create_item("Pen")}
-USERS.each {|user| user.create_item("Ball")}
-USERS.each {|user| user.create_item("Laptop")}
-USERS.each {|user| user.create_item("TV")}
-USERS.each {|user| user.create_item("Apples")}
-USERS.each {|user| user.create_item("Bookshelf")}
-USERS.each {|user| user.create_item("Essential Oil Diffuser")}
-USERS.each {|user| user.create_item("Air Purifier")}
+USERS.each {|user| user.items << Item.create(name: "Pen", description: "123abc desc", cost: 22)}
+USERS.each {|user| user.items << Item.create(name: "Ball",  description:"123abc desc plus",cost:  122)}
+USERS.each {|user| user.items << Item.create(name: "Laptop", description: "123abc desc a lot",cost:  225)}
+USERS.each {|user| user.items << Item.create(name: "TV", description: "123abc desc wow",cost:  22)}
+USERS.each {|user| user.items << Item.create(name: "Apples",  description:"123abc desc delicious",cost:  232)}
+USERS.each {|user| user.items << Item.create(name: "Bookshelf", description: "123abc desc amazing",cost:  252)}
+USERS.each {|user| user.items << Item.create(name: "Essential Oil Diffuser", description: "123abc desc aromatic",cost:  522)}
+USERS.each {|user| user.items << Item.create(name: "Air Purifier", description: "123abc desc clean!",cost:  722)}
 
-USERS.each {|user| user.add_items}
+
+Folder.all.each do |folder|
+  Item.all.each do |item|
+    if folder.empty?
+      folder << item
+    end
+  end
+end
+
+Category.all.each do |category|
+  Item.all.each do |item|
+    if category.empty?
+      category << item
+    end
+  end
+end

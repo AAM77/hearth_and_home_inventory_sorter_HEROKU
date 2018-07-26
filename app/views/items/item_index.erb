@@ -1,5 +1,3 @@
-<%= erb(:"partials/flash_partial") %>
-
 <!-- CAUTION -->
 <!-- THE PURPOSE OF THIS PAGE IS TO ALLOW THE USER TO DELETE AN ITEMS COMPLETELY -->
 <!-- THIS ITEM GETS DELETED FROM THE ACCOUNT (i.e. ALL FOLDERS AND CATEGORIES) -->
@@ -7,6 +5,8 @@
 <!-- Displays page title -->
 <h2> All of <%= current_user.username.capitalize %>'s Items </h2>
 <br>
+
+<%= erb(:"partials/flash_partial") %>
 
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
   <h2>CAUTION:</h2> Deleting an item from this page will remove the item from all of its associated folders

@@ -29,6 +29,7 @@ class ItemsController < ApplicationController
   get "/:slug/items/new" do
     if logged_in?
       @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
+      @categories = current_user.categories.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"items/create_item"
     else
       flash[:login] = "You are not logged in. Please Log in or Register."
@@ -74,6 +75,7 @@ class ItemsController < ApplicationController
     if logged_in?
       @item = current_user.items.find_by_id(params[:item_id])
       @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
+      @categories = current_user.categories.sort { |a,b| a.name.downcase <=> b.name.downcase }
 
       erb :"items/edit_item"
 

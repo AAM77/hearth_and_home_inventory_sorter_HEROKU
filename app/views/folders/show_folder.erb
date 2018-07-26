@@ -11,7 +11,7 @@
 <div class="folder_container">
 
   <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
-    <%= @folder.name %> : Contains <%= @folder.items.size %> item(s)</a>
+    <strong><%= @folder.name %></strong>  :  <p>contains <%= @folder.items.size %> item(s)</p>
   <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
     <% @items.each do |item| %>
       <%= erb(:"partials/item_partial", :locals => {

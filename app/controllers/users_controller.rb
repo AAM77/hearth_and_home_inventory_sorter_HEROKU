@@ -30,6 +30,9 @@ class UsersController < ApplicationController
     if @user || @email
       flash[:warning] = "That email or username is not valid. Choose something else."
       redirect "/signup"
+    elsif  params[:username] == "" || params[:email] == "" || params[:password] == ""
+      flash[:warning] = "YOU MUST FILL OUT ALL FIELDS!!"
+      redirect "/signup"
     else
       @user = User.new(username: params[:username], email: params[:email], password: params[:password])
       @user.initial_folders

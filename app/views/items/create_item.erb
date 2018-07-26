@@ -13,29 +13,7 @@
   <!-- ITEM FORM PARTIAL -->
   <%= erb(:"partials/item_form_partial", :locals => {:temp_name => "Item Name", :temp_cost => "0.00", :temp_description => "Item Description (e.g. shape, color, why it's important, etc.)"}) %>
   <!-- ITEM FORM PARTIAL -->
-
-  <br>
-  <!-- Displays a dropdown menu of existing folders to choose from -->
-  <label>Add or Remove this item from existing folders: </label>
-  <br>
-
-  <select name="item[folder_ids][]" size="4" multiple>
-    <% @folders.each do |folder| %>
-      <option value="<%= folder.id %>"><%= folder.name %></option>
-    <% end %>
-  </select>
-  <br>
-  <br>
-
-  <!-- Displays folder creation form -->
-  <!-- Creates folder only if name does not exist -->
-
-  <h5>Add to new folder as well?</h5>
-  <label>Folder Name:
-  <input type="text" name="folder[name]" placeholder="Folder Name">
-  </label>
-  <br>
-  <br>
+  
 
   <!-- Submit Button -->
   <button class="content_button"  type="submit">Create Item</button>

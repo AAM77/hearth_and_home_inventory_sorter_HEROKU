@@ -35,16 +35,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def create_item(item_name)
-    self.items << Item.create(name: item_name)
-  end
-
-  def add_items
-    self.folders.each do |folder|
-      self.items.each {|item| folder.push(item)}
-    end
-  end
-
 
 
   ###########################################################

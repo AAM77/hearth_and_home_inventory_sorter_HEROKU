@@ -1,3 +1,5 @@
+<!-- CURRENTLY BEING USED WITH CREATE_ITEM.ERB & EDIT_ITEM.ERB -->
+
 <!-- Displays form to Create a New Item -->
 <!-- Will not create item if the item's name is missing -->
 
@@ -22,3 +24,6 @@
 
 <br>
 <br>
+
+<%= erb(:"partials/category_folder_partials.erb", :locals {:object => @folders, :object_string => "folder"}) %>
+<%= erb(:"partials/category_folder_partials.erb", :locals {:object => @categories, :object_string => "category"}) %>

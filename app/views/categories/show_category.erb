@@ -1,17 +1,13 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Displays the Page Title -->
-<h3> [ -- <%= @category.name %> -- ] contains the Following Items: </h3>
-<br>
-<br>
-
 <!-- Lists the items in the category (alphabetical Order) -->
 <!-- Displays an item url + edit and delete buttons -->
 
 <div class="category_container">
 
   <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
-    <%= @category.name %> : Contains <%= @category.items.size %> item(s)</a>
+    <strong><%= @category.name %></strong>  :  <p>contains <%= @category.items.size %> item(s)</p>
   <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
     <% @items.each do |item| %>
       <%= erb(:"partials/item_partial", :locals => {

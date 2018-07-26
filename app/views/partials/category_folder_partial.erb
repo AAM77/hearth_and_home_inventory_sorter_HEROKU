@@ -1,0 +1,22 @@
+<br>
+<!-- Displays a dropdown menu of existing folders/categories to choose from -->
+<label>Add or Remove this item from existing <%= object_string.pluralize %>: </label>
+<br>
+
+<select name="item[<%=object_string%>_ids][]" size="4" multiple>
+  <% object.each do |obj| %>
+    <option value="<%= obj.id %>"><%= obj.name %></option>
+  <% end %>
+</select>
+<br>
+<br>
+
+<!-- Displays folder/category creation form -->
+<!-- Creates folder/category only if name does not exist -->
+
+<h5>Add to new <%= object_string %> as well?</h5>
+<label><%= object_string.capitalize %> Name:
+<input type="text" name="<%= object_string %>[name]" placeholder="<%= object_string.capitalize %> Name">
+</label>
+<br>
+<br>
