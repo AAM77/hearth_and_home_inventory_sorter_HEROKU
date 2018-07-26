@@ -1,22 +1,26 @@
 <%= erb(:"partials/flash_partial") %>
 
-<!-- Display the Page Title -->
+<!-- Displays page title -->
 <h3> Create a New Category: </h3>
 <br>
 
-<!-- Display a Category creation form -->
+<!-- Displays category creation form -->
+
 <form action="/<%= current_user.slug %>/categories/new" method="POST">
 
   <!-- Category Name field -->
-  <p>Category Name: <input type="text" name="category[name]" placeholder="Category Name"><p> <br>
-
+  <label for="category_name">Category Name:
+    <input type="text" name="category[name]" placeholder="Category Name">
+  </label>
+  <br>
+  <br>
 
   <!-- Displays a dropdown menu of existing items to choose from -->
-  <label>Add or Remove existing items: </label><br>
 
+  <label>Add or Remove existing items: </label><br>
   <select name="category[item_ids][]" size="4" multiple>
     <% @items.each do |item| %>
-      <option value="<%= item.id %>" <%= 'selected' if @folder.items.include?(item) %>><%= item.name %></option>
+      <option value="<%= item.id %>"><%= item.name %></option>
     <% end %>
   </select>
   <p>(hold ctrl [in Windows] or cmd [in MacBooks] to select or deselect any of the above)</p>
@@ -24,7 +28,7 @@
   <br>
   <br>
 
-  <h5>Would you like to add a new item to this Category?</h5>
+  <h5>Would you like to add a new item as well?</h5>
   <br>
 
   <!-- Displays form to Create a New Item -->
@@ -36,11 +40,11 @@
 
 
   <!-- Submit Button -->
-  <button class="content_button"  type="submit">Create New Category</button>
+  <button class="form_button create_button"  type="submit">Create New Category</button>
 </form>
 
-  <br>
-  <br>
+<br>
+<br>
 
-<!-- Display a Back button. It takes the user to the previously visited page -->
+<!-- Displays a Back button. It takes the user to the previously visited page -->
 <a href="javascript:history.back()">Go Back</a>

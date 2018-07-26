@@ -3,6 +3,8 @@ class Category < ActiveRecord::Base
   has_many :item_categories
   has_many :items, through: :item_categories
 
+  validates_presence_of :name
+
   def slug
     self.name.gsub(" ", "-")
   end
@@ -18,4 +20,4 @@ class Category < ActiveRecord::Base
     self.where("lower(name) = ? AND user_id = ?", record.downcase, user_id)
   end
 
-end
+  end

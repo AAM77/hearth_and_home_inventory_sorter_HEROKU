@@ -127,6 +127,7 @@ class FoldersController < ApplicationController
   get "/:user_slug/folders/:folder_slug" do
     if logged_in?
       @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+      @items = @folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"folders/show_folder"
     else
       flash[:warning] = "You are not logged in. Please Log in or Register."

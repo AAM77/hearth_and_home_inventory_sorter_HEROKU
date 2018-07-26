@@ -10,9 +10,9 @@
 
 <div class="folder_container">
 
-  <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
+  <%= erb(:"partials/accordion_top_partial")%>
     <%= @folder.name %> : Contains <%= @folder.items.size %> item(s)</a>
-  <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
+  <%= erb(:"partials/accordion_middle_partial")%>
     <% @items.each do |item| %>
       <%= erb(:"partials/item_partial", :locals => {
         :item => item,

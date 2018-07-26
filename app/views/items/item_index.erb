@@ -8,8 +8,7 @@
 <h2> All of <%= current_user.username.capitalize %>'s Items </h2>
 <br>
 
-<div>
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
   <h2>CAUTION:</h2> Deleting an item from this page will remove the item from all of its associated folders
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -22,62 +21,77 @@
   <!-- No single large block was doing the task, so I split it into partials -->
   <!-- And, now, I am able to mix and match them based on which components I need -->
 
-  <br>
-  <div class="folder_items">
-    <% @folders.each do |folder| %>
-      <%= erb(:"partials/accordion_top_partial")%>
-        <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %> : Has <%= folder.items.size %>) item(s)</a>
-      <%= erb(:"partials/accordion_middle_partial")%>
-        <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
-          <%= erb(:"partials/item_partial", :locals => {
-            :object => folder, :item => item,
-            :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
-            :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-            :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
-            })%>
-        <% end %>
-      <%= erb(:"partials/accordion_bottom_partial")%>
-    <% end %>
-
-
-
-
-  <!-- ITEMS THAT ARE NOT ASSOCIATED WITH ANY FOLDERS  -->
-  <!-- These items can be edited and reassigned -->
-  <!-- Or, they can be deleted permanently -->
-
-  <h3>Items Not in a Folder</h3>
-  <br>
-
-  <!-- Display the item's url, price, and id -->
-  <!-- the id is being displayed temporarily, until I add the option to upload an image -->
-
-    <br>
-    <div class="non_folder_items">
-      <%= erb(:"partials/accordion_top_partial")%>
-        <h3>Items Not in a Folder</h3>
-      <%= erb(:"partials/accordion_middle_partial")%>
-        <% @items.each do |item| %>
-          <% if item.folders.empty? %>
-            <%= erb(:"partials/item_partial", :locals => {
-              :item => item,
-              :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
-              :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-              :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
-              })%>
-          <% end %>
-        <%= erb(:"partials/accordion_bottom_partial")%>
+<br>
+<div class="folder_items">
+  <% @folders.each do |folder| %>
+    <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
+      <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %> : Contains <%= folder.items.size %> item(s)</a>
+    <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
+      <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+        <%= erb(:"partials/item_partial", :locals => {
+          :object => folder, :item => item,
+          :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
+          :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
+          :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+          })%>
       <% end %>
-    </div>
-
-  <!-- Display Item Creation Button -->
-  <form action="/<%= current_user.slug %>/items/new">
-    <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
-  </form>
-
-  <br>
-  <br>
-
-  <!-- Display a Back button. It takes the user to the previously visited page -->
-  <a href="javascript:history.back()">Go Back</a>
+    <%= erb(:"partials/accordion_bottom_partial")%>
+  <% end %>
 </div>
+
+
+<!-- ITEMS THAT ARE NOT ASSOCIATED WITH ANY FOLDERS  -->
+<!-- These items can be edited and reassigned -->
+<!-- Or, they can be deleted permanently -->
+
+<br>
+<br>
+
+<!-- Display the item's url, price, and id -->
+<!-- the id is being displayed temporarily, until I add the option to upload an image -->
+
+<br>
+
+<div>
+  <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseTwo", :heading_num => "headingTwo"})%>
+    <h3>Items Not in a Folder</h3>
+  <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseTwo", :heading_num => "headingTwo"})%>
+    <% @items.each do |item| %>
+      <% if item.folders.empty? %>
+        <%= erb(:"partials/item_partial", :locals => {
+          :item => item,
+          :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
+          :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
+          :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+          })%>
+
+        <% end %>
+      <% end %>
+    <%= erb(:"partials/accordion_bottom_partial")%>
+
+  </div>
+  </div>
+  </div>
+</div>
+</div>
+
+
+
+
+  <br>
+  <br>
+
+<!-- Display Item Creation Button -->
+<form action="/<%= current_user.slug %>/items/new">
+  <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
+</form>
+
+<br>
+<br>
+
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>
+
+<br>
+<br>
+<br>

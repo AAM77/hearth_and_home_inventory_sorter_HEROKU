@@ -1,41 +1,52 @@
 <%= erb(:"partials/flash_partial") %>
 
+<!-- Displays the Page Title -->
 <h3> [ -- <%= @category.name %> -- ] contains the Following Items: </h3>
 <br>
 <br>
 
 <!-- Lists the items in the category (alphabetical Order) -->
-<% @category.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+<!-- Displays an item url + edit and delete buttons -->
 
-  <!-- Lists the items in the category (alphabetical Order) -->
-  <!-- Displays an item url + edit and delete buttons -->
+<div class="category_container">
 
-  <!-- LIST ITEM PARTIAL -->
-  <%= erb(:"partials/list_item_partial", :locals => {:collapse_num => "collapseOne", :object_one => category, :object_two => item, :object_one_plural => "categories", :object_one_slug => category.slug, :object_one_id => category.id, :object_two_plural => "items", :object_two_slug => item.slug, :object_two_id => item.id })%>
-  <!-- LIST ITEM PARTIAL -->
+  <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
+    <%= @category.name %> : Contains <%= @category.items.size %> item(s)</a>
+  <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
+    <% @items.each do |item| %>
+      <%= erb(:"partials/item_partial", :locals => {
+        :item => item,
+        :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
+        :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
+        :item_delete_path => "/"+current_user.slug+"/categories"+@category.slug+@category.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+        })%>
+    <% end %>
+  <%= erb(:"partials/accordion_bottom_partial")%>
+</div>
 
-<% end %> <!-- category.items.each -->
 <br>
-<br>
 
+<!-- Displays Item Creation Button -->
 <form action="/<%= current_user.slug %>/items/new">
-<button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
+  <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
 </form>
 
 <br>
 <br>
 
+<!-- Displays Edit Category button -->
 <form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/edit">
-  <button class="content_button"  type="submit">Edit Category</button>
+  <button class="form_button"  type="submit">Edit Category</button>
 </form>
 
+<!-- Display Delete Category button -->
 <form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/delete" method="POST">
   <input id="hidden" type="hidden" name="_method" value="delete">
-  <button class="content_button"  type="submit">Delete Category</button>
+  <button class="form_button"  type="submit">Delete Category</button>
 </form>
 
+<br>
+<br>
 
-  <br>
-  <br>
-
-  <a href="javascript:history.back()">Go Back</a>
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

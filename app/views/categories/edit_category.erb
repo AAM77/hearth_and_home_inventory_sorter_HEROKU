@@ -1,21 +1,25 @@
 <%= erb(:"partials/flash_partial") %>
 
-<!-- Displays page title -->
+<!-- Display the Page Title -->
 <h3> [ -- <%= @category.name %> -- ] Edit Page: </h3>
 <br>
 
-<!-- Displays form to edit category -->
+<!-- Display a Category creation form -->
 <form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/edit" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
+<!-- Category Name field -->
+  <label for="category_name">Category Name:
+    <input type="text" name="category[name]" placeholder="<%=@category.name%>">
+  </label>
+  <br>
+  <br>
 
-  <label for="category_name">Category Name: </label>
-  <input type="text" name="category[name]" placeholder="<%=@category.name%>"><br>
-
+  <!-- Displays a dropdown menu of existing items to choose from -->
   <label>Add or Remove existing items: </label><br>
   <select name="category[item_ids][]" size="4" multiple>
     <% @items.each do |item| %>
-      <option value="<%= item.id %>" <%= 'selected' if @folder.items.include?(item) %>><%= item.name %></option>
+      <option value="<%= item.id %>" <%= 'selected' if @category.items.include?(item) %>><%= item.name %></option>
     <% end %>
   </select>
   <p>(hold ctrl [in Windows] or cmd [in MacBooks] to select or deselect any of the above)</p>
@@ -27,22 +31,19 @@
   <h5>Would you like to add a new item as well?</h5>
   <br>
 
+  <!-- Displays form to Create a New Item -->
+  <!-- Will not create item if the item's name is missing -->
+
   <!-- ITEM FORM PARTIAL -->
   <%= erb(:"partials/item_form_partial", :locals => {:temp_name => "Item Name", :temp_cost => "0.00", :temp_description => "Item Description (e.g. shape, color, why it's important, etc.)"}) %>
   <!-- ITEM FORM PARTIAL -->
 
-  <label class="item" for="item_description">Item Description: </label><br>
-  <textarea name="item[description]" rows="10" cols="30">Item Description (e.g. shape, color, why it's important, etc.)</textarea>
-  <br>
-
-  <br>
-  <br>
-
-  <button class="content_button"  type="submit">Save Changes</button>
+  <!-- Submit Button -->
+  <button class="content_button edit_button"  type="submit">Save Changes</button>
 </form>
 
+<br>
+<br>
 
-  <br>
-  <br>
-
-  <a href="javascript:history.back()">Go Back</a>
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>
