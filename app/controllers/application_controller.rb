@@ -45,13 +45,6 @@ class ApplicationController < Sinatra::Base
       !!current_user
     end
 
-    ####################################
-    # Generates a Simple Flash Message #
-    ####################################
-    def generate_flash(message)
-        flash[:success_message] = message
-    end
-
 
     ######  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  ######
     ##  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  ####
@@ -114,10 +107,10 @@ class ApplicationController < Sinatra::Base
     # if the new item name field is not empty              #
     ########################################################
     def add_the_newly_created_item_to_the_folder(item_name, item_description, item_cost, instance_variable)
-      if item_name != ""
-        new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
-        instance_variable.items << new_item
-        current_user.items << new_item
+      if !item_name.empty?
+        new_item = Item.create(name: item_name, description: item_description, cost: item_cost) if item_name != ""
+        instance_variable.items << new_item if item_name != ""
+        current_user.items << new_item if item_name != ""
       end
     end
 

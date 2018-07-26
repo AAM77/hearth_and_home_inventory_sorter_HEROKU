@@ -1,32 +1,12 @@
+<%= erb(:"partials/flash_partial") %>
 
+<!-- Display Page Title -->
+<h2><%= current_user.username %>'s Categories</h2>
+<br>
 
-<!-- FLASH MESSAGES -->
-
-<% if flash[:success] %>
-  <br>
-  <div class="flash_success">
-    <%= flash[:success] %>
-  </div>
-  <br>
-
-<% elsif flash[:warning] %>
-  <br>
-  <div class="flash_warning">
-    <%= flash[:warning] %>
-  </div>
-  <br>
-
-<% elsif flash[:warning] %>
-  <br>
-  <div class="flash_login">
-    <%= flash[:warning] %>
-  </div>
-  <br>
-<% end %>
-
-<!-- END FLASH MESSAGES -->
-
+<!-- Display folder url + edit and delete buttons for each folder -->
 <% @categories.each do |category| %>
+
 <a href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
 
 <form action="/<%= current_user.slug %>/categories/<%= category.slug %>/edit">
@@ -36,19 +16,18 @@
 <form action="/<%= current_user.slug %>/categories/<%= category.slug %>/delete" method="POST">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <button class="content_button"  type="submit">Delete Category</button>
-</form><br>
+</form>
+<br>
 
 <% end %>
 
 <br>
 <br>
-
+<!-- Display Create Category Button -->
 <a href="/<%= current_user.slug %>/categories/new">Create New Category</a>
+
+<br>
 <br>
 
-
-
-  <br>
-  <br>
-
+<!-- Display a Back button. It takes the user to the previously visited page -->
 <a href="javascript:history.back()">Go Back</a>

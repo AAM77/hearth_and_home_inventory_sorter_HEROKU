@@ -1,61 +1,71 @@
-<div>
+<%= erb(:"partials/flash_partial") %>
 
+<!-- CAUTION -->
+<!-- THE PURPOSE OF THIS PAGE IS TO ALLOW THE USER TO DELETE AN ITEMS COMPLETELY -->
+<!-- THIS ITEM GETS DELETED FROM THE ACCOUNT (i.e. ALL FOLDERS AND CATEGORIES) -->
+
+<div>
+  <!-- Displays page title -->
   <h2 class="caution">CAUTION: </h2>
   <h2 class="caution"> Deleting an item from this page will remove the item from all of its associated folders</h2>
   <br>
 
-  <!-- FOLDERS AND THEIR ITEMS  -->
+
+  <!-- Displays each folder and its items -->
   <br>
   <div class="folder_items">
     <% @folders.each do |folder| %>
-      <h3 class="folder_items">[----------------------------- <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a> -----------------------------]</h3>
+
+      <div class="folder_title">
+        <h3 class="folder_items">[----------------------------- <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a> -----------------------------]</h3>
+      </div>
 
       <br>
+      <!-- Lists the items in the folder (alphabetical Order) -->
+      <!-- Displays an item url + edit and delete buttons -->
 
-      <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
-        <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
-        <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
+      <!-- LIST ITEM PARTIAL -->
+      <%= erb(:"partials/list_item_partial", :locals => { :object => folder, :f_slash_object_plural => "", :f_slash_object_id => ""})%>
+      <!-- LIST ITEM PARTIAL -->
 
-        <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-          <button class="content_button" type="submit">Edit Item Info</button>
-        </form>
-
-        <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
-          <input id="hidden" type="hidden" name="_method" value="delete">
-          <button class="content_button" type="submit">Delete Item from My Account</button>
-        </form>
-
-        <% if folder.items.size > 1 %>
-          <br>
-          <div class="item-divider" > - </div>
-          <br>
-        <% end %>
-
-      <% end %> <!-- folder.items.sort{}.each -->
+      <br>
       <br>
     <% end %> <!-- @folders.each -->
   </div>
   <br>
 
 
-  <!-- ITEMS THAT ARE NO LONGER ASSOCIATED WITH FOLDERS  -->
+  <!-- ITEMS THAT ARE NOT ASSOCIATED WITH ANY FOLDERS  -->
+  <!-- These items can be edited and reassigned -->
+  <!-- Or, they can be deleted permanently -->
 
   <h3>Items Not in a Folder</h3>
   <br>
 
+  <!-- Display the item's url, price, and id -->
+  <!-- the id is being displayed temporarily, until I add the option to upload an image -->
   <% @items.each do |item| %>
     <% if item.folders.empty? %>
-      <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
-      <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
+      <div class="list_item">
+        <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
+        <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
 
-      <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-        <button class="content_button" type="submit">Edit</button>
-      </form>
+        <!-- Display the Edit Button -->
+        <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
+          <button class="content_button" type="submit">Edit</button>
+        </form>
 
-      <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
-        <input id="hidden" type="hidden" name="_method" value="delete">
-        <button class="content_button" type="submit">Delete Item</button>
-      </form>
+        <!-- Display the Delete Button -->
+        <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
+          <input id="hidden" type="hidden" name="_method" value="delete">
+          <button class="content_button" type="submit">Delete Item</button>
+        </form>
+      </div>
+
+      <!-- Display a divider to compartmentalize each -->
+      <!-- this is temporary, until I add in bootstrapped or custom styles -->
+      <br>
+      <div class="item-divider" > - </div>
       <br>
     <% end %> <!-- item.folders.empty? -->
   <% end %> <!-- @items.each -->
@@ -63,12 +73,14 @@
   <br>
   <br>
 
+  <!-- Display Item Creation Button -->
   <form action="/<%= current_user.slug %>/items/new">
     <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
   </form>
 
-    <br>
-    <br>
+  <br>
+  <br>
 
-    <a href="javascript:history.back()">Go Back</a>
+  <!-- Display a Back button. It takes the user to the previously visited page -->
+  <a href="javascript:history.back()">Go Back</a>
 </div>

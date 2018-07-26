@@ -1,13 +1,21 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Displays page title -->
 <h3> Create a New Folder: </h3>
 <br>
 
+<!-- Displays folder creation form -->
+
 <form action="/<%= current_user.slug %>/folders/new" method="POST">
 
+  <!-- Category Name field -->
   <label for="folder_name">Folder Name:
     <input type="text" name="folder[name]" placeholder="Folder Name">
   </label>
   <br>
   <br>
+
+  <!-- Displays a dropdown menu of existing items to choose from -->
 
   <label>Add or Remove existing items: </label><br>
   <select name="folder[item_ids][]" size="4" multiple>
@@ -23,40 +31,20 @@
   <h5>Would you like to add a new item as well?</h5>
   <br>
 
-  <label class="item" for="item_name">Item Name:
-  <input type="text" name="item[name]" placeholder="Item Name">
-  </label>
+  <!-- Displays form to Create a New Item -->
+  <!-- Will not create item if the item's name is missing -->
 
-  <!-- FLASH MESSAGE -->
+  <!-- ITEM FORM PARTIAL -->
+  <%= erb(:"partials/item_form_partial", :locals => {:temp_name => "Item Name", :tempt_cost => "0.00", :temp_description => "Item Description (e.g. shape, color, why it's important, etc.)"}) %>
+  <!-- ITEM FORM PARTIAL -->
 
-  <% if flash[:warning] %>
-    <br>
-    <div id="flash_warning" style="text-align: center; border: 2px solid red;">
-      <%= flash[:warning] %>
-    </div>
-    <br>
-  <% end %>
 
-  <br>
-
-  <label class="item" for="item_cost">Item Cost:  $
-  <input type="number" name="item[cost]" min="0.00" max="999999999999999.00" step="0.01" placeholder="0.00">
-  </label>
-  <br>
-  <br>
-
-  <label class="item" for="item_description">Item Description: </label><br>
-  <textarea name="item[description]" rows="10" cols="30">Item Description (e.g. shape, color, why it's important, etc.)</textarea>
-  <br>
-
-  <br>
-  <br>
-
+  <!-- Submit Button -->
   <button class="form_button create_button"  type="submit">Create New Folder</button>
 </form>
 
+<br>
+<br>
 
-  <br>
-  <br>
-
-  <a href="javascript:history.back()">Go Back</a>
+<!-- Displays a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

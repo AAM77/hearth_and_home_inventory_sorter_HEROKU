@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @email = User.find_by_email(params[:email])
 
     if @user || @email
-      flash[:warning] = "That email or username already exists."
+      flash[:warning] = "That email or username is not valid. Choose something else."
       redirect "/signup"
     else
       @user = User.new(username: params[:username], email: params[:email], password: params[:password])
@@ -175,6 +175,7 @@ class UsersController < ApplicationController
         flas[:success] = "Your account was successfully deleted."
         redirect "/"
       else
+        flas[:warning] = "Could not delete account."
         redirect "/#{@user.slug}"
       end
 

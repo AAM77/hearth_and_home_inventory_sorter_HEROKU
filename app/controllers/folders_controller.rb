@@ -12,6 +12,7 @@ class FoldersController < ApplicationController
   ###################################
   get "/:slug/folders" do
     if logged_in?
+      @path = ""
       @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"folders/folder_index"
     else

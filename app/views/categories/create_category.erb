@@ -1,48 +1,46 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Display the Page Title -->
 <h3> Create a New Category: </h3>
 <br>
 
-
+<!-- Display a Category creation form -->
 <form action="/<%= current_user.slug %>/categories/new" method="POST">
+
+  <!-- Category Name field -->
   <p>Category Name: <input type="text" name="category[name]" placeholder="Category Name"><p> <br>
 
-    <label>Add or Remove existing items: </label><br>
-    <select name="category[item_ids][]" size="4" multiple>
-      <% @items.each do |item| %>
-        <option value="<%= item.id %>" <%= 'selected' if @folder.items.include?(item) %>><%= item.name %></option>
-      <% end %>
-    </select>
-    <p>(hold ctrl [in Windows] or cmd [in MacBooks] to select or deselect any of the above)</p>
+
+  <!-- Displays a dropdown menu of existing items to choose from -->
+  <label>Add or Remove existing items: </label><br>
+
+  <select name="category[item_ids][]" size="4" multiple>
+    <% @items.each do |item| %>
+      <option value="<%= item.id %>" <%= 'selected' if @folder.items.include?(item) %>><%= item.name %></option>
+    <% end %>
+  </select>
+  <p>(hold ctrl [in Windows] or cmd [in MacBooks] to select or deselect any of the above)</p>
 
   <br>
   <br>
 
-  <h5>Would you like to add a new item as well?</h5>
+  <h5>Would you like to add a new item to this Category?</h5>
   <br>
 
-  <label class="item" for="item_name">Item Name:
-  <input type="text" name="item[name]" placeholder="Item Name">
-  </label>
-  <br>
+  <!-- Displays form to Create a New Item -->
+  <!-- Will not create item if the item's name is missing -->
 
-  <label class="item" for="item_cost">Item Cost:  $
-  <input type="number" name="item[cost]" min="0.00" max="999999999999999.00" step="0.01" placeholder="0.00">
-  </label>
-  <br>
-  <br>
-
-  <label class="item" for="item_description">Item Description: </label><br>
-  <textarea name="item[description]" rows="10" cols="30">Item Description (e.g. shape, color, why it's important, etc.)</textarea>
-  <br>
-
-  <br>
-  <br>
+  <!-- ITEM FORM PARTIAL -->
+  <%= erb(:"partials/item_form_partial", :locals => {:temp_name => "Item Name", :tempt_cost => "0.00", :temp_description => "Item Description (e.g. shape, color, why it's important, etc.)"}) %>
+  <!-- ITEM FORM PARTIAL -->
 
 
+  <!-- Submit Button -->
   <button class="content_button"  type="submit">Create New Category</button>
 </form>
 
-
   <br>
   <br>
 
-  <a href="javascript:history.back()">Go Back</a>
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

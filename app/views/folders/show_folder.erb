@@ -1,30 +1,21 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Displays the Page Title -->
 <h3> [ -- <%= @folder.name %> -- ] contains the Following Items: </h3>
 <br>
 <br>
 
-<% @folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+<!-- Lists the items in the folder (alphabetical Order) -->
+<!-- Displays an item url + edit and delete buttons -->
 
-    <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a>
-    <p> Price: $ <%= item.cost %> -- { ID: <%= item.id %> } </p>
-
-    <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-      <button class="content_button"  type="submit">Edit Item</button>
-    </form>
-
-    <form action="/<%= current_user.slug %>/folders/<%= @folder.id %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
-      <input id="hidden" type="hidden" name="_method" value="delete">
-      <button class="content_button"  type="submit">Delete Item from This Folder</button>
-    </form>
-
-    <br>
-    <div class="item-divider" > - </div>
-    <br>
-
-<% end %>
+<!-- LIST ITEM PARTIAL -->
+<%= erb(:"partials/list_item_partial", :locals => {:object => @folder, :f_slash_object_plural => "/folders", :f_slash_object_id => @folder.id})%>
+<!-- LIST ITEM PARTIAL -->
 
 <br>
 <br>
 
+<!-- Displays Item Creation Button -->
 <form action="/<%= current_user.slug %>/items/new">
   <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
 </form>
@@ -32,17 +23,19 @@
 <br>
 <br>
 
+<!-- Displays Edit Folder button -->
 <form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/edit">
   <button class="form_button"  type="submit">Edit Folder</button>
 </form>
 
+<!-- Display Delete Folder button -->
 <form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/delete" method="POST">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <button class="form_button"  type="submit">Delete Folder</button>
 </form>
 
+<br>
+<br>
 
-  <br>
-  <br>
-
-  <a href="javascript:history.back()">Go Back</a>
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

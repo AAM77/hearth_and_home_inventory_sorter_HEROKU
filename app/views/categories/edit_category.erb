@@ -1,6 +1,10 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Displays page title -->
 <h3> [ -- <%= @category.name %> -- ] Edit Page: </h3>
 <br>
 
+<!-- Displays form to edit category -->
 <form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/edit" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
@@ -16,22 +20,16 @@
   </select>
   <p>(hold ctrl [in Windows] or cmd [in MacBooks] to select or deselect any of the above)</p>
 
+
   <br>
   <br>
 
   <h5>Would you like to add a new item as well?</h5>
   <br>
 
-  <label class="item" for="item_name">Item Name:
-  <input type="text" name="item[name]" placeholder="Item Name">
-  </label>
-  <br>
-
-  <label class="item" for="item_cost">Item Cost:  $
-  <input type="number" name="item[cost]" min="0.00" max="999999999999999.00" step="0.01" placeholder="0.00">
-  </label>
-  <br>
-  <br>
+  <!-- ITEM FORM PARTIAL -->
+  <%= erb(:"partials/item_form_partial", :locals => {:temp_name => "Item Name", :tempt_cost => "0.00", :temp_description => "Item Description (e.g. shape, color, why it's important, etc.)"}) %>
+  <!-- ITEM FORM PARTIAL -->
 
   <label class="item" for="item_description">Item Description: </label><br>
   <textarea name="item[description]" rows="10" cols="30">Item Description (e.g. shape, color, why it's important, etc.)</textarea>

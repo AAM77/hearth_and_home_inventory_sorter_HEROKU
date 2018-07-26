@@ -1,26 +1,21 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Displays page title -->
 <h3> [ -- <%= @item.name %> -- ] Edit Page: </h3>
 <br>
 
-<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/edit" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="patch">
+  <!-- Lists the items in the folder (alphabetical Order) -->
+  <!-- Displays an item url + edit and delete buttons -->
 
-  <label for="item_name">Item Name:
-  <input type="text" name="item[name]" placeholder="<%= @item.name %>">
-  </label>
-  <br>
-
-  <label for="item_cost">Item Cost: $
-  <input type="number" name="item[cost]" min="0.00" max="999999999999999.00" step="0.01" placeholder="<%= @item.cost %>">
-  </label>
-  <br>
-
-  <label for="item_description">Item Description: </label><br>
-  <textarea name="item[description]" rows="10" cols="30"><%= @item.description %></textarea>
-  <br>
+  <!-- ITEM FORM PARTIAL -->
+  <%= erb(:"partials/item_form_partial", :locals => {:temp_name => @item.name, :tempt_cost => @item.cost, :temp_description => @item.description}) %>
+  <!-- ITEM FORM PARTIAL -->
 
   <br>
-  <label>Add or Remove the item from existing folders:</label>
+  <!-- Displays a dropdown menu of existing folders to choose from -->
+  <label>Add or Remove this item from existing folders: </label>
   <br>
+
   <select name="item[folder_ids][]" size="4" multiple>
     <% @folders.each do |folder| %>
       <option value="<%= folder.id %>" <%= 'selected' if @item.folders.include?(folder) %> ><%= folder.name %></option>
@@ -29,21 +24,22 @@
   <br>
   <br>
 
-  <h5>Add to new folder</h5>
+  <!-- Displays folder creation form -->
+  <!-- Creates folder only if name does not exist -->
 
+  <h5>Add to new folder as well?</h5>
   <label>Folder Name:
   <input type="text" name="folder[name]" placeholder="Folder Name">
   </label>
   <br>
-
-  <br>
   <br>
 
+  <!-- Submit Button -->
   <button class="content_button"  type="submit">Update Item Info</button>
 </form>
 
+<br>
+<br>
 
-  <br>
-  <br>
-
-  <a href="javascript:history.back()">Go Back</a>
+<!-- Displays a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

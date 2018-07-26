@@ -1,25 +1,10 @@
-<% @category.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
+<%= erb(:"partials/flash_partial") %>
 
-    <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a>
-    <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
+<h3> [ -- <%= @category.name %> -- ] contains the Following Items: </h3>
+<br>
+<br>
 
-    <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-      <button class="content_button"  type="submit">Edit Item</button>
-    </form>
-
-    <form action="/<%= current_user.slug %>/categories/<%= @category.id %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
-      <input id="hidden" type="hidden" name="_method" value="delete">
-      <button class="content_button"  type="submit">Delete Item</button>
-    </form>
-
-    <br>
-
-    <br>
-    <div class="item-divider" > - </div>
-    <br>
-
-<% end %>
-
+<%= erb(:"partials/list_item_partial", :locals => {:object => @category, :f_slash_object_plural => "/categories", , :f_slash_object_id => @category.id})%>
 
 <br>
 <br>
