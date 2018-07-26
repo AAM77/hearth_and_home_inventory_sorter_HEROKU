@@ -11,6 +11,19 @@ class User < ActiveRecord::Base
     self.folders << Folder.create(name: "Work")
   end
 
+  def initial_categories
+    self.categories << Category.create(name: "Books")
+    self.categories << Category.create(name: "Clothes")
+    self.categories << Category.create(name: "Electronics")
+    self.categories << Category.create(name: "Furniture")
+    self.categories << Category.create(name: "Health and Fitness")
+    self.categories << Category.create(name: "Kitchenware")
+    self.categories << Category.create(name: "Office Supplies")
+    self.categories << Category.create(name: "Personal Grooming")
+    self.categories << Category.create(name: "Shoes")
+    self.categories << Category.create(name: "Video Games")
+  end
+
   ####################################################
   # Test to see if the input username already exists #
   ####################################################

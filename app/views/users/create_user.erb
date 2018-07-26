@@ -1,3 +1,13 @@
+<h2> Welcome to the Registration Page </h2>
+
+<% if flash[:warning] %>
+<br>
+  <div class="flash_warning">
+    <%= flash[:warning] %>
+  </div>
+<br>
+<% end %>
+
 <form action="/signup" method="POST">
   <label for="username">Username: </label>
   <input type="text" name="username" placeholder="Username">

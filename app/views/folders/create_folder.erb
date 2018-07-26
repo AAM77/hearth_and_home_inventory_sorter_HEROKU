@@ -26,10 +26,21 @@
   <label class="item" for="item_name">Item Name:
   <input type="text" name="item[name]" placeholder="Item Name">
   </label>
+
+  <!-- FLASH MESSAGE -->
+
+  <% if flash[:warning] %>
+    <br>
+    <div id="flash_warning" style="text-align: center; border: 2px solid red;">
+      <%= flash[:warning] %>
+    </div>
+    <br>
+  <% end %>
+
   <br>
 
   <label class="item" for="item_cost">Item Cost:  $
-  <input type="number" name="item[cost]" min="0.00" max="10000.00" step="0.01" placeholder="0.00">
+  <input type="number" name="item[cost]" min="0.00" max="999999999999999.00" step="0.01" placeholder="0.00">
   </label>
   <br>
   <br>

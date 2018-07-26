@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   ##########################################
   get "/signup" do
     if logged_in?
+      flash[:message] = "You are already logged in."
       redirect "/#{current_user.slug}"
     else
       erb :"users/create_user"
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
     @email = User.find_by_email(params[:email])
 
     if @user || @email
+      flash[:warning] = "That email or username already exists."
       redirect "/signup"
     else
       @user = User.new(username: params[:username], email: params[:email], password: params[:password])
@@ -35,6 +37,7 @@ class UsersController < ApplicationController
 
       session[:user_id] = @user.id
 
+      flash[:success] = "You have successfully registered!"
       redirect "/folders"
     end
   end
@@ -62,12 +65,17 @@ class UsersController < ApplicationController
 
       if @user && @user.authenticate(params[:password])
         session[:user_id] = @user.id
+
+        flash[:success] = "You have successfully logged in!"
         redirect "/#{@user.slug}"
+
       else
-        redirect "/signup"
+        flash[:warning] = "Could not verify the password or username. Please check and try again."
+        redirect "/login"
       end
 
     else
+      flash[:login] = "Could not log you in. Please check your username and password and try again."
       redirect "/login"
     end
   end
@@ -80,8 +88,11 @@ class UsersController < ApplicationController
     if logged_in?
 
       session.clear
+
+      flash[:success] = "You have successfully logged out."
       redirect "/"
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -94,6 +105,7 @@ class UsersController < ApplicationController
     if logged_in?
       erb :"users/edit_user"
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -112,9 +124,12 @@ class UsersController < ApplicationController
       @user.email = params[:email] if params[:email] != ""
 
       @user.save!(validate: false)
+
+      flash[:success] = "Your information has been successfully updated."
       redirect "/#{@user.slug}/user_info"
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -127,6 +142,9 @@ class UsersController < ApplicationController
     if logged_in?
       @user = current_user
       erb :"users/user_info"
+    else
+      flash[:login] = "You are not logged in. Please Log in or Register."
+      redirect "/login"
     end
   end
 
@@ -139,7 +157,8 @@ class UsersController < ApplicationController
       @user = current_user
       erb :"users/show_user"
     else
-      redirect "/signup"
+      flash[:login] = "You are not logged in. Please Log in or Register."
+      redirect "/login"
     end
   end
 
@@ -152,12 +171,15 @@ class UsersController < ApplicationController
       @user = User.find_by_slug(params[:slug])
       if @user.id == current_user.id
         @user.destroy
+
+        flas[:success] = "Your account was successfully deleted."
         redirect "/"
       else
         redirect "/#{@user.slug}"
       end
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end

@@ -1,17 +1,25 @@
+<h3> Item Information: </h3>
+<br>
 
   <label for="item_name">Item Name:
   <%= @item.name %>
   </label>
   <br>
 
-  <label for="item_cost">Item Cost:
-  <%= @item.cost %> $ 
+  <label for="item_cost">Item Cost: $
+  <%= @item.cost %>
   </label>
   <br>
 
   <label for="item_description">Item Description: </label><br>
   <p><%= @item.description %></p>
   <br>
+
+  <h5>This item is in the following folders: </h5>
+  <% @item.folders.each do |folder| %>
+    <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>
+    <br>
+  <% end %>
   <br>
 
   <form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/edit">

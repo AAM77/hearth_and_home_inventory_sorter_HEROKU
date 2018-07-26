@@ -1,26 +1,35 @@
 <div>
 
-  <h2 id="caution">CAUTION: Deleting an item from this page will remove the item from all of its associated folders</h2>
+  <h2 class="caution">CAUTION: </h2>
+  <h2 class="caution"> Deleting an item from this page will remove the item from all of its associated folders</h2>
   <br>
 
   <!-- FOLDERS AND THEIR ITEMS  -->
   <br>
   <div class="folder_items">
     <% @folders.each do |folder| %>
-      <h3 class="folder_items">[----------------------------- <%= folder.name %> -----------------------------]</h3>
+      <h3 class="folder_items">[----------------------------- <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a> -----------------------------]</h3>
+
+      <br>
 
       <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
         <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
-        <br>
+        <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
 
         <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-          <button class="content_button" type="submit">Edit</button>
+          <button class="content_button" type="submit">Edit Item Info</button>
         </form>
 
         <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
           <input id="hidden" type="hidden" name="_method" value="delete">
-          <button class="content_button" type="submit">Delete Item</button>
+          <button class="content_button" type="submit">Delete Item from My Account</button>
         </form>
+
+        <% if folder.items.size > 1 %>
+          <br>
+          <div class="item-divider" > - </div>
+          <br>
+        <% end %>
 
       <% end %> <!-- folder.items.sort{}.each -->
       <br>
@@ -37,6 +46,7 @@
   <% @items.each do |item| %>
     <% if item.folders.empty? %>
       <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"> <%= item.name %> </a>
+      <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
 
       <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
         <button class="content_button" type="submit">Edit</button>
@@ -56,7 +66,6 @@
   <form action="/<%= current_user.slug %>/items/new">
     <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
   </form>
-
 
     <br>
     <br>

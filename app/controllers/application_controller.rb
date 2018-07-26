@@ -45,6 +45,13 @@ class ApplicationController < Sinatra::Base
       !!current_user
     end
 
+    ####################################
+    # Generates a Simple Flash Message #
+    ####################################
+    def generate_flash(message)
+        flash[:success_message] = message
+    end
+
 
     ######  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  ######
     ##  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  ####
@@ -79,16 +86,16 @@ class ApplicationController < Sinatra::Base
     ########################################################
     def add_the_newly_created_item_to_the_category(item_name, item_description, item_cost, instance_variable)
       if !item_name.empty?
-        new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
-        instance_variable.items << new_item
-        current_user.items << new_item
+        new_item = Item.create(name: item_name, description: item_description, cost: item_cost) if item_name != ""
+        instance_variable.items << new_item if item_name != ""
+        current_user.items << new_item  if item_name != ""
       end
     end
 
 
-    ######################
+    ########################
     # ** FOLDER HELPERS ** #
-    ######################
+    ########################
 
     ########################################################
     # Adds selected items from the drop down to the folder #
@@ -107,7 +114,7 @@ class ApplicationController < Sinatra::Base
     # if the new item name field is not empty              #
     ########################################################
     def add_the_newly_created_item_to_the_folder(item_name, item_description, item_cost, instance_variable)
-      if !item_name.empty?
+      if item_name != ""
         new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
         instance_variable.items << new_item
         current_user.items << new_item
@@ -134,17 +141,35 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-    ########################################################
-    # Adds the item to the newly created folder            #
-    # if the new folder name field is not empty            #
-    ########################################################
-    def add_the_item_to_the_newly_created_folder(folder_name, instance_variable)
-      folder_exists = !folder_name.empty?
+    #############################################
+    # Adds the item to the newly created folder #
+    # if the new folder name field is not empty #
+    #############################################
+    def add_the_item_to_the_newly_created_folder(new_folder_name, instance_variable)
 
-      if folder_exists
-        new_folder = Folder.create(name: folder_name)
-        new_folder.items << new_item
-        current_user.folders << new_folder
+      if new_folder_name != ""
+        folder_name_exists = !Folder.find_by_folder_name(new_folder_name, current_user.id).empty?
+        if !folder_name_exists
+          new_folder = Folder.create(name: new_folder_name)
+          new_folder.items << instance_variable
+          current_user.folders << new_folder
+        end
+      end
+    end
+
+    ###############################################
+    # Adds the item to the newly created category #
+    # if the new category name field is not empty #
+    ###############################################
+    def add_the_item_to_the_newly_created_category(new_category_name, instance_variable)
+
+      if new_category_name != ""
+        category_name_exists = !current_user.find_by_category_name(new_category_name).empty?
+        if !category_name_exists
+          new_category = Category.create(name: new_category_name)
+          new_category.items << instance_variable
+          current_user.categories << new_category
+        end
       end
     end
 

@@ -20,6 +20,7 @@ huang.create_folder("Gym")
 motunui.create_folder("My Island")
 
 USERS.each {|user| user.initial_folders}
+USERS.each {|user| user.initial_categories}
 USERS.each {|user| user.create_folder("Triple A") if user.username.downcase.include?("a")}
 USERS.each {|user| user.create_folder("J Room") if user.username.downcase.include?("j")}
 

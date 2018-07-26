@@ -1,17 +1,28 @@
-<% if flash[:success_message] %>
+<h2><%= current_user.username %>'s Folders</h2>
+<br>
+
+<% if flash[:success] %>
   <br>
-  <div id="flash_message" style="text-align: center; border: 2px solid green;">
-    <%= flash[:success_message] %>
+  <div class="flash_success">
+    <%= flash[:success] %>
   </div>
   <br>
 
-<% elsif flash[:fail_message] %>
+<% elsif flash[:warning] %>
   <br>
-  <div id="flash_message" style="border: 2px solid red;">
-    <%= flash[:fail_message] %>
+  <div class="flash_warning">
+    <%= flash[:warning] %>
+  </div>
+  <br>
+
+<% elsif flash[:warning] %>
+  <br>
+  <div class="flash_login">
+    <%= flash[:warning] %>
   </div>
   <br>
 <% end %>
+
 
 <% @folders.each do |folder| %>
 <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>

@@ -15,6 +15,7 @@ class FoldersController < ApplicationController
       @folders = current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"folders/folder_index"
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/"
     end
   end
@@ -27,6 +28,7 @@ class FoldersController < ApplicationController
       @items = current_user.items
       erb :"folders/create_folder"
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -41,16 +43,23 @@ class FoldersController < ApplicationController
       if params[:folder][:name] == ""
         redirect "/#{current_user.slug}/folders/new"
       else
-        @folder = Folder.create(name: params[:folder][:name])
+        folder_name_exists = !Folder.find_by_folder_name(params[:folder][:name], current_user.id).empty?
 
-        add_existing_items_to_the_folder(params[:folder][:item_ids], @folder)
-        add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
-        current_user.folders << @folder
+        if folder_name_exists
+          redirect "/#{current_user.slug}/folders/new"
+        else
+          @folder = Folder.create(name: params[:folder][:name])
 
-        redirect "/#{current_user.slug}/folders"
+          add_existing_items_to_the_folder(params[:folder][:item_ids], @folder)
+          add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
+          current_user.folders << @folder
+
+          redirect "/#{current_user.slug}/folders"
+        end #if folder_exists
       end #params[:folder][:name] empty
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end #logged_in?
   end
@@ -73,6 +82,7 @@ class FoldersController < ApplicationController
       end
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -98,14 +108,16 @@ class FoldersController < ApplicationController
           add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
 
           @folder.save
+          flash[:success] = "Successfully updated folder details for folder: [#{@folder.name}]."
           redirect "/#{current_user.slug}/folders/#{@folder.slug}"
-        end # folder_name_exists?
-      end #if @folder
+        end
+      end
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
-    end # if logged_in?
-  end # patch
+    end
+  end
 
 
   ####################################
@@ -115,8 +127,8 @@ class FoldersController < ApplicationController
     if logged_in?
       @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
       erb :"folders/show_folder"
-      # lists the items in alphabetical order
     else
+      flash[:warning] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -133,14 +145,15 @@ class FoldersController < ApplicationController
 
       if @folder.user_id == current_user.id
         @folder.destroy
-        flash[:success_message] = "Successfully deleted folder: [ #{@folder.name} ]"
+        flash[:success] = "Successfully deleted folder: [ #{@folder.name} ]"
         redirect "/#{current_user.slug}/folders"
       else
-        flash[:fail_message] = "ERROR: Could not delete folder: [ #{@folder.name} ]."
-        redirect "/#{current_user.slug}"
+        flash[:warning] = "ERROR: Could not delete folder: [ #{@folder.name} ]."
+        redirect "/#{current_user.slug}/folders"
       end
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end

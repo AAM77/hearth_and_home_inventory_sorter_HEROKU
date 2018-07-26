@@ -1,8 +1,11 @@
 <h3> [ -- <%= @folder.name %> -- ] contains the Following Items: </h3>
+<br>
+<br>
 
 <% @folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
 
-    <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a><br>
+    <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a>
+    <p> Price: $ <%= item.cost %> -- { ID: <%= item.id %> } </p>
 
     <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
       <button class="content_button"  type="submit">Edit Item</button>
@@ -10,12 +13,24 @@
 
     <form action="/<%= current_user.slug %>/folders/<%= @folder.id %>/items/<%= item.slug %>/<%= item.id %>/delete" method="POST">
       <input id="hidden" type="hidden" name="_method" value="delete">
-      <button class="content_button"  type="submit">Delete Item</button>
+      <button class="content_button"  type="submit">Delete Item from This Folder</button>
     </form>
 
     <br>
+    <div class="item-divider" > - </div>
+    <br>
 
 <% end %>
+
+<br>
+<br>
+
+<form action="/<%= current_user.slug %>/items/new">
+  <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
+</form>
+
+<br>
+<br>
 
 <form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/edit">
   <button class="form_button"  type="submit">Edit Folder</button>

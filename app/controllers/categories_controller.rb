@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
 
-  # There must be a way to refactor this and folders so as to not repeat myself.
+  # There must be a way to refactor this and categories so as to not repeat myself.
   # I could just get rid of the categories altogether...
 
 
@@ -19,7 +19,8 @@ class CategoriesController < ApplicationController
       @categories = current_user.categories.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"categories/category_index"
     else
-      redirect "/"
+      flash[:login] = "You are not logged in. Please Log in or Register."
+      redirect "/login"
     end
   end
 
@@ -31,6 +32,7 @@ class CategoriesController < ApplicationController
       @items = current_user.items
       erb :"categories/create_category"
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -45,16 +47,24 @@ class CategoriesController < ApplicationController
       if params[:category][:name] == ""
         redirect "/#{current_user.slug}/categories/new"
       else
-        @category = Category.create(name: params[:category][:name])
+        category_name_exists = current_user.find_by_category_name(params[:category][:name])
 
-        add_existing_items_to_the_category(params[:category][:item_ids], @category)
-        add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
-        current_user.categories << @category
+        if category_name_exists
+          redirect "/#{current_user.slug}/categories/new"
+        else
+          @category = Category.create(name: params[:category][:name])
 
-        redirect "/#{current_user.slug}/categories"
+          add_existing_items_to_the_category(params[:category][:item_ids], @category)
+          add_the_newly_created_item_to_the_category(params[:item][:name], params[:item][:description], params[:item][:cost], @category)
+          current_user.categories << @category
+
+          flash[:success] = "Successfully created category: #{@categroy}"
+          redirect "/#{current_user.slug}/categories"
+        end #if category_exists
       end #params[:category][:name] empty
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end #logged_in?
   end
@@ -73,10 +83,12 @@ class CategoriesController < ApplicationController
       if @category
         erb :"categories/edit_category"
       else
+        flash[:warning] = "That category does not exist."
         redirect "/#{current_user.slug}/categories"
       end
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -93,22 +105,25 @@ class CategoriesController < ApplicationController
 
       if @category
         if category_name_exists
+          flash[:warning] = "Category name already exists"
           redirect "/#{current_user.slug}/categories/#{@category.slug}/edit"
 
         else
           @category.name = params[:category][:name] if params[:category][:name] != ""
           add_existing_items_to_the_category(params[:category][:item_ids], @category) { @category.items.clear }
-          add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
+          add_the_newly_created_item_to_the_category(params[:item][:name], params[:item][:description], params[:item][:cost], @category)
 
           @category.save
+          flash[:success] = "Successfully edited details for category: [#{@category.name}]"
           redirect "/#{current_user.slug}/categories"
-        end # category_name_exists?
-      end #if @category
+        end
+      end
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
-    end # if logged_in?
-  end # patch
+    end
+  end
 
   ######################################
   # Show route for a specific category #
@@ -117,8 +132,8 @@ class CategoriesController < ApplicationController
     if logged_in?
       @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
       erb :"categories/show_category"
-      # lists the items in alphabetical order
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end
@@ -135,14 +150,15 @@ class CategoriesController < ApplicationController
 
       if @category.user_id == current_user.id
         @category.destroy
-        flash[:success_message] = "Successfully deleted category: [ #{@category.name} ]"
+        flash[:success] = "Successfully deleted category: [ #{@category.name} ]"
         redirect "/#{current_user.slug}/categories"
       else
-        flash[:fail_message] = "ERROR: Could not delete category: [ #{@category.name} ]."
+        flash[:warning] = "ERROR: Could not delete category: [ #{@category.name} ]."
         redirect "/#{current_user.slug}"
       end
 
     else
+      flash[:login] = "You are not logged in. Please Log in or Register."
       redirect "/login"
     end
   end

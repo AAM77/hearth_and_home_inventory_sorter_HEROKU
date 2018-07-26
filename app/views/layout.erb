@@ -54,7 +54,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="/<%= current_user.slug %>/categories">All Categories</a>
                       <div class="dropdown-divider"></div>
-                      <% current_user.categories.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |folder| %>
+                      <% current_user.categories.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |category| %>
                         <a class="dropdown-item" href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
                       <% end %>
                     </div>
@@ -68,6 +68,7 @@
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="/<%= current_user.slug %>/folders">All Folders</a>
+                      <a class="dropdown-item" href="/<%= current_user.slug %>/folders/new">Create New Folder</a>
                       <div class="dropdown-divider"></div>
                       <% current_user.folders.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |folder| %>
                         <a class="dropdown-item" href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>

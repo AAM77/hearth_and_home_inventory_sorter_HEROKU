@@ -39,6 +39,24 @@ body {
   margin-top: 200px;
 }
 
+.flash_warning {
+  text-align: center;
+  border: 2px solid red;"
+}
+
+.flash_success {
+  text-align: center;
+  border: 2px solid green;"
+}
+
+.item-divider {
+  width: 300px;
+  height:0;
+  border-top: 2px solid #157EFB;
+  font-size:0;"
+  margin-top: 200px;
+}
+
 h3 .folder_items {
   color: blue;
   margin-bottom: 20px;

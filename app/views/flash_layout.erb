@@ -1,0 +1,25 @@
+<!-- FLASH MESSAGES -->
+
+<% if flash[:success] %>
+  <br>
+  <div class="flash_success">
+    <%= flash[:success] %>
+  </div>
+  <br>
+
+<% elsif flash[:warning] %>
+  <br>
+  <div class="flash_warning">
+    <%= flash[:warning] %>
+  </div>
+  <br>
+
+<% elsif flash[:warning] %>
+  <br>
+  <div class="flash_login">
+    <%= flash[:warning] %>
+  </div>
+  <br>
+<% end %>
+
+<!-- END FLASH MESSAGES -->

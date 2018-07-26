@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180714194403) do
   create_table "items", force: :cascade do |t|
     t.string  "name"
     t.string  "description"
-    t.integer "cost"
+    t.decimal "cost",        precision: 30, scale: 2
     t.integer "user_id"
   end
 
