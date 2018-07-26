@@ -1,5 +1,5 @@
-<%= erb(:"partials/category_folder_show_partial", :locals => {
-  :object_one => @category, :object_two => @items,
-  :fs_object_string => "/categories", :edit_string => "Category",
-  :delete_string => "Category"
+<%= erb(:"categories_folders/category_folder_show_partial", :locals => {
+  :object_one => @folder, :object_two => @items,
+  :fs_object_string => "/folders", :edit_string => "Folder",
+  :delete_string => "Folder"
   })%>

@@ -1,4 +1,4 @@
-<%= erb(:"partials/category_folder_edit_partial", :locals => {
-  :object => @category, :object_string => "category",
-  :edit_path => "/"+current_user.slug+"/categories/"+@category.slug+"/edit"
+<%= erb(:"categories_folders/category_folder_edit_partial", :locals => {
+  :object => @folder, :object_string => "folder",
+  :edit_path => "/"+current_user.slug+"/categories/"+@folder.slug+"/edit"
   })%>

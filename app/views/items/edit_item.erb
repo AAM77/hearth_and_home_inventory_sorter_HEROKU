@@ -22,32 +22,17 @@
   <!-- Display a dropdown menu of existing folders/categories to choose from -->
   <!-- Display folder/category creation form -->
   <!-- Creates folder/category only if name does not exist -->
+
+  <h4> Choose a Folder: (optional)</h4>
+
   <%= erb(:"partials/category_folder_select_partial", :locals => {:object => @folders, :object_string => "folder"}) %>
 
+  <br>
+
+  <h4> Choose a Category: (optional)</h4>
+
   <%= erb(:"partials/category_folder_select_partial", :locals => {:object => @categories, :object_string => "category"}) %>
-
-  <br>
-  <!-- Displays a dropdown menu of existing folders to choose from -->
-  <label>Add or Remove this item from existing folders: </label>
-  <br>
-
-  <select name="item[folder_ids][]" size="4" multiple>
-    <% @folders.each do |folder| %>
-      <option value="<%= folder.id %>" <%= 'selected' if @item.folders.include?(folder) %> ><%= folder.name %></option>
-    <% end %>
-  </select>
-  <br>
-  <br>
-
-  <!-- Displays folder creation form -->
-  <!-- Creates folder only if name does not exist -->
-
-  <h5>Add to new folder as well?</h5>
-  <label>Folder Name:
-  <input type="text" name="folder[name]" placeholder="Folder Name">
-  </label>
-  <br>
-  <br>
+  
 
   <!-- Submit Button -->
   <button class="content_button"  type="submit">Update Item Info</button>
