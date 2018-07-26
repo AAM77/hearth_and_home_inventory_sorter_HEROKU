@@ -1,3 +1,4 @@
+<!-- Controls flash messages -->
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Display the Page Title -->
@@ -11,9 +12,11 @@
   <label><%=object_string%> Name:
     <input type="text" name="<%=object_string%>[name]" placeholder="<%=object_string.capitalize %> Name">
   </label>
+
   <br>
   <br>
 
+  <!-- Provides an a selection box to choose items to add -->
   <%= erb(:"partials/item_selection_new_partial", :locals => {
     :object_string => object_string, :object_items => object_items
     })%>

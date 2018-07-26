@@ -1,3 +1,4 @@
+<!-- Controls flash messages -->
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Display the Page Title -->
@@ -5,7 +6,6 @@
 <br>
 
 <!-- Display Form -->
-<!-- "/<%= current_user.slug %>/categories/<%= @category.slug %>/edit" -->
 <form action="<%= edit_path %>" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
@@ -16,6 +16,7 @@
   <br>
   <br>
 
+  <!-- Provides a selection box to choose items to add or remove -->
   <%= erb(:"partials/item_selection_edit_partial", :locals => {
     :object => object, :object_string => object_string, :object_items => @items
     })%>
@@ -35,6 +36,7 @@
     :temp_description => "Item Description (e.g. shape, color, why it's important, etc.)"
     }) %>
   <!-- ITEM FORM PARTIAL -->
+
 
   <!-- Submit Button -->
   <button class="content_button edit_button"  type="submit">Save Changes</button>

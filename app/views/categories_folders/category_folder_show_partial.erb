@@ -1,6 +1,4 @@
-<!-- PLANNING ON USING THIS TO SERVE AS THE PRIMARY FILE FOR BOTH FOLDER AND CATEGORY -->
-
-
+<!-- Controls flash messages -->
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Displays the Page Title -->
@@ -17,31 +15,27 @@
     <%= object_one.name %> : Contains <%= object_one.items.size %> item(s)</a>
   <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
     <% object_two.each do |item| %>
-      <%= erb(:"partials/item_partial", :locals => {
-        :item => item,
-        :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
-        :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-        :item_delete_path => "/"+current_user.slug+fs_object_string+object_one.slug+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+      <%= erb(:"partials/list_item_partial", :locals => {
+        :item => item, :item_delete_path => "/"+current_user.slug+fs_object_string+object_one.slug+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
         })%>
     <% end %>
   <%= erb(:"partials/accordion_bottom_partial")%>
 </div>
 
+<!--CEATE ITEM BUTTON -->
 <%= erb(:"partials/button_create_item_partial") %>
 
-<br>
 <br>
 
 <!-- EDIT BUTTON -->
 <%= erb(:"partials/button_edit_partial", :locals => {
-  :edit_string => edit_string,
-  :edit_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/edit"
+  :object_string => object_string, :edit_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/edit"
   })%>
 <br>
+
 <!-- DELETE BUTTON -->
 <%= erb(:"partials/button_delete_partial", :locals => {
-  :delete_string => delete_string,
-  :delete_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/delete"
+  :object_string => object_string, :delete_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/delete"
   })%>
 
 

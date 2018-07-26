@@ -2,11 +2,11 @@
 
   <!-- Display the item's url, price, and id -->
   <!-- the id is being displayed temporarily, until I add the option to upload an image -->
-  <a href="<%= item_path %>"><%= item.name %></a>
+  <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a>
   <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
 
   <!-- Display the Edit Button -->
-  <form action="<%= item_edit_path %>">
+  <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
     <button class="content_button"  type="submit">Edit Item</button>
   </form>
 

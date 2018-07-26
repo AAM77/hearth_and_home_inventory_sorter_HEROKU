@@ -1,3 +1,4 @@
+<!-- Controls flash messages -->
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Display Page Title -->
@@ -7,7 +8,7 @@
 <!-- Display Object's url -->
 <% object_plural.each do |object| %>
   <a href="/<%= current_user.slug %>/<%=object_string.pluralize%>/<%= object.slug %>"><%= object.name %></a>
-
+  
   <!-- Display edit button -->
   <form action="/<%= current_user.slug %>/<%=object_string.pluralize%>/<%= object.slug %>/edit">
     <button class="content_button"  type="submit">Edit</button>
@@ -24,8 +25,8 @@
 <br>
 <br>
 
-<!-- Display Creation Link -->
-<a href="/<%= current_user.slug %>/<%=object_string.pluralize%>/new">Create New <%=object_string.capitalize%></a>
+<!-- Display Category/Folder Creation Link -->
+<a href="/<%= current_user.slug %>/<%=object_string.pluralize%>/new">Create New <%= object_string.capitalize %></a>
 
 <br>
 <br>

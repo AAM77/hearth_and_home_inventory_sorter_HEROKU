@@ -1,3 +1,4 @@
+<!-- Controls flash messages -->
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Displays the Page Title -->
@@ -31,16 +32,16 @@
 <% end %>
 <br>
 
-<!-- Displays Edit Item button -->
-<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/edit">
-  <button class="content_button"  type="submit">Edit Item</button>
-</form>
+<!-- EDIT BUTTON -->
+<%= erb(:"partials/button_edit_partial", :locals => {
+  :object_string => "Item", :edit_path => "/"+current_user.slug+"/items/"+@item.slug+"/"+@item.id.to_s+"/edit"
+  })%>
+<br>
 
-<!-- Displays Delete Item button -->
-<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/delete" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete">
-  <button class="content_button"  type="submit">Delete Item</button>
-</form>
+<!-- DELETE BUTTON -->
+<%= erb(:"partials/button_delete_partial", :locals => {
+  :object_string => "Item", :delete_path => "/"+current_user.slug+"/items/"+@item.slug+"/"+@item.id.to_s+"/delete"
+  })%>
 
 <br>
 <br>

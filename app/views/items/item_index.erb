@@ -20,6 +20,7 @@
   <!-- It looks convoluted, but it's not really -->
   <!-- No single large block was doing the task, so I split it into partials -->
   <!-- And, now, I am able to mix and match them based on which components I need -->
+  <!-- the item's delete url is special in this case because it deletes the item from teh account -->
 
 <br>
 
@@ -28,17 +29,12 @@
       <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %> : Contains <%= folder.items.size %> item(s)</a>
     <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
       <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
-        <%= erb(:"partials/item_partial", :locals => {
-          :object => folder, :item => item,
-          :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
-          :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-          :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+        <%= erb(:"partials/list_item_partial", :locals => {
+          :object => folder, :item => item, :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
           })%>
       <% end %>
     <%= erb(:"partials/accordion_bottom_partial")%>
   <% end %>
-
-
 
 <!-- ITEMS THAT ARE NOT ASSOCIATED WITH ANY FOLDERS  -->
 <!-- These items can be edited and reassigned -->
@@ -49,6 +45,7 @@
 
 <!-- Display the item's url, price, and id -->
 <!-- the id is being displayed temporarily, until I add the option to upload an image -->
+<!-- the item's delete url is special in this case because it deletes the item from teh account -->
 
 <br>
 
@@ -58,24 +55,18 @@
     <% @items.each do |item| %>
       <% if item.folders.empty? %>
         <%= erb(:"partials/item_partial", :locals => {
-          :item => item,
-          :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
-          :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-          :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+          :item => item, :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
           })%>
 
         <% end %>
       <% end %>
     <%= erb(:"partials/accordion_bottom_partial")%>
 
-
   <br>
   <br>
 
 <!-- Display Item Creation Button -->
-<form action="/<%= current_user.slug %>/items/new">
-  <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
-</form>
+<%= erb(:"partials/button_create_item_partial") %>
 
 <br>
 <br>
