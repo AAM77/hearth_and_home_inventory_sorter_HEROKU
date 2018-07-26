@@ -22,7 +22,7 @@
   <!-- And, now, I am able to mix and match them based on which components I need -->
 
 <br>
-<div class="folder_items">
+
   <% @folders.each do |folder| %>
     <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
       <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %> : Contains <%= folder.items.size %> item(s)</a>
@@ -37,7 +37,7 @@
       <% end %>
     <%= erb(:"partials/accordion_bottom_partial")%>
   <% end %>
-</div>
+
 
 
 <!-- ITEMS THAT ARE NOT ASSOCIATED WITH ANY FOLDERS  -->
@@ -52,7 +52,7 @@
 
 <br>
 
-<div>
+
   <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseTwo", :heading_num => "headingTwo"})%>
     <h3>Items Not in a Folder</h3>
   <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseTwo", :heading_num => "headingTwo"})%>
@@ -69,11 +69,6 @@
       <% end %>
     <%= erb(:"partials/accordion_bottom_partial")%>
 
-  </div>
-  </div>
-  </div>
-</div>
-</div>
 
 
 
