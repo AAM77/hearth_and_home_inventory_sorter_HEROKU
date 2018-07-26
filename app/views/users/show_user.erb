@@ -1,13 +1,11 @@
-<% if flash[:success] %>
-  <br>
-  <div id="login_success" style="text-align: center; border: 2px solid green;">
-    <%= flash[:success] %>
-  </div>
-  <br>
-<% end %>
+<%= erb(:"partials/flash_partial") %>
 
+<!-- Diplay page title -->
 <h2>Welcome <%= @user.username.capitalize %>,</h2>
+
 <br>
+
+<!-- Displays links for the user to click on -->
 <h5>Please select an option:</h5><br>
 <a href="/<%= @user.slug %>/folders"><%= @user.username.capitalize %>'s Folders</a><br>
 <a href="/<%= @user.slug %>/categories"><%= @user.username.capitalize %>'s Item Categories</a><br>

@@ -1,23 +1,33 @@
+<!-- Display page title -->
+<h2>Edit <%=current_user.username%>'s Information:</h2>
+
+<!-- Display form to edit information -->
 <form action="/<%= current_user.slug %>/edit" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
+  <!-- Request user's first name -->
   <label for="first name">First Name: </label>
   <input type="text" name="first_name" placeholder="First Name">
   <br>
 
+  <!-- Request user's last name -->
   <label for="last name">Last Name: </label>
   <input type="text" name="last_name" placeholder="Last Name">
   <br>
 
+  <!-- Request user's telephone name in a specific pattern with dashes (e.g. 555-555-5555) -->
   <label for="telephone">Telephone </label>
   <input type="tel" name="telephone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 
   <br>
 
+  <!-- Request user's email -->
   <label for="email">Email: </label>
-  <input type="email" name="email" placeholder="Email">
+  <input type="email" name="email" placeholder="<%= current_user.email%>">
   <br>
 
+  <!-- display a link to the user to reset password -->
+  <!-- Note: the link is for show only. I have not added in the feature yet -->
   <label for="reset password">Reset Password: </label>
   <a href="">Click here if you would like to reset your password</a>
   <br>
@@ -25,6 +35,6 @@
   <br>
   <br>
 
+  <!-- Displays Submit Button -->
   <button class="content_button"  type="submit">Update My Info</button>
-
 </form>

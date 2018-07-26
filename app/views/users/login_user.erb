@@ -1,15 +1,24 @@
+<%= erb(:"partials/flash_partial") %>
 
+<!-- Display page title -->
 <h2> Please Log In Below </h2>
 <br>
 
+<!-- Display login form -->
 <form action="/login" method="POST">
+
+  <!-- Request username -->
   <label for="username">Username: </label>
   <input type="text" name="username" placeholder="Username">
   <br>
+
+  <!-- Request password -->
   <label for="password">Password: </label>
   <input type="password" name="password" placeholder="Password">
   <br>
 
+  <!-- Display a link to request a password reset -->
+  <!-- This link is not-functional, as I have not added in the feature yet -->
   <label for="reset password">Forgot Your Password? </label>
   <a href="">Click here to reset your password</a>
   <br>

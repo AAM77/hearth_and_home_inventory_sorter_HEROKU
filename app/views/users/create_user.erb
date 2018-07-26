@@ -1,23 +1,27 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Displays page title -->
 <h2> Welcome to the Registration Page </h2>
 
-<% if flash[:warning] %>
-<br>
-  <div class="flash_warning">
-    <%= flash[:warning] %>
-  </div>
-<br>
-<% end %>
-
+<!-- Displays signup form -->
 <form action="/signup" method="POST">
+
+  <!-- Requests username -->
   <label for="username">Username: </label>
   <input type="text" name="username" placeholder="Username">
   <br>
+
+  <!-- Requests email -->
   <label for="email">Email: </label>
   <input type="email" name="email" placeholder="Email">
   <br>
+
+  <!-- Requests password -->
   <label for="password">Password: </label>
   <input type="password" name="password" placeholder="Password">
   <br>
   <br>
+
+  <!-- Submit button -->
   <button class="content_button"  type="submit">Create User</button>
 </form>

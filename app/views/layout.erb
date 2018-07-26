@@ -26,6 +26,7 @@
       <div class="row">
         <div class="col-sm-12">
 
+          <!-- Display the navbar -->
           <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="/">
               <img src="" width="30" height="30" class="d-inline-block align-top" alt="">| Hearth & Home |
@@ -37,6 +38,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+              <!-- These menu option display only is the user is logged in -->
               <% if logged_in? %>
 
                 <ul class="navbar-nav mr-auto">
@@ -93,10 +95,10 @@
                   </li>
                 </ul>
 
+              <!-- If not logged in, the navbar displays the following options -->
               <% else %>
                 <ul class="navbar-nav mr-auto">
                 </ul>
-
 
                 <ul class="navbar-nav">
                   <li class="nav-item dropdown">
@@ -118,19 +120,24 @@
       </div>
 
 
+      <div id="html_ruby_insert">
 
         <br>
           <%= yield %>
         <br>
 
-        <br>
-        <div class="divider-line" > - </div>
-        <br>
-        <br>
+      </div>
 
+      <!-- A Divider line to separate out the bottom of the page -->
+      <br>
+      <div class="divider-line" > - </div>
+      <br>
+      <br>
 
       <div class="row page-links">
         <div class="col-sm-4">
+
+          <!-- Contact info -->
           <h3>Contact</h3>
 
           <address>
@@ -145,6 +152,7 @@
           </p>
         </div>
 
+        <!-- Useful links -->
         <div class="col-sm-4">
           <h3>Links</h3>
           <p>
@@ -154,6 +162,7 @@
           </p>
         </div>
 
+        <!-- Social Media Links -->
         <div class="col-sm-4">
           <h3>Follow</h3>
           <p>
@@ -164,9 +173,12 @@
         </div>
       </div>
 
+      <!-- Copyright & Developer Info -->
+      <!-- links to my github and blog -->
+
       <div class="row">
         <div class="col-sm-12">
-          <small>&copy; 2018 <strong>Hearth and Home: Inventory Sorter. All Rights Reserved.</strong> Developed by <a href="http://adeelstechbeat.net/">Mohammad Adeel</a> | <a href="https://github.com/AAM77/hearth_and_home_inventory">GitHub</a></small>
+          <small>&copy; 2018 <strong>Hearth and Home Inventory Sorter. All Rights Reserved.</strong> Developed by <a href="http://adeelstechbeat.net/">Mohammad Adeel</a> | <a href="https://github.com/AAM77/hearth_and_home_inventory">GitHub</a></small>
         </div>
       </div>
 
