@@ -78,10 +78,10 @@ class ApplicationController < Sinatra::Base
     # if the new item name field is not empty              #
     ########################################################
     def add_the_newly_created_item_to_the_category(item_name, item_description, item_cost, instance_variable)
-      if !item_name.empty?
-        new_item = Item.create(name: item_name, description: item_description, cost: item_cost) if item_name != ""
-        instance_variable.items << new_item if item_name != ""
-        current_user.items << new_item  if item_name != ""
+      if item_name != ""
+        new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
+        instance_variable.items << new_item
+        current_user.items << new_item
       end
     end
 
@@ -107,10 +107,10 @@ class ApplicationController < Sinatra::Base
     # if the new item name field is not empty              #
     ########################################################
     def add_the_newly_created_item_to_the_folder(item_name, item_description, item_cost, instance_variable)
-      if !item_name.empty?
-        new_item = Item.create(name: item_name, description: item_description, cost: item_cost) if item_name != ""
-        instance_variable.items << new_item if item_name != ""
-        current_user.items << new_item if item_name != ""
+      if item_name != ""
+        new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
+        instance_variable.items << new_item
+        current_user.items << new_item
       end
     end
 
@@ -129,6 +129,20 @@ class ApplicationController < Sinatra::Base
         folder_ids.each do |folder_id|
           folder = current_user.folders.find_by_id(folder_id)
           folder.items << instance_variable
+          current_user.items << instance_variable
+        end
+      end
+    end
+
+    ####################################################################
+    # Adds the item to the categories selected from the drop down menu #
+    ####################################################################
+    def add_the_item_to_existing_categories(category_ids, instance_variable)
+      if category_ids
+        yield if block_given?
+        category_ids.each do |category_id|
+          category = current_user.categorys.find_by_id(category_id)
+          category.items << instance_variable
           current_user.items << instance_variable
         end
       end
@@ -157,7 +171,7 @@ class ApplicationController < Sinatra::Base
     def add_the_item_to_the_newly_created_category(new_category_name, instance_variable)
 
       if new_category_name != ""
-        category_name_exists = !current_user.find_by_category_name(new_category_name).empty?
+        category_name_exists = !Category.find_by_category_name(new_category_name, current_user.id).empty?
         if !category_name_exists
           new_category = Category.create(name: new_category_name)
           new_category.items << instance_variable

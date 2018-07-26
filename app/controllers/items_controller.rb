@@ -54,6 +54,8 @@ class ItemsController < ApplicationController
 
         add_the_item_to_existing_folders(params[:item][:folder_ids], @item)
         add_the_item_to_the_newly_created_folder(params[:folder][:name], @item)
+        add_the_item_to_existing_categories(params[:item][:category_ids], @item)
+        add_the_item_to_the_newly_created_category(params[:category][:name], @item)
 
         @item.save
 
