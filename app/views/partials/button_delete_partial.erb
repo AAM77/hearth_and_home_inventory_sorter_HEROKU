@@ -1,0 +1,10 @@
+
+<!-- Display Delete Folder button -->
+
+<!-- DELETE BUTTON-->
+<div>
+  <form action="<%= delete_path %>" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <button class="form_button"  type="submit"> Delete <%= delete_string %></button>
+  </form>
+</div>

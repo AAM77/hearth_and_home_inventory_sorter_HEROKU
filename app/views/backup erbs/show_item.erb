@@ -1,0 +1,49 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Displays the Page Title -->
+<h3> Item Information: </h3>
+<br>
+
+<!-- Displays item name -->
+<label for="item_name">Item Name:
+  <%= @item.name %>
+</label>
+<br>
+
+<!-- Displays item cost -->
+<label for="item_cost">Item Cost: $
+  <%= @item.cost %>
+</label>
+<br>
+
+<!-- Displays item description -->
+<label for="item_description">Item Description:
+  <p><%= @item.description %></p>
+</label>
+<br>
+
+<!-- Displays which folders the item is in -->
+<h5>This item is in the following folders: </h5>
+
+<% @item.folders.each do |folder| %>
+  <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>
+  <br>
+<% end %>
+<br>
+
+<!-- Displays Edit Item button -->
+<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/edit">
+  <button class="content_button"  type="submit">Edit Item</button>
+</form>
+
+<!-- Displays Delete Item button -->
+<form action="/<%= current_user.slug %>/items/<%= @item.slug %>/<%= @item.id %>/delete" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <button class="content_button"  type="submit">Delete Item</button>
+</form>
+
+<br>
+<br>
+
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

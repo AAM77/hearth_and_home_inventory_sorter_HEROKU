@@ -1,48 +1,5 @@
-<%= erb(:"partials/flash_partial") %>
-
-<!-- Displays the Page Title -->
-<!-- Lists the items in the category (alphabetical Order) -->
-<!-- Displays an item url + edit and delete buttons -->
-
-<div class="category_container">
-
-  <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
-    <strong><%= @category.name %></strong>  :  <p>contains <%= @category.items.size %> item(s)</p>
-  <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
-    <% @items.each do |item| %>
-      <%= erb(:"partials/item_partial", :locals => {
-        :item => item,
-        :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
-        :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-        :item_delete_path => "/"+current_user.slug+"/categories"+@category.slug+@category.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
-        })%>
-    <% end %>
-  <%= erb(:"partials/accordion_bottom_partial")%>
-</div>
-
-<br>
-
-<!-- Displays Item Creation Button -->
-<form action="/<%= current_user.slug %>/items/new">
-  <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
-</form>
-
-<br>
-<br>
-
-<!-- Displays Edit Category button -->
-<form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/edit">
-  <button class="form_button"  type="submit">Edit Category</button>
-</form>
-
-<!-- Display Delete Category button -->
-<form action="/<%= current_user.slug %>/categories/<%= @category.slug %>/delete" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete">
-  <button class="form_button"  type="submit">Delete Category</button>
-</form>
-
-<br>
-<br>
-
-<!-- Display a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<%= erb(:"partials/category_folder_show_partial", :locals => {
+  :object_one => @category, :object_two => @items,
+  :fs_object_string => "/categories", :edit_string => "Category",
+  :delete_string => "Category"
+  })%>

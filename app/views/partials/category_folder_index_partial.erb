@@ -1,0 +1,34 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Display Page Title -->
+<h2><%= current_user.username %>'s <%=object_string.pluralize%></h2>
+<br>
+
+<!-- Display Object's url -->
+<% object_plural.each do |object| %>
+  <a href="/<%= current_user.slug %>/<%=object_string.pluralize%>/<%= object.slug %>"><%= object.name %></a>
+
+  <!-- Display edit button -->
+  <form action="/<%= current_user.slug %>/<%=object_string.pluralize%>/<%= object.slug %>/edit">
+    <button class="content_button"  type="submit">Edit</button>
+  </form>
+
+  <!-- Display delete button -->
+  <form action="/<%= current_user.slug %>/<%=object_string.pluralize%>/<%= object.slug %>/delete" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <button class="content_button"  type="submit">Delete <%=object_string.capitalize%></button>
+  </form><br>
+
+<% end %>
+
+<br>
+<br>
+
+<!-- Display Creation Link -->
+<a href="/<%= current_user.slug %>/<%=object_string.pluralize%>/new">Create New <%=object_string.capitalize%></a>
+
+<br>
+<br>
+
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

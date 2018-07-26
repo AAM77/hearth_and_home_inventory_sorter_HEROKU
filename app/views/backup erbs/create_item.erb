@@ -1,0 +1,29 @@
+<%= erb(:"partials/flash_partial") %>
+
+<!-- Displays page title -->
+<h3> Create a New Item </h3>
+<br>
+
+
+<form action="/<%= current_user.slug %>/items/new" method="POST">
+
+  <!-- Lists the items in the folder (alphabetical Order) -->
+  <!-- Displays an item url + edit and delete buttons -->
+
+  <!-- ITEM FORM PARTIAL -->
+  <%= erb(:"partials/item_form_partial", :locals => {
+    :temp_name => "Item Name", :temp_cost => "0.00",
+    :temp_description => "Item Description (e.g. shape, color, why it's important, etc.)",
+    :object_one => @folders, :object_two => @categories}) %>
+  <!-- ITEM FORM PARTIAL -->
+
+
+  <!-- Submit Button -->
+  <button class="content_button"  type="submit">Create Item</button>
+</form>
+
+<br>
+<br>
+
+<!-- Displays a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()">Go Back</a>

@@ -1,52 +1,5 @@
-<%= erb(:"partials/flash_partial") %>
-
-<!-- Displays the Page Title -->
-<h3> [ -- <%= @folder.name %> -- ] contains the Following Items: </h3>
-<br>
-<br>
-
-<!-- Lists the items in the folder (alphabetical Order) -->
-<!-- Displays an item url + edit and delete buttons -->
-
-<div class="folder_container">
-
-  <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
-    <strong><%= @folder.name %></strong>  :  <p>contains <%= @folder.items.size %> item(s)</p>
-  <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
-    <% @items.each do |item| %>
-      <%= erb(:"partials/item_partial", :locals => {
-        :item => item,
-        :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
-        :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-        :item_delete_path => "/"+current_user.slug+"/folders"+@folder.slug+@folder.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
-        })%>
-    <% end %>
-  <%= erb(:"partials/accordion_bottom_partial")%>
-</div>
-
-<br>
-
-<!-- Displays Item Creation Button -->
-<form action="/<%= current_user.slug %>/items/new">
-  <button class="content_button" type="submit"><a class="add_button" href="/<%= current_user.slug %>/items/new">Add a New Item</a></button>
-</form>
-
-<br>
-<br>
-
-<!-- Displays Edit Folder button -->
-<form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/edit">
-  <button class="form_button"  type="submit">Edit Folder</button>
-</form>
-
-<!-- Display Delete Folder button -->
-<form action="/<%= current_user.slug %>/folders/<%= @folder.slug %>/delete" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete">
-  <button class="form_button"  type="submit">Delete Folder</button>
-</form>
-
-<br>
-<br>
-
-<!-- Display a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<%= erb(:"partials/category_folder_show_partial", :locals => {
+  :object_one => @category, :object_two => @items,
+  :fs_object_string => "/categories", :edit_string => "Category",
+  :delete_string => "Category"
+  })%>

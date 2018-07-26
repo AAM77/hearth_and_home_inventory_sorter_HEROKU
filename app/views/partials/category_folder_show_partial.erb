@@ -1,11 +1,5 @@
 <!-- PLANNING ON USING THIS TO SERVE AS THE PRIMARY FILE FOR BOTH FOLDER AND CATEGORY -->
 
-@folders --> object_one
-@items --> object_two
-/folders --> f_sslash_string
-
-
-
 
 <%= erb(:"partials/flash_partial") %>
 
@@ -19,15 +13,15 @@
 
 <div class="folder_container">
 
-  <%= erb(:"partials/accordion_top_partial")%>
+  <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
     <%= object_one.name %> : Contains <%= object_one.items.size %> item(s)</a>
-  <%= erb(:"partials/accordion_middle_partial")%>
+  <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
     <% object_two.each do |item| %>
       <%= erb(:"partials/item_partial", :locals => {
         :item => item,
         :item_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s,
         :item_edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
-        :item_delete_path => "/"+current_user.slug+f_slash_string+object_one.slug+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+        :item_delete_path => "/"+current_user.slug+fs_object_string+object_one.slug+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
         })%>
     <% end %>
   <%= erb(:"partials/accordion_bottom_partial")%>
@@ -38,20 +32,18 @@
 <br>
 <br>
 
-<!-- Displays Edit Folder button -->
-<!-- EDIT BUTTON... <%= edit_path %> ::: /<%= current_user.slug %>/folders/<%= object_one.slug %>/edit -->
-<!-- <%= edit_string %> ::: for button label -->
-<form action="<%= edit_path %>">
-  <button class="form_button"  type="submit">Edit <%= edit_string %></button>
-</form>
+<!-- EDIT BUTTON -->
+<%= erb(:"partials/button_edit_partial", :locals => {
+  :edit_string => edit_string,
+  :edit_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/edit"
+  })%>
+<br>
+<!-- DELETE BUTTON -->
+<%= erb(:"partials/button_delete_partial", :locals => {
+  :delete_string => delete_string,
+  :delete_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/delete"
+  })%>
 
-<!-- Display Delete Folder button -->
-<!-- DELETE BUTTON... <%= delete_path %> ::: /<%= current_user.slug %>/folders/<%= object_one.slug %>/delete
-<!-- <%= edit_string %> ::: for button label -->
-<form action="<%= delete_path %>" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete">
-  <button class="form_button"  type="submit"><%= delete_string %></button>
-</form>
 
 <br>
 <br>
