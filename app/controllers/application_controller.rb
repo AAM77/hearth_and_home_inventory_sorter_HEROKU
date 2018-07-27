@@ -61,6 +61,7 @@ class ApplicationController < Sinatra::Base
     # ** CATEGORY HELPERS ** #
     ##########################
 
+
     ########################################################
     # Adds selected items from the drop down to the category #
     ########################################################
@@ -70,18 +71,6 @@ class ApplicationController < Sinatra::Base
         item_ids.each do |item_id|
           instance_variable.items << current_user.items.find_by_id(item_id)
         end
-      end
-    end
-
-    ########################################################
-    # Adds the new item to the folder and user's item list #
-    # if the new item name field is not empty              #
-    ########################################################
-    def add_the_newly_created_item_to_the_category(item_name, item_description, item_cost, instance_variable)
-      if item_name != ""
-        new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
-        instance_variable.items << new_item
-        current_user.items << new_item
       end
     end
 
@@ -107,7 +96,7 @@ class ApplicationController < Sinatra::Base
     # if the new item name field is not empty              #
     ########################################################
     def add_the_newly_created_item_to_the_folder(item_name, item_description, item_cost, instance_variable)
-      if item_name != ""
+      if !item_name.empty?
         new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
         instance_variable.items << new_item
         current_user.items << new_item
@@ -119,20 +108,97 @@ class ApplicationController < Sinatra::Base
     # ** ITEM HELPERS ** #
     ########################
 
+    ########################################################
+    # Adds the new item to the folder and user's item list #
+    # if the new item name field is not empty              #
+    ########################################################
+    def add_the_newly_created_item(item_name, item_description, item_cost, instance_variable)
+      if !item_name.empty?
+        new_item = Item.create(name: item_name, description: item_description, cost: item_cost)
+        instance_variable.items << new_item
+        current_user.items << new_item
+        instance_variable.save
+        current_user.save
+      end
+    end
+
 
     #################################################################
     # Adds the item to the folders selected from the drop down menu #
     #################################################################
-    def add_the_item_to_existing_folders(folder_ids, instance_variable)
-      if folder_ids
+
+    folder_proc = proc { |user, folder_id| user.folders.find_by_id(folder_id) }
+    category_proc = proc { |user, category_id| user.categories.find_by_id(category_id) }
+
+    def add_to_existing_folder_category(category_ids, instance_variable)
+      if category_ids
         yield if block_given?
-        folder_ids.each do |folder_id|
-          folder = current_user.folders.find_by_id(folder_id)
-          folder.items << instance_variable
+        category_ids.each do |category_id|
+          category = current_user.categorys.find_by_id(category_id)
+          category.items << instance_variable
           current_user.items << instance_variable
         end
       end
     end
+
+    def call_folder_category(proc_name, user)
+      snooze = Item.create(name: "sleep", description: "zzzzz zzzzz zzzz", cost: 3434253)
+      @object_ids.each do |object_id|
+        section = proc_name.call(user, object_id)
+        if !section.nil?
+          section.items << snooze
+        end
+      end
+    end
+
+    sarah.categories.each do |category|
+      category.items.each do |item|
+        if item.name == "sleep"
+          puts "#{category.name} <- :: -> #{item.name}"
+        end
+      end
+    end
+
+    #
+    #
+    #
+
+    ########
+
+    #
+    #
+    #
+
+
+    def add_the_item_to_existing_sections(object_ids, object_var, proc_name)
+      if object_ids
+        yield if block_given?
+        object_ids.each do |object_id|
+          section = proc_name.call
+          current_user.items << instance_variable
+          section.items << instance_variable
+        end
+      end
+    end
+
+
+    def add_the_item_to_existing_sections(section_ids, instance_variable, sections)
+      if section_ids
+        yield if block_given?
+        section_ids.each do |section_id|
+          section = current_user.sections.find_by_id(folder_id)
+          section.items << instance_variable
+          current_user.items << instance_variable
+          section.save
+          current_user.save
+        end
+      end
+    end
+
+    def testing(user, sections)
+      user.sections.each {|section| puts section.name}
+    end
+
 
     ####################################################################
     # Adds the item to the categories selected from the drop down menu #

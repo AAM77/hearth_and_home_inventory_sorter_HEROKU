@@ -6,6 +6,14 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :email, :password
   has_secure_password
 
+  def self.create_user(username:, email:, password:)
+    new_user = self.new(username: username, email: email, password: password)
+    new_user.initial_folders
+    new_user.initial_categories
+    new_user.save
+    new_user
+  end
+
   def initial_folders
     self.folders << Folder.create(name: "Home")
     self.folders << Folder.create(name: "Work")
@@ -22,6 +30,7 @@ class User < ActiveRecord::Base
     self.categories << Category.create(name: "Personal Grooming")
     self.categories << Category.create(name: "Shoes")
     self.categories << Category.create(name: "Video Games")
+    self.save
   end
 
   ####################################################
@@ -30,8 +39,9 @@ class User < ActiveRecord::Base
   def create_folder(folder_name)
     folder = self.folders.where("lower(name) = ?", folder_name.downcase)
 
-    if folder.empty?
+    if folder.empty? #if a folder with that name does not exist
       self.folders << Folder.create(name: folder_name)
+      self.save
     end
   end
 

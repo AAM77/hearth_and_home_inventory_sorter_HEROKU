@@ -57,8 +57,6 @@ class ItemsController < ApplicationController
         add_the_item_to_existing_categories(params[:item][:category_ids], @item)
         add_the_item_to_the_newly_created_category(params[:category][:name], @item)
 
-        @item.save
-
         flash[:success] = "Successfully created the item: #{@item.name}"
         redirect "/#{current_user.slug}/items"
       end
@@ -99,11 +97,12 @@ class ItemsController < ApplicationController
       @item.name = params[:item][:name] if params[:item][:name] != ""
       @item.cost = params[:item][:cost] if params[:item][:cost] != ""
       @item.description = params[:item][:description] if params[:item][:description] != ""
+      @item.save
 
       add_the_item_to_existing_folders(params[:item][:folder_ids], @item) { @item.folders.clear }
       add_the_item_to_the_newly_created_folder(params[:folder][:name], @item)
 
-      @item.save
+
       flash[:success] = "Successfully updated the details for item: [#{@item.name}]."
       redirect "/#{current_user.slug}/items/#{@item.slug}/#{@item.id}"
     else

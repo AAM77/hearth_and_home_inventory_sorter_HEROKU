@@ -16,7 +16,7 @@
   <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
     <% object_two.each do |item| %>
       <%= erb(:"partials/list_item_partial", :locals => {
-        :item => item, :item_delete_path => "/"+current_user.slug+fs_object_string+object_one.slug+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+        :item => item, :item_delete_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/"+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
         })%>
     <% end %>
   <%= erb(:"partials/accordion_bottom_partial")%>

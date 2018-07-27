@@ -109,6 +109,7 @@ class CategoriesController < ApplicationController
           add_the_newly_created_item_to_the_category(params[:item][:name], params[:item][:description], params[:item][:cost], @category)
 
           @category.save
+          
           flash[:success] = "Successfully updated category details for category: [#{@category.name}]."
           redirect "/#{current_user.slug}/categories/#{@category.slug}"
         end

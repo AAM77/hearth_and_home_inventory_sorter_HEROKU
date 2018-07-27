@@ -28,16 +28,15 @@ class UsersController < ApplicationController
     @email = User.find_by_email(params[:email])
 
     if @user || @email
-      flash[:warning] = "That email or username is not valid. Choose something else."
+      flash[:warning] = "That email or username is not valid. Please choose something else."
       redirect "/signup"
+
     elsif  params[:username] == "" || params[:email] == "" || params[:password] == ""
       flash[:warning] = "YOU MUST FILL OUT ALL FIELDS!!"
       redirect "/signup"
-    else
-      @user = User.new(username: params[:username], email: params[:email], password: params[:password])
-      @user.initial_folders
-      @user.save!
 
+    else
+      @user = User.create_user(username: params[:username], email: params[:email], password: params[:password])
       session[:user_id] = @user.id
 
       flash[:success] = "You have successfully registered!"
@@ -51,7 +50,6 @@ class UsersController < ApplicationController
 
   get "/login" do
     if logged_in?
-      @user = current_user
       redirect :"/#{@user.slug}"
     else
       erb :"users/login_user"
@@ -121,11 +119,10 @@ class UsersController < ApplicationController
     if logged_in?
       @user = current_user
 
-      @user.first_name = params[:first_name] if params[:first_name] != ""
-      @user.last_name = params[:last_name] if params[:last_name] != ""
-      @user.telephone = params[:telephone] if params[:telephone] != ""
-      @user.email = params[:email] if params[:email] != ""
-
+      @user.first_name = params[:first_name] if !params[:first_name].empty?
+      @user.last_name = params[:last_name] if !params[:last_name].empty?
+      @user.telephone = params[:telephone] if !params[:telephone].empty?
+      @user.email = params[:email] if !params[:email].empty?
       @user.save!(validate: false)
 
       flash[:success] = "Your information has been successfully updated."
@@ -178,7 +175,7 @@ class UsersController < ApplicationController
         flash[:success] = "Your account was successfully deleted."
         redirect "/"
       else
-        flash[:warning] = "Could not delete account."
+        flash[:warning] = "Could not delete your account."
         redirect "/#{@user.slug}"
       end
 

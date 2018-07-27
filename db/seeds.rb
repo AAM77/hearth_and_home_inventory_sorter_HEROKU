@@ -6,15 +6,15 @@ User.all.clear
 
 USERS = []
 
-USERS << apples = User.create(username: "Apples", email: "Apples@test.com", password: "orange")
-USERS << joe = User.create(username: "Joe", email: "joe@test.com", password: "123abcjoe")
-USERS << john = User.create(username: "John", email: "john@test.com", password: "123abcjohn")
-USERS << karim = User.create(username: "Karim", email: "karim@test.com", password: "123abckarim")
-USERS << sarah = User.create(username: "Sarah", email: "sarah@test.com", password: "123abcsarah")
-USERS << karen = User.create(username: "Karen", email: "karen@test.com", password: "123abckaren")
-USERS << annie = User.create(username: "Annie", email: "annie@test.com", password: "123abcannie")
-USERS << huang = User.create(username: "Huang", email: "huangtest.com", password: "123abchuang")
-USERS << motunui = User.create(username: "Motunui", email: "motunui@test.com", password: "123abcmotunui")
+USERS << apples = User.create_user(username: "Apples", email: "Apples@test.com", password: "orange")
+USERS << joe = User.create_user(username: "Joe", email: "joe@test.com", password: "123abcjoe")
+USERS << john = User.create_user(username: "John", email: "john@test.com", password: "123abcjohn")
+USERS << karim = User.create_user(username: "Karim", email: "karim@test.com", password: "123abckarim")
+USERS << sarah = User.create_user(username: "Sarah", email: "sarah@test.com", password: "123abcsarah")
+USERS << karen = User.create_user(username: "Karen", email: "karen@test.com", password: "123abckaren")
+USERS << annie = User.create_user(username: "Annie", email: "annie@test.com", password: "123abcannie")
+USERS << huang = User.create_user(username: "Huang", email: "huangtest.com", password: "123abchuang")
+USERS << motunui = User.create_user(username: "Motunui", email: "motunui@test.com", password: "123abcmotunui")
 
 joe.create_folder("Dorm")
 john.create_folder("Dining Room")
@@ -25,8 +25,6 @@ annie.create_folder("Bedroom")
 huang.create_folder("Gym")
 motunui.create_folder("My Island")
 
-USERS.each {|user| user.initial_folders}
-USERS.each {|user| user.initial_categories}
 USERS.each {|user| user.create_folder("Triple A") if user.username.downcase.include?("a")}
 USERS.each {|user| user.create_folder("J Room") if user.username.downcase.include?("j")}
 
