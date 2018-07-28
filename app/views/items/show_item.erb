@@ -33,6 +33,16 @@
 <br>
 
 
+<!-- Displays which folders the item is in -->
+<h5>This item is in the following categories: </h5>
+
+<% @item.categories.each do |folder| %>
+  <a href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
+  <br>
+<% end %>
+<br>
+
+
 <!-- EDIT BUTTON -->
 <%= erb(:"partials/button_edit_partial", :locals => {
   :object_string => "Item", :edit_path => "/"+current_user.slug+"/items/"+@item.slug+"/"+@item.id.to_s+"/edit",

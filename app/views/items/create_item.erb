@@ -26,12 +26,12 @@
 
   <h4> Choose a Folder: (optional)</h4>
 
-  <%= erb(:"partials/category_folder_select_partial", :locals => {:object => @folders, :object_string => "folder"}) %>
+  <%= erb(:"partials/category_folder_select_partial", :locals => {:itm => nil, :object => @folders, :object_string => "folder"}) %>
 
   <br>
 
   <h4> Choose a Category: (optional)</h4>
-  <%= erb(:"partials/category_folder_select_partial", :locals => {:object => @categories, :object_string => "category"}) %>
+  <%= erb(:"partials/category_folder_select_partial", :locals => {:itm => nil, :object => @categories, :object_string => "category"}) %>
 
 
   <!-- Submit Button -->
