@@ -6,7 +6,6 @@ class UsersController < ApplicationController
   ###################################################
 
 
-
   ##########################################
   # Retrieves the Signup/Registration Page #
   ##########################################
@@ -31,8 +30,20 @@ class UsersController < ApplicationController
       flash[:warning] = "That email or username is not valid. Please choose something else."
       redirect "/signup"
 
-    elsif  params[:username] == "" || params[:email] == "" || params[:password] == ""
+    elsif  params[:username].blank? || params[:email].blank? || params[:password].blank?
       flash[:warning] = "YOU MUST FILL OUT ALL FIELDS!!"
+      redirect "/signup"
+
+    elsif params[:username].match(/[\?\<\>\'\,\?\[\]\}\{\=\-\)\(\*\&\^\%\$\#\`\~\{\}@]/)
+      flash[:warning] = "The username can contain only letters, digits, and underscores"
+      redirect "/signup"
+
+    elsif (5 > params[:username].length) || (params[:username].length > 20)
+      flash[:warning] = "The length of the username must be between 5 and 20 characters long."
+      redirect "/signup"
+
+    elsif (5 > params[:password].length) || (params[:password].length > 30)
+      flash[:warning] = "The length of the password must be between 5 and 30 characters long."
       redirect "/signup"
 
     else

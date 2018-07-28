@@ -50,8 +50,7 @@ class ApplicationController < Sinatra::Base
     ##  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  ####
     ##                                                                ##
     ##                  Some Repetitiveness here                      ##
-    ##             Could not figure out how to do this                ##
-    ##       Might need to use something like metaprogramming         ##
+    ##             Could not figure out how to reduce this            ##
     ##                                                                ##
     ##  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  ####
     ######  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  #  ######
@@ -99,7 +98,7 @@ class ApplicationController < Sinatra::Base
 
     # new_folder << selected_item
     def item_to_new_folder_proc
-      proc { |new_folder, selected_item| new_folder.items << item }
+      proc { |ncew_folder, selected_item| new_folder.items << item }
     end
 
     # new_category << selected_item
@@ -121,9 +120,11 @@ class ApplicationController < Sinatra::Base
     def add_selected_item_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
       if ifc_ids
         yield if block_given?
+
         ifc_ids.each do |ifc_id|
           selected_ifc = find_proc.call(ifc_id)
-          if !itm_fld_ctg.nil?
+
+          if !selected_ifc.nil?
             add_item_proc.call(new_object, selected_ifc)
           end
         end
@@ -135,7 +136,7 @@ class ApplicationController < Sinatra::Base
     # if the new item name field is not empty              #
     ########################################################
 
-    def add_the_newly_created_item(name:, description:, cost:, new_folder_category)
+    def add_the_newly_created_item(name:, description:, cost:, new_folder_category:)
       if !item_name.blank?
         new_item = Item.create(name: name, description: description, cost: cost)
         new_folder_category.items << new_item
@@ -192,4 +193,4 @@ class ApplicationController < Sinatra::Base
 =end
 
   end #helpers
-end
+end #class

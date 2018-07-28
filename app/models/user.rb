@@ -4,10 +4,6 @@ class User < ActiveRecord::Base
   has_many :categories
 
   validates_presence_of :username, :email, :password
-  validates :username, format: { with: /\A[a-zA-Z0-9]+\Z/, message: "Can contain only letters, digits, dashes, and underscores" }
-  validates :username, length: {minimum: 5, maximum: 12, wrong_length: "Must be between 5 and 12 characters."}
-  validates :password, length: {minimum: 5, maximum: 12, wrong_length: "Must be between 5 and 12 characters."}
-
   has_secure_password
 
   def self.create_user(username:, email:, password:)
@@ -34,7 +30,6 @@ class User < ActiveRecord::Base
     self.categories << Category.create(name: "Personal Grooming")
     self.categories << Category.create(name: "Shoes")
     self.categories << Category.create(name: "Video Games")
-    self.save
   end
 
   ####################################################
@@ -43,9 +38,9 @@ class User < ActiveRecord::Base
   def create_folder(folder_name)
     folder = self.folders.where("lower(name) = ?", folder_name.downcase)
 
-    if folder.empty? #if a folder with that name does not exist
+    if !folder.nil? #if a folder with that name does not exist
       self.folders << Folder.create(name: folder_name)
-      self.save
+      self.save(validate: false)
     end
   end
 

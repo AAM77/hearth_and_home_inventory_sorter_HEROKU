@@ -54,7 +54,7 @@
   <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseTwo", :heading_num => "headingTwo"})%>
     <% @items.each do |item| %>
       <% if item.folders.empty? %>
-        <%= erb(:"partials/item_partial", :locals => {
+        <%= erb(:"partials/list_item_partial", :locals => {
           :item => item, :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
           })%>
 

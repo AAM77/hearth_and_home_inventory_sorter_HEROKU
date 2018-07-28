@@ -7,9 +7,9 @@ class CategoriesController < ApplicationController
 
 
 
-  ###################################
+  ######################################
   # Displays the User's categories     #
-  ###################################
+  ######################################
   get "/:slug/categories" do
     if logged_in?
       @path = ""
@@ -54,11 +54,15 @@ class CategoriesController < ApplicationController
 
           current_user.categories << @category
 
+          #procs
+          find_item = find_item_proc
+          item_to_new_category = item_to_new_category_proc
+
           # add selected items to folder
-          add_selected_item_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, proc_find: find_category_proc, proc_add_item: item_to_new_category_proc)
+          add_selected_item_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, find_proc: find_item, add_item_proc: item_to_new_category)
 
           # add new item to folder
-          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @category)
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], new_folder_category: @category)
 
           redirect "/#{current_user.slug}/categories"
         end #if category_exists
@@ -70,11 +74,11 @@ class CategoriesController < ApplicationController
     end #logged_in?
   end
 
-  ###############################################################
+  #################################################################
   # Displays the edit_category form                               #
   # Allows the user to add and remove items from the category     #
   # Allows the user to create and add a new item to the category  #
-  ###############################################################
+  #################################################################
 
   get "/:user_slug/categories/:category_slug/edit" do
     if logged_in?
@@ -112,11 +116,15 @@ class CategoriesController < ApplicationController
 
           @category.save
 
+          #procs
+          find_item = find_item_proc
+          item_to_new_category = item_to_new_category_proc
+
           # add selected items to folder
-          add_selected_item_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, proc_find: find_category_proc, proc_add_item: item_to_new_category_proc) { @category.items.clear }
+          add_selected_item_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, find_proc: find_item, add_item_proc: item_to_new_category) { @category.items.clear }
 
           # add new item to folder
-          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @category)
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], new_folder_category: @category)
 
           flash[:success] = "Successfully updated category details for category: [#{@category.name}]."
           redirect "/#{current_user.slug}/categories/#{@category.slug}"
@@ -130,9 +138,9 @@ class CategoriesController < ApplicationController
   end
 
 
-  ####################################
+  ######################################
   # Show route for a specific category #
-  ####################################
+  ######################################
   get "/:user_slug/categories/:category_slug" do
     if logged_in?
       @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
@@ -145,9 +153,9 @@ class CategoriesController < ApplicationController
   end
 
 
-  ######################################
+  ########################################
   # Delete route for a specific category #
-  ######################################
+  ########################################
 
   delete "/:user_slug/categories/:category_slug/delete" do
     if logged_in?

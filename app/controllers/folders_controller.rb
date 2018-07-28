@@ -52,11 +52,15 @@ class FoldersController < ApplicationController
           @folder = Folder.create(name: params[:folder][:name])
           current_user.folders << @folder
 
+          #procs
+          find_item = find_item_proc
+          item_to_new_folder = item_to_new_folder_proc
+
           # add selected items to folder
-          add_selected_item_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, proc_find: find_folder_proc, proc_add_item: item_to_new_folder_proc)
+          add_selected_item_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, find_proc: find_item, add_item_proc: item_to_new_folder)
 
           # add new item to folder
-          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], new_folder_category: @folder)
 
 
           redirect "/#{current_user.slug}/folders"
@@ -112,11 +116,15 @@ class FoldersController < ApplicationController
 
           @folder.save
 
+          #procs
+          find_item = find_item_proc
+          item_to_new_folder = item_to_new_folder_proc
+
           # add selected items to folder
-          add_selected_item_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, proc_find: find_folder_proc, proc_add_item: item_to_new_folder_proc) { @folder.items.clear }
+          add_selected_item_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, find_proc: find_item, add_item_proc: item_to_new_folder) { @folder.items.clear }
 
           # add new item to folder
-          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], new_folder_category: @folder)
 
 
 

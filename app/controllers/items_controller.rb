@@ -50,17 +50,25 @@ class ItemsController < ApplicationController
         flash[:warning] = "You must enter an item name!"
         redirect "/#{current_user.slug}/items/new"
       else
+
+        #procs
+        find_folder = find_folder_proc
+        find_category = find_category_proc
+        item_to_folder = new_item_to_folder_proc
+        item_to_category = new_item_to_category_proc
+        #binding.pry
+
         # create & save the item
         @item = Item.create(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost])
 
         # add to selected folders
-        add_selected_item_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, proc_find: find_folder_proc, proc_add_item: new_item_to_folder_proc)
+        add_selected_item_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, find_proc: find_folder, add_item_proc: item_to_folder)
 
         # add to new folder
         add_item_to_new_folder_category(new_fc_name: params[:folder][:name], item: @item, klass: Folder) { current_user.folders }
 
         # add selected categories
-        add_selected_item_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, proc_find: find_category_proc, proc_add_item: new_item_to_category_proc)
+        add_selected_item_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, find_proc: find_category, add_item_proc: item_to_category)
 
         # add to new category
         add_item_to_new_folder_category(new_fc_name: params[:category][:name], item: @item, klass: Category) { current_user.categories }
@@ -110,14 +118,21 @@ class ItemsController < ApplicationController
 
       @item.save
 
+      #procs
+      find_folder = find_folder_proc
+      find_category = find_category_proc
+      item_to_folder = new_item_to_folder_proc
+      item_to_category = new_item_to_category_proc
+      #binding.pry
+
       # add to selected folders
-      add_selected_item_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, proc_find: find_folder_proc, proc_add_item: new_item_to_folder_proc) { @item.folders.clear }
+      add_selected_item_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, find_proc: find_folder, add_item_proc: item_to_folder) { @item.folders.clear }
 
       # add to new folder
       add_item_to_new_folder_category(new_fc_name: params[:folder][:name], item: @item, klass: Folder) { current_user.folders }
 
       # add selected categories
-      add_selected_item_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, proc_find: find_category_proc, proc_add_item: new_item_to_category_proc) { @item.categories.clear }
+      add_selected_item_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, find_proc: find_category, add_item_proc: item_to_category) { @item.categories.clear }
 
       # add to new category
       add_item_to_new_folder_category(new_fc_name: params[:category][:name], item: @item, klass: Category) { current_user.categories }
@@ -155,13 +170,14 @@ class ItemsController < ApplicationController
     if logged_in?
       @item = current_user.items.find_by_id(params[:item_id])
       @folder = current_user.folders.find_by_id(params[:folder_id])
+      #@item_name = @item.name
 
       if @item && @folder
         @item.folders.delete(Folder.find_by_id(params[:folder_id]))
         @folder.items.delete(Item.find_by_id(params[:item_id]))
       end
 
-      flash[:success] = "Successfully deleted the item [#{@item.name}] from folder [#{@folder.name}]. You can still find it in your items section."
+      flash[:success] = "Successfully deleted the item from folder [#{@folder.name}]. You can still find it in your items section."
       redirect "/#{current_user.slug}/folders/#{@folder.slug}"
 
     else
