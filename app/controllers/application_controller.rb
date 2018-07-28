@@ -106,24 +106,35 @@ class ApplicationController < Sinatra::Base
     end
 
 
+    inserter(new_folder.items, item) # new_folder << itme
+    inserted(new_category.items, item)
+
+
     ############ IN DEVELOPMENT ###############
     #******************* # ********************#
 
-    add_item = proc {|}
-    def add_to_selected_folder_category(ifc_ids:, new_object:, proc_find:, proc_add:)
+    new_item_to_folder = proc { |new_item, @folder| @folder.items << new_item }
+    new_item_to_category = proc { |new_item, @category| @category.items << new_item}
+    item_to_new_folder = proc { |new_folder, item| new_folder.items << item}
+    item_to_new_category = proc { |new_category, item| new_category.items << item }
+
+    def add_item_to_folder_category(ifc_ids:, new_object:, proc_find:, proc_add_item:)
       if ifc_ids
         yield if block_given?
         ifc_ids.each do |ifc_id|
           selected_ifc = proc_find.call(ifc_id)
           if !itm_fld_ctg.nil?
-            proc_add.call(new_object, )
-            #new_folder << selected_ifc       |  a << b
-            #new_category << selected_ifc     |  a << b
-            #selected_ifc.items << new_item   |  b << a
-            #selected_ifc.items << new_item   |  b << a
+            proc_add_item.call(new_object, selected_ifc)
+          end
         end
       end
     end
+
+            #new_object.items << selected_ifc       |  a << b
+            #new_category.items << selected_ifc     |  a << b
+            #selected_ifc.items << new_item         |  b << a
+            #selected_ifc.items << new_item         |  b << a
+
 
     ############################################
 
