@@ -54,7 +54,7 @@ class FoldersController < ApplicationController
         else
           @folder = Folder.create(name: params[:folder][:name])
           current_user.folders << @folder
-          
+           
           #procs
           find_item = find_item_proc
           item_to_new_folder = item_to_new_folder_proc
