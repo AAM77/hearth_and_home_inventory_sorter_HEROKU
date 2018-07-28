@@ -118,7 +118,7 @@ class ApplicationController < Sinatra::Base
     # Adds the item to selected EXISTING folders or categories #
     ############################################################
 
-    def add_item_to_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
+    def add_selected_item_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
       if ifc_ids
         yield if block_given?
         ifc_ids.each do |ifc_id|
@@ -130,12 +130,11 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-
-
     ########################################################
     # Adds the new item to the folder and user's item list #
     # if the new item name field is not empty              #
     ########################################################
+
     def add_the_newly_created_item(name:, description:, cost:, new_folder_category)
       if !item_name.blank?
         new_item = Item.create(name: name, description: description, cost: cost)
@@ -149,6 +148,7 @@ class ApplicationController < Sinatra::Base
     # Adds the item to the newly created category #
     # if the new category name field is not empty #
     ###############################################
+
     def add_item_to_new_folder_category(new_fc_name:, item:, klass:)
 
       if !new_fc_name.blank?
@@ -172,7 +172,7 @@ class ApplicationController < Sinatra::Base
     item_to_new_folder = proc { |new_folder, selected_item| new_folder.items << item}
     item_to_new_category = proc { |new_category, selected_item| new_category.items << item }
 
-    def add_item_to_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
+    def add_selected_item_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
       if ifc_ids
         yield if block_given?
         ifc_ids.each do |ifc_id|

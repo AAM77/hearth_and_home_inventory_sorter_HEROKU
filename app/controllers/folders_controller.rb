@@ -53,8 +53,8 @@ class FoldersController < ApplicationController
           current_user.folders << @folder
 
           # add selected items to folder
-          add_item_to_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, proc_find: find_folder_proc, proc_add_item: item_to_new_folder_proc)
-          
+          add_selected_item_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, proc_find: find_folder_proc, proc_add_item: item_to_new_folder_proc)
+
           # add new item to folder
           add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
 
@@ -100,6 +100,7 @@ class FoldersController < ApplicationController
   patch "/:user_slug/folders/:folder_slug/edit" do
     if logged_in?
       @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+
       folder_name_exists = !Folder.find_by_folder_name(params[:folder][:name], current_user.id).empty?
 
       if @folder
@@ -107,12 +108,18 @@ class FoldersController < ApplicationController
           redirect "/#{current_user.slug}/folders/#{@folder.slug}/edit"
 
         else
-          @folder.name = params[:folder][:name] if params[:folder][:name] != ""
-
-          add_existing_items_to_the_folder(params[:folder][:item_ids], @folder) { @folder.items.clear }
-          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
+          @folder.name = params[:folder][:name] if !params[:folder][:name].blank?
 
           @folder.save
+
+          # add selected items to folder
+          add_selected_item_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, proc_find: find_folder_proc, proc_add_item: item_to_new_folder_proc) { @folder.items.clear }
+
+          # add new item to folder
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
+
+
+
           flash[:success] = "Successfully updated folder details for folder: [#{@folder.name}]."
           redirect "/#{current_user.slug}/folders/#{@folder.slug}"
         end

@@ -54,13 +54,13 @@ class ItemsController < ApplicationController
         @item = Item.create(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost])
 
         # add to selected folders
-        add_item_to_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, proc_find: find_folder_proc, proc_add_item: new_item_to_folder_proc)
+        add_selected_item_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, proc_find: find_folder_proc, proc_add_item: new_item_to_folder_proc)
 
         # add to new folder
         add_item_to_new_folder_category(new_fc_name: params[:folder][:name], item: @item, klass: Folder) { current_user.folders }
 
         # add selected categories
-        add_item_to_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, proc_find: find_category_proc, proc_add_item: new_item_to_category_proc)
+        add_selected_item_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, proc_find: find_category_proc, proc_add_item: new_item_to_category_proc)
 
         # add to new category
         add_item_to_new_folder_category(new_fc_name: params[:category][:name], item: @item, klass: Category) { current_user.categories }
@@ -104,13 +104,24 @@ class ItemsController < ApplicationController
     if logged_in?
 
       @item = current_user.items.find_by_id(params[:item_id])
-      @item.name = params[:item][:name] if params[:item][:name] != ""
-      @item.cost = params[:item][:cost] if params[:item][:cost] != ""
-      @item.description = params[:item][:description] if params[:item][:description] != ""
+      @item.name = params[:item][:name] if !params[:item][:name].blank?
+      @item.cost = params[:item][:cost] if !params[:item][:cost].blank?
+      @item.description = params[:item][:description] if !params[:item][:description].blank?
+
       @item.save
 
-      add_the_item_to_existing_folders(params[:item][:folder_ids], @item) { @item.folders.clear }
-      add_the_item_to_the_newly_created_folder(params[:folder][:name], @item)
+      # add to selected folders
+      add_selected_item_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, proc_find: find_folder_proc, proc_add_item: new_item_to_folder_proc) { @item.folders.clear }
+
+      # add to new folder
+      add_item_to_new_folder_category(new_fc_name: params[:folder][:name], item: @item, klass: Folder) { current_user.folders }
+
+      # add selected categories
+      add_selected_item_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, proc_find: find_category_proc, proc_add_item: new_item_to_category_proc) { @item.categories.clear }
+
+      # add to new category
+      add_item_to_new_folder_category(new_fc_name: params[:category][:name], item: @item, klass: Category) { current_user.categories }
+
 
 
       flash[:success] = "Successfully updated the details for item: [#{@item.name}]."

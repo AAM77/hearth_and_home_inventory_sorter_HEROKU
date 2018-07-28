@@ -48,15 +48,17 @@ class CategoriesController < ApplicationController
 
         if category_name_exists
           redirect "/#{current_user.slug}/categories/new"
+
         else
           @category = Category.create(name: params[:category][:name])
+
           current_user.categories << @category
 
           # add selected items to folder
-          add_item_to_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, proc_find: find_category_proc, proc_add_item: item_to_new_category_proc)
+          add_selected_item_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, proc_find: find_category_proc, proc_add_item: item_to_new_category_proc)
 
           # add new item to folder
-          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @category)
 
           redirect "/#{current_user.slug}/categories"
         end #if category_exists
@@ -106,12 +108,15 @@ class CategoriesController < ApplicationController
           redirect "/#{current_user.slug}/categories/#{@category.slug}/edit"
 
         else
-          @category.name = params[:category][:name] if params[:category][:name] != ""
-
-          add_existing_items_to_the_category(params[:category][:item_ids], @category) { @category.items.clear }
-          add_the_newly_created_item_to_the_category(params[:item][:name], params[:item][:description], params[:item][:cost], @category)
+          @category.name = params[:category][:name] if !params[:category][:name].blank?
 
           @category.save
+
+          # add selected items to folder
+          add_selected_item_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, proc_find: find_category_proc, proc_add_item: item_to_new_category_proc) { @category.items.clear }
+
+          # add new item to folder
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @category)
 
           flash[:success] = "Successfully updated category details for category: [#{@category.name}]."
           redirect "/#{current_user.slug}/categories/#{@category.slug}"
