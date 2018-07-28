@@ -60,92 +60,86 @@ class ApplicationController < Sinatra::Base
     #   PROCS   #
     #############
 
-        folder_proc = proc { |folder_id| current_user.folders.find_by_id(folder_id) }
-        category_proc = proc { |category_id| current_user.categories.find_by_id(category_id) }
+    #--------------------------------------------------------------#
+    #  ---  FOR USE WITH METHOD: add_item_to_folder_category  ---  #
+    #--------------------------------------------------------------#
 
+    #------------#
+    # FIND PROCS #
+    #------------#
 
-    ###################################
-    # ** FOLDER / CATEGORY HELPERS ** #
-    ###################################
-
-
-    ##########################################################
-    # Adds selected EXISTING items to the folder or category #
-    ##########################################################
-    def add_existing_items_to_folder_category(item_ids, fc_variable)
-      if item_ids
-        yield if block_given?
-        item_ids.each do |item_id|
-          fc_variable.items << current_user.items.find_by_id(item_id)
-        end
-      end
+    #find selected folder
+    def find_folder_proc
+      proc { |folder_id| current_user.folders.find_by_id(folder_id) }
     end
 
-    ######################
-    # ** ITEM HELPERS ** #
-    ######################
+    #find selected category
+    def find_category_proc
+      proc { |category_id| current_user.categories.find_by_id(category_id) }
+    end
+
+    #find selected item
+    def find_item_proc
+      proc { |item_id| current_user.items.find_by_id(item_id) }
+    end
+
+    #-----------#
+    # ADD PROCS #
+    #-----------#
+
+    # selected_folder << new_item
+    def new_item_to_folder_proc
+      proc { |new_item, selected_folder| selected_folder.items << new_item }
+    end
+
+    # selected_category << new_item
+    def new_item_to_category_proc
+      proc { |new_item, selected_category| selected_category.items << new_item }
+    end
+
+    # new_folder << selected_item
+    def item_to_new_folder_proc
+      proc { |new_folder, selected_item| new_folder.items << item }
+    end
+
+    # new_category << selected_item
+    def item_to_new_category_proc
+      proc { |new_category, selected_item| new_category.items << item }
+    end
+
+
+
+    ##########################################
+    # ** ITEM / FOLDER / CATEGORY HELPERS ** #
+    ##########################################
+
 
     ############################################################
     # Adds the item to selected EXISTING folders or categories #
     ############################################################
 
-    def add_to_selected_folder_category(fc_ids, fc_selected, proc_name)
-      if fc_ids
-        yield if block_given?
-
-        fc_ids.each do |fc_id|
-
-          folder_category = proc_name.call(fc_id)
-
-          if !folder_category.nil?
-            folder_category.items << instance_variable
-            current_user.items << instance_variable
-          end
-        end
-      end
-    end
-
-
-    inserter(new_folder.items, item) # new_folder << itme
-    inserted(new_category.items, item)
-
-
-    ############ IN DEVELOPMENT ###############
-    #******************* # ********************#
-
-    new_item_to_folder = proc { |new_item, @folder| @folder.items << new_item }
-    new_item_to_category = proc { |new_item, @category| @category.items << new_item}
-    item_to_new_folder = proc { |new_folder, item| new_folder.items << item}
-    item_to_new_category = proc { |new_category, item| new_category.items << item }
-
-    def add_item_to_folder_category(ifc_ids:, new_object:, proc_find:, proc_add_item:)
+    def add_item_to_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
       if ifc_ids
         yield if block_given?
         ifc_ids.each do |ifc_id|
-          selected_ifc = proc_find.call(ifc_id)
+          selected_ifc = find_proc.call(ifc_id)
           if !itm_fld_ctg.nil?
-            proc_add_item.call(new_object, selected_ifc)
+            add_item_proc.call(new_object, selected_ifc)
           end
         end
       end
     end
 
-            #new_object.items << selected_ifc       |  a << b
-            #new_category.items << selected_ifc     |  a << b
-            #selected_ifc.items << new_item         |  b << a
-            #selected_ifc.items << new_item         |  b << a
 
-
-    ############################################
 
     ########################################################
     # Adds the new item to the folder and user's item list #
     # if the new item name field is not empty              #
     ########################################################
-    def add_the_newly_created_item(name:, description:, cost:, instance_variable)
+    def add_the_newly_created_item(name:, description:, cost:, new_folder_category)
       if !item_name.blank?
         new_item = Item.create(name: name, description: description, cost: cost)
-        instance_variable.items << new_item
+        new_folder_category.items << new_item
         current_user.items << new_item
       end
     end
@@ -155,7 +149,7 @@ class ApplicationController < Sinatra::Base
     # Adds the item to the newly created category #
     # if the new category name field is not empty #
     ###############################################
-    def add_the_item_to_new_folder_category(new_fc_name, item, klass) { current_user.categories }
+    def add_item_to_new_folder_category(new_fc_name:, item:, klass:)
 
       if !new_fc_name.blank?
         folder_category = !klass.find_by_name(new_fc_name, current_user.id).blank?
@@ -166,6 +160,36 @@ class ApplicationController < Sinatra::Base
         end
       end
     end
+
+
+
+=begin
+    ############ IN DEVELOPMENT ###############
+    #******************* # ********************#
+
+    new_item_to_folder = proc { |new_item, selected_folder| selected_folder.items << new_item }
+    new_item_to_category = proc { |new_item, selected_category| selected_category.items << new_item}
+    item_to_new_folder = proc { |new_folder, selected_item| new_folder.items << item}
+    item_to_new_category = proc { |new_category, selected_item| new_category.items << item }
+
+    def add_item_to_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
+      if ifc_ids
+        yield if block_given?
+        ifc_ids.each do |ifc_id|
+          selected_ifc = find_proc.call(ifc_id)
+          if !itm_fld_ctg.nil?
+            add_item_proc.call(new_object, selected_ifc)
+          end
+        end
+      end
+    end
+
+            #new_object.items << selected_ifc       |  a << b
+            #new_category.items << selected_ifc     |  a << b
+            #selected_ifc.items << new_item         |  b << a
+            #selected_ifc.items << new_item         |  b << a
+
+=end
 
   end #helpers
 end

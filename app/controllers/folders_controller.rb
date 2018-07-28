@@ -50,14 +50,14 @@ class FoldersController < ApplicationController
           redirect "/#{current_user.slug}/folders/new"
         else
           @folder = Folder.create(name: params[:folder][:name])
+          current_user.folders << @folder
 
           # add selected items to folder
+          add_item_to_folder_category(ifc_ids: params[:folder][:item_ids], new_object: @folder, proc_find: find_folder_proc, proc_add_item: item_to_new_folder_proc)
+          
           # add new item to folder
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
 
-
-          add_existing_items_to_the_folder(params[:folder][:item_ids], @folder)
-          add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
-          current_user.folders << @folder
 
           redirect "/#{current_user.slug}/folders"
         end #if folder_exists

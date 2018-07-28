@@ -50,22 +50,20 @@ class ItemsController < ApplicationController
         flash[:warning] = "You must enter an item name!"
         redirect "/#{current_user.slug}/items/new"
       else
+        # create & save the item
         @item = Item.create(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost])
 
-        folder_proc = proc { |folder_id| current_user.folders.find_by_id(folder_id) }
-        category_proc = proc { |category_id| current_user.categories.find_by_id(category_id) }
+        # add to selected folders
+        add_item_to_folder_category(ifc_ids: params[:item][:folder_ids], new_object: @item, proc_find: find_folder_proc, proc_add_item: new_item_to_folder_proc)
 
-        # create the item
-        # add the item to selected folder
-        # add the item to new folder
+        # add to new folder
+        add_item_to_new_folder_category(new_fc_name: params[:folder][:name], item: @item, klass: Folder) { current_user.folders }
 
-        # add the item to selected categroy
-        # add the item to new category
+        # add selected categories
+        add_item_to_folder_category(ifc_ids: params[:item][:category_ids], new_object: @item, proc_find: find_category_proc, proc_add_item: new_item_to_category_proc)
 
-        add_to_existing_folder_category(params[:item][:folder_ids], @item, folder_proc)
-        add_to_existing_folder_category(params[:item][:category_ids], @item, category_proc)
-        add_the_item_to_the_newly_created_folder(params[:folder][:name], @item)
-        add_the_item_to_existing_categories(params[:item][:category_ids], @item)
+        # add to new category
+        add_item_to_new_folder_category(new_fc_name: params[:category][:name], item: @item, klass: Category) { current_user.categories }
 
         current_user.items << @item
 

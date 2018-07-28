@@ -50,10 +50,13 @@ class CategoriesController < ApplicationController
           redirect "/#{current_user.slug}/categories/new"
         else
           @category = Category.create(name: params[:category][:name])
-
-          add_existing_items_to_the_category(params[:category][:item_ids], @category)
-          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
           current_user.categories << @category
+
+          # add selected items to folder
+          add_item_to_folder_category(ifc_ids: params[:category][:item_ids], new_object: @category, proc_find: find_category_proc, proc_add_item: item_to_new_category_proc)
+
+          # add new item to folder
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
 
           redirect "/#{current_user.slug}/categories"
         end #if category_exists
