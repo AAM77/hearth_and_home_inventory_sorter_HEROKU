@@ -52,7 +52,7 @@ class CategoriesController < ApplicationController
           @category = Category.create(name: params[:category][:name])
 
           add_existing_items_to_the_category(params[:category][:item_ids], @category)
-          add_the_newly_created_item_to_the_category(params[:item][:name], params[:item][:description], params[:item][:cost], @category)
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
           current_user.categories << @category
 
           redirect "/#{current_user.slug}/categories"
@@ -109,7 +109,7 @@ class CategoriesController < ApplicationController
           add_the_newly_created_item_to_the_category(params[:item][:name], params[:item][:description], params[:item][:cost], @category)
 
           @category.save
-          
+
           flash[:success] = "Successfully updated category details for category: [#{@category.name}]."
           redirect "/#{current_user.slug}/categories/#{@category.slug}"
         end

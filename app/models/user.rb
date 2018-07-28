@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   has_many :categories
 
   validates_presence_of :username, :email, :password
+  validates :username, format: { with: /\A[a-zA-Z0-9]+\Z/, message: "Can contain only letters, digits, dashes, and underscores" }
+  validates :username, length: {minimum: 5, maximum: 12, wrong_length: "Must be between 5 and 12 characters."}
+  validates :password, length: {minimum: 5, maximum: 12, wrong_length: "Must be between 5 and 12 characters."}
+
   has_secure_password
 
   def self.create_user(username:, email:, password:)

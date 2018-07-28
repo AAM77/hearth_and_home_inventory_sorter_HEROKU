@@ -51,6 +51,10 @@ class FoldersController < ApplicationController
         else
           @folder = Folder.create(name: params[:folder][:name])
 
+          # add selected items to folder
+          # add new item to folder
+
+
           add_existing_items_to_the_folder(params[:folder][:item_ids], @folder)
           add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
           current_user.folders << @folder
@@ -106,7 +110,7 @@ class FoldersController < ApplicationController
           @folder.name = params[:folder][:name] if params[:folder][:name] != ""
 
           add_existing_items_to_the_folder(params[:folder][:item_ids], @folder) { @folder.items.clear }
-          add_the_newly_created_item_to_the_folder(params[:item][:name], params[:item][:description], params[:item][:cost], @folder)
+          add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], @folder)
 
           @folder.save
           flash[:success] = "Successfully updated folder details for folder: [#{@folder.name}]."

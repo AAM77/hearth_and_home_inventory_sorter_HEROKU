@@ -52,10 +52,22 @@ class ItemsController < ApplicationController
       else
         @item = Item.create(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost])
 
-        add_the_item_to_existing_folders(params[:item][:folder_ids], @item)
+        folder_proc = proc { |folder_id| current_user.folders.find_by_id(folder_id) }
+        category_proc = proc { |category_id| current_user.categories.find_by_id(category_id) }
+
+        # create the item
+        # add the item to selected folder
+        # add the item to new folder
+
+        # add the item to selected categroy
+        # add the item to new category
+
+        add_to_existing_folder_category(params[:item][:folder_ids], @item, folder_proc)
+        add_to_existing_folder_category(params[:item][:category_ids], @item, category_proc)
         add_the_item_to_the_newly_created_folder(params[:folder][:name], @item)
         add_the_item_to_existing_categories(params[:item][:category_ids], @item)
-        add_the_item_to_the_newly_created_category(params[:category][:name], @item)
+
+        current_user.items << @item
 
         flash[:success] = "Successfully created the item: #{@item.name}"
         redirect "/#{current_user.slug}/items"
