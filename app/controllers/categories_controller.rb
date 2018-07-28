@@ -166,6 +166,7 @@ class CategoriesController < ApplicationController
         @category.destroy
         flash[:success] = "Successfully deleted category: [ #{@category.name} ]"
         redirect "/#{current_user.slug}/categories"
+        
       else
         flash[:warning] = "ERROR: Could not delete category: [ #{@category.name} ]."
         redirect "/#{current_user.slug}/categories"

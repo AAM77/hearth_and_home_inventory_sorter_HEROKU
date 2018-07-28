@@ -41,12 +41,15 @@ class FoldersController < ApplicationController
   post "/:slug/folders/new" do
     if logged_in?
 
-      if params[:folder][:name] == ""
+      if params[:folder][:name].blank?
+
+        flash[:warning] = "The folder name cannot be blank."
         redirect "/#{current_user.slug}/folders/new"
       else
         folder_name_exists = !Folder.find_by_folder_name(params[:folder][:name], current_user.id).empty?
 
         if folder_name_exists
+          flash[:warning] = "You already have a folder with that name. Don't get confused: please choose a different name!"
           redirect "/#{current_user.slug}/folders/new"
         else
           @folder = Folder.create(name: params[:folder][:name])
@@ -125,8 +128,6 @@ class FoldersController < ApplicationController
 
           # add new item to folder
           add_the_newly_created_item(name: params[:item][:name], description: params[:item][:description], cost: params[:item][:cost], new_folder_category: @folder)
-
-
 
           flash[:success] = "Successfully updated folder details for folder: [#{@folder.name}]."
           redirect "/#{current_user.slug}/folders/#{@folder.slug}"

@@ -162,35 +162,5 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-
-
-=begin
-    ############ IN DEVELOPMENT ###############
-    #******************* # ********************#
-
-    new_item_to_folder = proc { |new_item, selected_folder| selected_folder.items << new_item }
-    new_item_to_category = proc { |new_item, selected_category| selected_category.items << new_item}
-    item_to_new_folder = proc { |new_folder, selected_item| new_folder.items << item}
-    item_to_new_category = proc { |new_category, selected_item| new_category.items << item }
-
-    def add_selected_item_folder_category(ifc_ids:, new_object:, find_proc:, add_item_proc:)
-      if ifc_ids
-        yield if block_given?
-        ifc_ids.each do |ifc_id|
-          selected_ifc = find_proc.call(ifc_id)
-          if !itm_fld_ctg.nil?
-            add_item_proc.call(new_object, selected_ifc)
-          end
-        end
-      end
-    end
-
-            #new_object.items << selected_ifc       |  a << b
-            #new_category.items << selected_ifc     |  a << b
-            #selected_ifc.items << new_item         |  b << a
-            #selected_ifc.items << new_item         |  b << a
-
-=end
-
   end #helpers
 end #class
