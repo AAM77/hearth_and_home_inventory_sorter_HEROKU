@@ -41,6 +41,12 @@
   <!-- Submit Button -->
   <button class="content_button edit_button"  type="submit">Save Changes</button>
 </form>
+<br>
+
+<!-- DELETE BUTTON -->
+<%= erb(:"partials/button_delete_partial", :locals => {
+  :object_string => object_string, :delete_path => "/"+current_user.slug+"/"+object_string.pluralize+"/"+object.slug+"/delete"
+  })%>
 
 <br>
 <br>

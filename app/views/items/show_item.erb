@@ -32,9 +32,11 @@
 <% end %>
 <br>
 
+
 <!-- EDIT BUTTON -->
 <%= erb(:"partials/button_edit_partial", :locals => {
-  :object_string => "Item", :edit_path => "/"+current_user.slug+"/items/"+@item.slug+"/"+@item.id.to_s+"/edit"
+  :object_string => "Item", :edit_path => "/"+current_user.slug+"/items/"+@item.slug+"/"+@item.id.to_s+"/edit",
+  :button_label =>"Item Details"
   })%>
 <br>
 

@@ -2,7 +2,7 @@
 <label>Add or Remove existing items: </label><br>
 <select name="<%=object_string%>[item_ids][]" size="4" multiple>
   <% object_items.each do |item| %>
-    <option value="<%= item.id %>" <%= 'selected' if @category.items.include?(item) %>><%= item.name %></option>
+    <option value="<%= item.id %>" <%= 'selected' if object.items.include?(item) %>><%= item.name %></option>
   <% end %>
 </select>
 <p>(hold ctrl [in Windows] or cmd [in MacBooks] to select or deselect any of the above)</p>

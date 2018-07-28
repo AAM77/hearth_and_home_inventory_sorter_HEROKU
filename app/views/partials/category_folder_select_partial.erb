@@ -9,7 +9,7 @@
 
 <select name="item[<%=object_string%>_ids][]" size="4" multiple>
   <% object.each do |obj| %>
-    <option value="<%= obj.id %>"><%= obj.name %></option>
+    <option value="<%= obj.id %>" <%= 'selected' if obj.items.include?(itm) %>><%= obj.name %></option>
   <% end %>
 </select>
 <br>

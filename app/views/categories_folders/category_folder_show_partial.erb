@@ -22,14 +22,13 @@
   <%= erb(:"partials/accordion_bottom_partial")%>
 </div>
 
-<!--CEATE ITEM BUTTON -->
-<%= erb(:"partials/button_create_item_partial") %>
 
 <br>
 
-<!-- EDIT BUTTON -->
+<!-- EDIT / CREATE ITEM BUTTON -->
 <%= erb(:"partials/button_edit_partial", :locals => {
-  :object_string => object_string, :edit_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/edit"
+  :object_string => object_string, :edit_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/edit",
+  :button_label => object_string + " or Add item"
   })%>
 <br>
 

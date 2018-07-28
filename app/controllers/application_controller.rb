@@ -98,12 +98,12 @@ class ApplicationController < Sinatra::Base
 
     # new_folder << selected_item
     def item_to_new_folder_proc
-      proc { |ncew_folder, selected_item| new_folder.items << item }
+      proc { |new_folder, selected_item| new_folder.items << selected_item }
     end
 
     # new_category << selected_item
     def item_to_new_category_proc
-      proc { |new_category, selected_item| new_category.items << item }
+      proc { |new_category, selected_item| new_category.items << selected_item }
     end
 
 
@@ -137,7 +137,7 @@ class ApplicationController < Sinatra::Base
     ########################################################
 
     def add_the_newly_created_item(name:, description:, cost:, new_folder_category:)
-      if !item_name.blank?
+      if !name.blank?
         new_item = Item.create(name: name, description: description, cost: cost)
         new_folder_category.items << new_item
         current_user.items << new_item
