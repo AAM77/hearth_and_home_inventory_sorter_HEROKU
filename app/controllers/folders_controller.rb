@@ -49,12 +49,12 @@ class FoldersController < ApplicationController
         folder_name_exists = !Folder.find_by_folder_name(params[:folder][:name], current_user.id).empty?
 
         if folder_name_exists
-          flash[:warning] = "You already have a folder with that name. Don't get confused: please choose a different name!"
+          flash[:warning] = "You already have a folder with that name. Don't get confused: please hoose a different name!"
           redirect "/#{current_user.slug}/folders/new"
         else
           @folder = Folder.create(name: params[:folder][:name])
           current_user.folders << @folder
-
+          
           #procs
           find_item = find_item_proc
           item_to_new_folder = item_to_new_folder_proc
