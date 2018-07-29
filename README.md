@@ -6,7 +6,7 @@
 The inspiration for this app came from a discussion regarding the usefulness of taking an inventory of one's home for insurance purposes. Of course, to be completely useful for that, this app would need to allow the user to upload images an videos. Although I learned how to do this and plan to add this feature, I decided not to do so for the time being.
 
 This project is currently built on Sinatra. I build it for Flatiron's Learn Verified Full stack Web Developer program.
-
+ 
 ## Description
 
 A limited list of features for the app include:
