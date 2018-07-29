@@ -2,7 +2,9 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Displays page title -->
-<h3> [ -- <%= @item.name %> -- ]'s Edit Page: </h3>
+<div class="title_heading rounded">
+  <h3> [ -- <%= @item.name %> -- ]'s Edit Page: </h3>
+</div>
 <br>
 
 
@@ -32,11 +34,11 @@
 
 
   <!-- Submit Button -->
-  <button class="content_button"  type="submit">Update Item Info</button>
+  <button class="btn btn-primary btn-lg active" role="button" aria-pressed="true"  type="submit">Update Item Info</button>
 </form>
 
 <br>
 <br>
 
-<!-- Displays a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<!-- Display a Back button. It takes the user to the previously visited page -->
+<a href="javascript:history.back()" class="badge-pill badge-secondary">Go Back</a>

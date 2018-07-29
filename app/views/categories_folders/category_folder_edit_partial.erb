@@ -2,7 +2,7 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Display the Page Title -->
-<div class="title_heading">
+<div class="title_heading rounded">
   <h3> [ -- <%= object.name.capitalize %> -- ] Edit Page: </h3>
 </div>
 <br>
@@ -41,7 +41,7 @@
 
 
   <!-- Submit Button -->
-  <button class="content_button edit_button"  type="submit">Save Changes</button>
+  <button class="btn btn-primary btn-lg active" role="button" aria-pressed="true"  type="submit">Save Changes</button>
 </form>
 <br>
 
@@ -54,4 +54,4 @@
 <br>
 
 <!-- Display a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<a href="javascript:history.back()" class="badge-pill badge-secondary">Go Back</a>

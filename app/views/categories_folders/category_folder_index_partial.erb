@@ -2,7 +2,7 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Display Page Title -->
-<div class="title_heading">
+<div class="title_heading rounded">
   <h2><%= current_user.username.capitalize %>'s <%=object_string.pluralize%></h2>
 </div>
 <br>
@@ -45,10 +45,10 @@
 <br>
 
 <!-- Display Category/Folder Creation Link -->
-<a href="/<%= current_user.slug %>/<%=object_string.pluralize%>/new">Create New <%= object_string.capitalize %></a>
+<a href="/<%= current_user.slug %>/<%=object_string.pluralize%>/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Create New <%= object_string.capitalize %></a>
 
 <br>
 <br>
 
 <!-- Display a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<a href="javascript:history.back()" class="badge-pill badge-secondary">Go Back</a>

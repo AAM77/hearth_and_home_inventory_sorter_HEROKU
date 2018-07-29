@@ -2,7 +2,7 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Displays the Page Title -->
-<div class="title_heading">
+<div class="title_heading rounded">
   <h3> [ -- <%= object_one.name.capitalize %> -- ] contains the Following Items: </h3>
 </div>
 <br>
@@ -18,7 +18,7 @@
   <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
     <% object_two.each do |item| %>
       <%= erb(:"partials/list_item_partial", :locals => {
-        :item => item, :item_delete_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/"+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+        :item => item, :delete_path => "/"+current_user.slug+fs_object_string+"/"+object_one.slug+"/"+object_one.id.to_s+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
         })%>
     <% end %>
   <%= erb(:"partials/accordion_bottom_partial")%>
@@ -44,4 +44,4 @@
 <br>
 
 <!-- Display a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<a href="javascript:history.back()" class="badge-pill badge-secondary">Go Back</a>

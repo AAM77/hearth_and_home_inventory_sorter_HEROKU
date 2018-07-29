@@ -2,7 +2,7 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Display the Page Title -->
-<div class="title_heading">
+<div class="title_heading rounded">
   <h3> Create a New <%= object_string.capitalize %>: </h3>
 </div>
 <br>
@@ -40,11 +40,11 @@
   <!-- ITEM FORM PARTIAL -->
 
   <!-- Submit Button -->
-  <button type="submit">Create <%= object_string %></button>
+  <button class="btn btn-primary btn-lg active" role="button" aria-pressed="true" type="submit">Create <%= object_string %></button>
 </form>
 
 <br>
 <br>
 
 <!-- Display a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<a href="javascript:history.back()" class="badge-pill badge-secondary">Go Back</a>

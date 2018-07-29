@@ -22,4 +22,8 @@ class Item < ActiveRecord::Base
     self.where("lower(name) = ? AND id = ? AND user_id = ?", record.downcase, id, user_id)
   end
 
+  def self.find_by_name(record, user_id)
+    self.where("lower(name) = ? AND user_id = ?", record.downcase, user_id)
+  end
+
 end

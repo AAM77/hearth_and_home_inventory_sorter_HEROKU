@@ -3,7 +3,7 @@
 <!-- THIS ITEM GETS DELETED FROM THE ACCOUNT (i.e. ALL FOLDERS AND CATEGORIES) -->
 
 <!-- Displays page title -->
-<div class="title_heading">
+<div class="title_heading rounded">
   <h2> All of <%= current_user.username.capitalize %>'s Items </h2>
 </div>
 <br>
@@ -32,7 +32,7 @@
     <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
       <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
         <%= erb(:"partials/list_item_partial", :locals => {
-          :object => folder, :item => item, :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+          :object => folder, :item => item, :delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
           })%>
       <% end %>
     <%= erb(:"partials/accordion_bottom_partial")%>
@@ -57,7 +57,7 @@
     <% @items.each do |item| %>
       <% if item.folders.empty? %>
         <%= erb(:"partials/list_item_partial", :locals => {
-          :item => item, :item_delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
+          :item => item, :delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete",
           })%>
 
         <% end %>
@@ -74,7 +74,7 @@
 <br>
 
 <!-- Display a Back button. It takes the user to the previously visited page -->
-<a href="javascript:history.back()">Go Back</a>
+<a href="javascript:history.back()" class="badge-pill badge-secondary">Go Back</a>
 
 <br>
 <br>

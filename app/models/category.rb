@@ -27,4 +27,4 @@ class Category < ActiveRecord::Base
     self.where("lower(name) = ? AND user_id = ?", record.downcase, user_id)
   end
 
-  end
+end
