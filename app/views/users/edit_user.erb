@@ -1,5 +1,7 @@
 <!-- Display page title -->
-<h2>Edit <%=current_user.username%>'s Information:</h2>
+<div class="title_heading">
+  <h2>Edit <%=current_user.username%>'s Information:</h2>
+</div>
 
 <!-- Display form to edit information -->
 <form action="/<%= current_user.slug %>/edit" method="POST">

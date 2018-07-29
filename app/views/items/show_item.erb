@@ -2,46 +2,73 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Displays the Page Title -->
-<h3> Item Information: </h3>
+<div class="title_heading">
+  <h3> Item Information: </h3>
+</div>
 <br>
 
 <!-- Displays item name -->
-<label for="item_name">Item Name:
-  <%= @item.name %>
-</label>
+<label class="font-weight-bold" for="item_name"> Item Name: </label>
+<div class="w-25 p-3">
+  <p class="border border-primary"><%= @item.name %></p>
+</div>
 <br>
 
 <!-- Displays item cost -->
-<label for="item_cost">Item Cost: $
-  <%= @item.cost %>
-</label>
+<label class="font-weight-bold" for="item_cost">Item Cost: </label>
+<div class="w-25 p-3">
+  <p class="border border-primary"> $ <%= @item.cost %> </p>
+</div>
 <br>
 
 <!-- Displays item description -->
-<label for="item_description">Item Description:
-  <p><%= @item.description %></p>
-</label>
+<label class="font-weight-bold" for="item_description">Item Description:</label>
+<div class="w-25 p-3">
+  <p class="border border-primary"><%= @item.description %></p>
+</div>
 <br>
 
 <!-- Displays which folders the item is in -->
 <h5>This item is in the following folders: </h5>
 
-<% @item.folders.each do |folder| %>
-  <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>
-  <br>
-<% end %>
+<div class="btn-group">
+  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Folders
+  </button>
+  <div class="dropdown-menu">
+    <% @item.folders.each do |folder| %>
+      <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %></a>
+      <br>
+      <div class="dropdown-divider"></div>
+    <% end %>
+    <br>
+  </div>
+</div>
+
+<br>
 <br>
 
 
 <!-- Displays which folders the item is in -->
 <h5>This item is in the following categories: </h5>
 
-<% @item.categories.each do |folder| %>
-  <a href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
-  <br>
-<% end %>
-<br>
+<div class="btn-group">
+  <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Categories
+  </button>
+  <div class="dropdown-menu">
+    <% @item.categories.each do |category| %>
+      <a href="/<%= current_user.slug %>/categories/<%= category.slug %>"><%= category.name %></a>
+      <br>
+      <div class="dropdown-divider"></div>
+    <% end %>
+  </div>
+</div>
 
+<br>
+<br>
+<br>
+<br>
 
 <!-- EDIT BUTTON -->
 <%= erb(:"partials/button_edit_partial", :locals => {

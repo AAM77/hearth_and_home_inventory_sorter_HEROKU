@@ -1,40 +1,41 @@
+<div class="title_heading">
+  <h2><%= current_user.username %>'s Information: </h2>
+</div>
 
-<h2><%= current_user.username %>'s Information: </h2>
+<label for="first name">First Name:
+<p><%= @user.first_name %></p>
+</label>
+<br>
+<br>
 
-  <label for="first name">First Name:
-  <p><%= @user.first_name %></p>
-  </label>
-  <br>
-  <br>
+<label for="last name">Last Name:
+<p><%= @user.last_name %></p>
+</label>
+<br>
+<br>
 
-  <label for="last name">Last Name:
-  <p><%= @user.last_name %></p>
-  </label>
-  <br>
-  <br>
+<label for="telephone">Telephone:
+<p><%= @user.telephone %></p>
+</label>
+<br>
+<br>
 
-  <label for="telephone">Telephone:
-  <p><%= @user.telephone %></p>
-  </label>
-  <br>
-  <br>
+<label for="email">Email:
+<p><%= @user.email %></p>
+</label>
+<br>
+<br>
+<br>
 
-  <label for="email">Email:
-  <p><%= @user.email %></p>
-  </label>
-  <br>
-  <br>
-  <br>
+<!-- Display edit button -->
+<form action="/<%= @user.slug %>/edit">
+  <button class="content_button"  type="submit">Edit My Info</button>
+</form>
 
-  <!-- Display edit button -->
-  <form action="/<%= @user.slug %>/edit">
-    <button class="content_button"  type="submit">Edit My Info</button>
-  </form>
+<br>
 
-  <br>
-
-  <!-- Display delete button -->
-  <form action="/<%= @user.slug %>/delete" method="POST">
-    <input id="hidden" type="hidden" name="_method" value="delete">
-    <button class="content_button"  type="submit">Delete Account</button>
-  </form>
+<!-- Display delete button -->
+<form action="/<%= @user.slug %>/delete" method="POST">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <button class="content_button"  type="submit">Delete Account</button>
+</form>

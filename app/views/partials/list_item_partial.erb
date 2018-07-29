@@ -1,27 +1,31 @@
-<div class="list_item">
+<!-- Display the item's url, price, and id -->
+<!-- the id is being displayed temporarily, until I add the option to upload an image -->
 
-  <!-- Display the item's url, price, and id -->
-  <!-- the id is being displayed temporarily, until I add the option to upload an image -->
-  <a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a>
-  <p> Price: $ <%= item.cost %> || ID: <%= item.id %> </p>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><a href="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>"><%= item.name %></a></h5>
+    <h6 class="card-subtitle mb-2 text-muted">Price: $ <%= item.cost %> || ID: <%= item.id %></h6>
 
-  <!-- Display the Edit Button -->
-  <form action="/<%= current_user.slug %>/items/<%= item.slug %>/<%= item.id %>/edit">
-    <button class="content_button"  type="submit">Edit Item</button>
-  </form>
+    <div class="row">
+      <div class="card-link">
+        <!-- EDIT BUTTON -->
+        <%= erb(:"partials/button_edit_partial", :locals => {
+          :object_string => "Item", :edit_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/edit",
+          :button_label =>"Item Details"
+          })%>
+      </div>
 
-  <!-- Display the Delete Button -->
-  <!-- Must add '/' in front when passing a value for f_slash_object_plural -->
-  <!-- Must add '/' in front when passing a value for f_slash_object_id -->
-  <form action="<%= item_delete_path %>" method="POST">
-    <input id="hidden" type="hidden" name="_method" value="delete">
-    <button class="content_button"  type="submit">Delete Item</button>
-  </form>
-
+      <div class="card-link">
+        <!-- DELETE BUTTON -->
+        <%= erb(:"partials/button_delete_partial", :locals => {
+          :object_string => "Item", :delete_path => "/"+current_user.slug+"/items/"+item.slug+"/"+item.id.to_s+"/delete"
+          })%>
+      </div>
+    </div>
+  </div>
 </div>
 
-  <!-- Display a divider to compartmentalize each -->
-  <!-- this is temporary, until I add in bootstrapped or custom styles -->
-  <br>
-  <div class="item-divider" > - </div>
-  <br>
+<!-- Display a divider to compartmentalize each -->
+<!-- this is temporary, until I add in bootstrapped or custom styles -->
+
+<div class="item-divider" > - </div>

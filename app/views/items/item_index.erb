@@ -3,7 +3,9 @@
 <!-- THIS ITEM GETS DELETED FROM THE ACCOUNT (i.e. ALL FOLDERS AND CATEGORIES) -->
 
 <!-- Displays page title -->
-<h2> All of <%= current_user.username.capitalize %>'s Items </h2>
+<div class="title_heading">
+  <h2> All of <%= current_user.username.capitalize %>'s Items </h2>
+</div>
 <br>
 
 <%= erb(:"partials/flash_partial") %>
@@ -26,7 +28,7 @@
 
   <% @folders.each do |folder| %>
     <%= erb(:"partials/accordion_top_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
-      <a href="/<%= current_user.slug %>/folders/<%= folder.slug %>"><%= folder.name %> : Contains <%= folder.items.size %> item(s)</a>
+      <%= folder.name %> : Contains <%= folder.items.size %> item(s)
     <%= erb(:"partials/accordion_middle_partial", :locals => {:collapse_num => "collapseOne", :heading_num => "headingOne"})%>
       <% folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }.each do |item| %>
         <%= erb(:"partials/list_item_partial", :locals => {

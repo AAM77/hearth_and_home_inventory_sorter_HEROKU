@@ -2,14 +2,16 @@
 <%= erb(:"partials/flash_partial") %>
 
 <!-- Display the Page Title -->
-<h3> Create a New <%= object_string.capitalize %>: </h3>
+<div class="title_heading">
+  <h3> Create a New <%= object_string.capitalize %>: </h3>
+</div>
 <br>
 
 <!-- Display Form -->
 <form action="/<%= current_user.slug %>/<%= object_string.pluralize%>/new" method="POST">
 
 <!-- Name field -->
-  <label><%=object_string%> Name:
+  <label><%=object_string.capitalize%> Name:
     <input type="text" name="<%=object_string%>[name]" placeholder="<%=object_string.capitalize %> Name">
   </label>
 

@@ -3,28 +3,17 @@
 
 /*////////// LAYOUT STYLES //////////*/
 
-a.btn {
-  background-color: red;
-  color: white;
-  padding: 1em 1.5em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-a.btn:hover {
-  background-color: #555;
-}
-
-a.btn:active {
-  background-color: black;
-}
-
-a.btn:visited {
-  background-color: #ccc;
-}
-
 body {
   background-color: #53A5F6;
+}
+
+.title_heading {
+  background-color: #53A5F6;
+  width: 350px;
+  padding: 5px;
+  margin-left: 0px;
+  color: white;
+  border: round;
 }
 
 .container {
@@ -39,37 +28,24 @@ body {
   margin-top: 200px;
 }
 
-.flash_login {
-  text-align: center;
-  border: 2px solid blue;"
-}
-
-.flash_success {
-  text-align: center;
-  border: 2px solid green;"
-}
-
-.flash_warning {
-  text-align: center;
-  border: 2px solid red;"
-}
-
-
-
-
-
 .item-divider {
-  width: 300px;
+  width: 288px;
   height:0;
   border-top: 2px solid #157EFB;
   font-size:0;"
   margin-top: 200px;
 }
 
+.folder-btn {
+  background-color: green;
+}
+
 h3 .folder_items {
   color: blue;
   margin-bottom: 20px;
 }
+
+
 
 .row {
   margin-bottom: 20px;
