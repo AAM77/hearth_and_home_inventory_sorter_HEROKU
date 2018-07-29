@@ -44,7 +44,7 @@ class CategoriesController < ApplicationController
       if params[:category][:name] == ""
         redirect "/#{current_user.slug}/categories/new"
       else
-        category_name_exists = !Category.find_by_category_name(params[:category][:name], current_user.id).empty?
+        category_name_exists = !Category.find_by_name(params[:category][:name], current_user.id).empty?
 
         if category_name_exists
           redirect "/#{current_user.slug}/categories/new"
@@ -82,7 +82,7 @@ class CategoriesController < ApplicationController
 
   get "/:user_slug/categories/:category_slug/edit" do
     if logged_in?
-      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
+      @category = Category.find_by_slug_and_user(params[:category_slug], current_user.id)
       @items = current_user.items
 
       if @category
@@ -104,8 +104,8 @@ class CategoriesController < ApplicationController
 
   patch "/:user_slug/categories/:category_slug/edit" do
     if logged_in?
-      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
-      category_name_exists = !Category.find_by_category_name(params[:category][:name], current_user.id).empty?
+      @category = Category.find_by_slug_and_user(params[:category_slug], current_user.id)
+      category_name_exists = !Category.find_by_name(params[:category][:name], current_user.id).empty?
 
       if @category
         if category_name_exists
@@ -143,7 +143,7 @@ class CategoriesController < ApplicationController
   ######################################
   get "/:user_slug/categories/:category_slug" do
     if logged_in?
-      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
+      @category = Category.find_by_slug_and_user(params[:category_slug], current_user.id)
       @items = @category.items.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"categories/show_category"
     else
@@ -160,13 +160,13 @@ class CategoriesController < ApplicationController
   delete "/:user_slug/categories/:category_slug/delete" do
     if logged_in?
 
-      @category = Category.find_by_category_slug(params[:category_slug], current_user.id)
+      @category = Category.find_by_slug_and_user(params[:category_slug], current_user.id)
 
       if @category.user_id == current_user.id
         @category.destroy
         flash[:success] = "Successfully deleted category: [ #{@category.name} ]"
         redirect "/#{current_user.slug}/categories"
-        
+
       else
         flash[:warning] = "ERROR: Could not delete category: [ #{@category.name} ]."
         redirect "/#{current_user.slug}/categories"

@@ -46,7 +46,7 @@ class FoldersController < ApplicationController
         flash[:warning] = "The folder name cannot be blank."
         redirect "/#{current_user.slug}/folders/new"
 
-      elsif !Folder.find_by_folder_name(params[:folder][:name], current_user.id).empty?
+      elsif !Folder.find_by_name(params[:folder][:name], current_user.id).empty?
 
         flash[:warning] = "You already have a folder with that name. Don't get confused: please choose a different name!"
         redirect "/#{current_user.slug}/folders/new"
@@ -83,7 +83,7 @@ class FoldersController < ApplicationController
 
   get "/:user_slug/folders/:folder_slug/edit" do
     if logged_in?
-      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+      @folder = Folder.find_by_slug_and_user(params[:folder_slug], current_user.id)
       @items = current_user.items
 
       if @folder
@@ -105,9 +105,9 @@ class FoldersController < ApplicationController
 
   patch "/:user_slug/folders/:folder_slug/edit" do
     if logged_in?
-      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+      @folder = Folder.find_by_slug_and_user(params[:folder_slug], current_user.id)
 
-      folder_name_exists = !Folder.find_by_folder_name(params[:folder][:name], current_user.id).empty?
+      folder_name_exists = !Folder.find_by_name(params[:folder][:name], current_user.id).empty?
 
       if @folder
         if folder_name_exists
@@ -145,7 +145,7 @@ class FoldersController < ApplicationController
   ####################################
   get "/:user_slug/folders/:folder_slug" do
     if logged_in?
-      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+      @folder = Folder.find_by_slug_and_user(params[:folder_slug], current_user.id)
       @items = @folder.items.sort { |a,b| a.name.downcase <=> b.name.downcase }
       erb :"folders/show_folder"
     else
@@ -162,7 +162,7 @@ class FoldersController < ApplicationController
   delete "/:user_slug/folders/:folder_slug/delete" do
     if logged_in?
 
-      @folder = Folder.find_by_folder_slug(params[:folder_slug], current_user.id)
+      @folder = Folder.find_by_slug_and_user(params[:folder_slug], current_user.id)
 
       if @folder.user_id == current_user.id
         @folder.destroy

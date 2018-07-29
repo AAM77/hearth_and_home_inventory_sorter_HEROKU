@@ -21,7 +21,6 @@ class ItemsController < ApplicationController
     end
   end
 
-
   ####################################
   # Retrieves the item creation page #
   ####################################
@@ -179,6 +178,32 @@ class ItemsController < ApplicationController
 
       flash[:success] = "Successfully deleted the item from folder [#{@folder.name}]. You can still find it in your items section."
       redirect "/#{current_user.slug}/folders/#{@folder.slug}"
+
+    else
+      flash[:login] = "You are not logged in. Please Log in or Register."
+      redirect "/login"
+    end
+  end
+
+  ## Not DRY !!!
+  ## Do something about this
+
+  ###########################################
+  # Deletes the item from a specific category #
+  ###########################################
+  delete "/:user_slug/categories/:category_slug/:category_id/items/:item_slug/:item_id/delete" do
+    if logged_in?
+      @item = current_user.items.find_by_id(params[:item_id])
+      @category = current_user.categories.find_by_id(params[:category_id])
+      #@item_name = @item.name
+
+      if @item && @category
+        @item.categories.delete(Category.find_by_id(params[:category_id]))
+        @category.items.delete(Item.find_by_id(params[:item_id]))
+      end
+
+      flash[:success] = "Successfully deleted the item from category [#{@category.name}]. You can still find it in your items section."
+      redirect "/#{current_user.slug}/categories/#{@category.slug}"
 
     else
       flash[:login] = "You are not logged in. Please Log in or Register."
