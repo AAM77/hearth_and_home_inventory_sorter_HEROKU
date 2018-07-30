@@ -4,10 +4,12 @@ require 'bundler/setup'
 require 'active_support/inflector'
 Bundler.require(:default, :production, ENV['SINATRA_ENV'])
 
-
-ActiveRecord::Base.establish_connection(
-  :database => "db/#{ENV['SINATRA_ENV']}.sqlite"
-)
+configure :development do
+  ActiveRecord::Base.establish_connection(
+    :adapter => "sqlite3",
+    :database => "db/#{ENV['SINATRA_ENV']}.sqlite"
+  )
+end
 
 configure :production do
    db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
