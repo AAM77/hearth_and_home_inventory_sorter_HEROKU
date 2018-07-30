@@ -39,5 +39,5 @@
 
 <!-- DELETE BUTTON -->
 <%= erb(:"partials/button_delete_partial", :locals => {
-  :object_string => "Account", :delete_path => @user.slug+"/delete"
+  :object_string => "Account", :delete_path => "/"+@user.slug+"/delete"
   })%>
