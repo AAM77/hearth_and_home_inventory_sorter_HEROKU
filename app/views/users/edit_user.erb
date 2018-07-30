@@ -3,6 +3,9 @@
   <h2>Edit <%=current_user.username%>'s Information:</h2>
 </div>
 
+<br>
+<br>
+
 <!-- Display form to edit information -->
 <form action="/<%= current_user.slug %>/edit" method="POST">
   <input id="hidden" type="hidden" name="_method" value="patch">
