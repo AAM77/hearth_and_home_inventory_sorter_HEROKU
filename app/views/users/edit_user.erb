@@ -40,8 +40,3 @@
   <!-- Displays Submit Button -->
   <button class="btn btn-primary btn-lg active" role="button" aria-pressed="true"  type="submit">Update My Info</button>
 </form>
-
-<!-- DELETE BUTTON -->
-<%= erb(:"partials/button_delete_partial", :locals => {
-  :object_string => "Account", :delete_path => @user+"/delete"
-  })%>
