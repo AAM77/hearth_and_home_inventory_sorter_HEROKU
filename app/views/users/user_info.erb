@@ -34,8 +34,7 @@
 
 <br>
 
-<!-- Display delete button -->
-<form action="/<%= @user.slug %>/delete" method="POST">
-  <input id="hidden" type="hidden" name="_method" value="delete">
-  <button class="content_button"  type="submit">Delete Account</button>
-</form>
+<!-- DELETE BUTTON -->
+<%= erb(:"partials/button_delete_partial", :locals => {
+  :object_string => "Account", :delete_path => @user+"/delete"
+  })%>
