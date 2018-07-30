@@ -116,7 +116,7 @@ DEPENDENCIES
   bcrypt
   capybara
   database_cleaner!
-  pg
+  pg (~> 1.0.0)
   pry
   rack-test
   rake
