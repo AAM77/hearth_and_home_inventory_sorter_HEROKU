@@ -154,7 +154,7 @@ class ItemsController < ApplicationController
       @item = Item.find_by_item_slug(params[:item_slug], params[:item_id].to_i, current_user.id)
       @item.destroy
 
-      flash[:success] = "Successfully deleted the item from your account. It no longer exists."
+      flash[:warning] = "You have deleted [ #{@item.name} ] from everywhere on your account !! It no longer exists."
       redirect "/#{current_user.slug}/items"
     else
       flash[:login] = "You are not logged in. Please Log in or Register."
