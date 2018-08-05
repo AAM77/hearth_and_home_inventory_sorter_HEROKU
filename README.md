@@ -6,7 +6,7 @@
 The inspiration for this app came from a discussion regarding the usefulness of taking an inventory of one's home for insurance purposes. Of course, to be completely useful for that, this app would need to allow the user to upload images an videos. Although I learned how to do this and plan to add this feature, I decided not to do so for the time being.
 
 This project is currently built on Sinatra. I build it for Flatiron's Learn Verified Full stack Web Developer program.
- 
+
 ## Description
 
 A limited list of features for the app include:
@@ -69,7 +69,7 @@ At present, until I upload this as a gem or until I deploy it to Heroku, you can
 (10) Alternatively, if you wish to experiment with the app locally, you can do so by typing ' tux '
 into the terminal.
 (11) Another way you can experiment with the app is by typing ' rake console '.
-(12) I will update this once I deploy it to Heroku
+(12) The link to web-app on Heroku can be found [Here](https://hh-inventorysorter-sinatra.herokuapp.com/).
 
 ## Development
 
